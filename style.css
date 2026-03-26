@@ -2213,3 +2213,78 @@ body {
   transition: transform 0.4s ease;
 }
 
+/* ===== WORKSHOP DOC LIST ===== */
+.workshop-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 20px 0;
+}
+
+.workshop-bullets li {
+  color: var(--text-light); /* หรือ #666 ถ้าไม่มี variable */
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.workshop-inner-divider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.07);
+  margin-bottom: 10px;
+  background: rgba(0,0,0,0.02);
+  transition: background 0.2s;
+}
+
+.doc-item:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.doc-icon {
+  color: var(--accent); /* สีส้มของ theme */
+  flex-shrink: 0;
+}
+
+.doc-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.doc-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.doc-meta {
+  font-size: 0.78rem;
+  color: #999;
+}
+
+.doc-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ปุ่มขนาดเล็ก */
+.btn-sm {
+  padding: 6px 14px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Responsive */
+@media (max-width: 560px) {
+  .doc-item { flex-wrap: wrap; }
+  .doc-actions { width: 100%; justify-content: flex-end; }
+}
