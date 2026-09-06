@@ -1,0 +1,14 @@
+# บันทึกการทำงานส่วนตัว ไม่ต้องขึ้น GitHub
+PROMPT_Portfolio.md
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor
+.idea/
+*.swp
+
+# ไฟล์ชั่วคราวตอนทดสอบ
+_*.html
