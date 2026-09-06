@@ -3,33 +3,10 @@
 ═══════════════════════════════════════════════ */
 
 'use strict';
-/*
- ── Dark Mode Toggle ── 
-const themeToggle = document.getElementById('themeToggle');
-const htmlElement = document.documentElement;
 
-function initTheme() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-  updateThemeIcon(savedTheme);
-}
-
-function updateThemeIcon(theme) {
-  if (themeToggle) {
-    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-  }
-}
-
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const isDark = document.body.classList.toggle('dark-mode');
-    const theme = isDark ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-    updateThemeIcon(theme);
-  });
-}
-
-initTheme();*/
+/* ── ผู้ใช้ตั้งค่า "ลดการเคลื่อนไหว" ไว้ไหม (ใช้ร่วมกับ @media prefers-reduced-motion ใน CSS) ── */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
 
 /* ── Click Animation for Images ── */
 const clickableImages = document.querySelectorAll('.clickable-image');
@@ -54,63 +31,17 @@ clickableImages.forEach(image => {
   });
 });
 
-/* ── Click Animation for Brings Items ── */
-const bringsItems = document.querySelectorAll('.brings-item');
-bringsItems.forEach(item => {
-  item.addEventListener('click', function(e) {
-    // Create ripple effect
-    const ripple = document.createElement('span');
-    ripple.classList.add('ripple-effect');
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    
-    this.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
-  });
-});
-
-/* ── Intersection Observer for Reveal Animation ── */
+/* ── Back to top button ── */
 const backToTopBtn = document.getElementById('backToTop');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
-}, { passive: true });
-
 if (backToTopBtn) {
+  window.addEventListener('scroll', () => {
+    backToTopBtn.classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
   backToTopBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-/* ── Toast Notification ── */
-function showToast(message, duration = 3000) {
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.remove();
-  }, duration);
-}
-
-/* ── Copy to Clipboard ── */
-function copyToClipboard(text, message = 'Copied to clipboard!') {
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(message);
-  }).catch(err => {
-    console.error('Failed to copy:', err);
+    window.scrollTo({ top: 0, behavior: scrollBehavior });
   });
 }
 
@@ -180,25 +111,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealEls.forEach(el => revealObserver.observe(el));
 
-/* ── Skill bar animations ── */
-const skillBars = document.querySelectorAll('.skill-bar');
-
-const skillObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const bar = entry.target;
-      const pct = bar.dataset.pct || '0';
-      // slight delay so it triggers after card reveal
-      setTimeout(() => {
-        bar.style.width = pct + '%';
-      }, 300);
-      skillObserver.unobserve(bar);
-    }
-  });
-}, { threshold: 0.3 });
-
-skillBars.forEach(bar => skillObserver.observe(bar));
-
 /* ── Smooth scroll for all anchor links ── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
@@ -209,66 +121,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const offset = 70; // navbar height
     const top = target.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.scrollTo({ top, behavior: scrollBehavior });
   });
 });
 
-/* ── Animated number counter (hero stats) ── */
-function animateCounter(el, target, duration = 1200) {
-  let start = 0;
-  const step = target / (duration / 16);
-  const run = () => {
-    start += step;
-    if (start < target) {
-      el.textContent = Math.floor(start);
-      requestAnimationFrame(run);
-    } else {
-      el.textContent = target;
-    }
-  };
-  requestAnimationFrame(run);
-}
-
-// Observe hero card numbers
-const heroStats = document.querySelectorAll('.hc-num');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el  = entry.target;
-      const raw = el.textContent.replace(/[^0-9]/g, '');
-      const suffix = el.textContent.replace(/[0-9]/g, '');
-      const target = parseInt(raw, 10);
-      if (!isNaN(target)) {
-        animateCounter({ set textContent(v) { el.textContent = v + suffix; } }, target);
-      }
-      counterObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-heroStats.forEach(el => counterObserver.observe(el));
-
-/* ── Typing cursor effect for hero tagline ── */
-(function() {
-  const tagline = document.querySelector('.hero-tagline');
-  if (!tagline) return;
-  // Just add a subtle pulse to the em elements
-  tagline.querySelectorAll('em').forEach(em => {
-    em.style.borderBottom = '2px solid rgba(196,118,58,0.4)';
-    em.style.paddingBottom = '2px';
-  });
-})();
-
-/* ── Parallax on hero background shape ── */
-const heroBgShape = document.querySelector('.hero-bg-shape');
-if (heroBgShape) {
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    heroBgShape.style.transform = `translateY(${y * 0.15}px)`;
-  }, { passive: true });
-}
-
 /* ── Project card tilt on hover (subtle) ── */
-document.querySelectorAll('.project-card, .skill-card').forEach(card => {
+document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 4;
@@ -282,15 +140,9 @@ document.querySelectorAll('.project-card, .skill-card').forEach(card => {
   });
 });
 
-/* ── Copy Contact Info ── */
+/* ── Keyboard shortcuts ── */
 document.addEventListener('DOMContentLoaded', () => {
-  // Add keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    // Ctrl/Cmd + D for dark mode
-    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-      e.preventDefault();
-      themeToggle?.click();
-    }
     // Esc to close mobile menu
     if (e.key === 'Escape' && menuOpen) {
       menuOpen = false;
@@ -299,13 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-/* ── Year auto-update in footer ── */
-const footerCopy = document.querySelector('.footer-copy');
-if (footerCopy) {
-  const year = new Date().getFullYear();
-  footerCopy.textContent = `© ${year} · Designed & built with care`;
-}
 
 /* ── Ripple Effect for Navigation ── */
 function createRipple(event) {
@@ -332,8 +177,9 @@ function createRipple(event) {
   }, 600);
 }
 
-// Add ripple effect to navigation links
-document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+// ระลอกคลื่นเหลือแค่เมนูมือถือ (แถวเต็มความกว้าง มีพื้นให้คลื่นวิ่ง)
+// เมนูบนสุดใช้เส้นทองใต้คำแทน ไม่มีกล่องมากั้นคลื่นแล้วมันจะล้นไปทับลิงก์ข้าง ๆ
+document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', createRipple);
 });
 
@@ -371,22 +217,22 @@ function type() {
   setTimeout(type, deleting ? 40 : 70);
 }
 
-type();
+if (reduceMotion) {
+  el.textContent = phrases[0];
+} else {
+  type();
+}
 
-const track = document.getElementById('techTrack');
+// โคลนชุดโลโก้ต่อท้ายให้แถบวิ่งวนไม่มีรอยต่อ
+// animation เลื่อน -50% ของแถบ ดังนั้น (1) จำนวนชุดต้องเป็นเลขคู่ ครึ่งแถบจะได้เท่ากับจำนวนชุดเต็ม ๆ
+// และ (2) ครึ่งแถบต้องกว้างกว่าช่องที่มองเห็น ไม่งั้นตอนวนกลับจะโผล่ช่องว่างท้ายแถบ
+// 1 ชุดกว้างแค่ ~630px แต่ช่องมองเห็นกว้างได้ถึง 1020px (.container 1100 - padding 80) จึงต้องโคลนมากกว่า 1 รอบ
+// ตั้งเป้าไว้ 1200px เผื่อไว้ ผู้ใช้ย่อ-ขยายหน้าต่างทีหลังก็ยังไม่เห็นช่องว่าง
+const MIN_HALF_WIDTH = 1200;
+const track = document.getElementById('logoTrack');
 
-// clone ทั้ง track
-const clone = track.innerHTML;
-track.innerHTML += clone;
-
-const reveals = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
-  });
-}, { threshold: 0.15 });
-
-reveals.forEach(el => observer.observe(el));
+if (track && !reduceMotion) {
+  const oneSet = track.innerHTML;
+  const setsPerHalf = Math.max(1, Math.ceil(MIN_HALF_WIDTH / track.offsetWidth));
+  track.innerHTML = oneSet.repeat(setsPerHalf * 2);
+}
