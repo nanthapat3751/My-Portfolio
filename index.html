@@ -28,7 +28,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <!-- ?v= คือเลขรุ่นกันแคช · แก้ style.css หรือ script.js เมื่อไหร่ ต้องเปลี่ยนเลขนี้ทั้งสองจุดก่อนอัปขึ้น GitHub
+       ไม่งั้นเบราว์เซอร์ของคนที่เคยเปิดเว็บจะใช้ไฟล์เก่าที่จำไว้คู่กับ HTML ใหม่ หน้าเพี้ยน (เคยทำรูปโปรไฟล์ยืดมาแล้ว) -->
+  <link rel="stylesheet" href="style.css?v=20260917b" />
   <noscript>
     <!-- ไม่มี JS = IntersectionObserver ไม่ทำงาน = .reveal ค้างที่ opacity 0 ทั้งหน้า
          กฎนี้บังคับให้เนื้อหาโผล่ครบ ยอมทิ้งอนิเมชันไป -->
@@ -331,17 +333,27 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <!-- ปุ่มนี้เป็น "ดาวน์โหลด" ส่วนปุ่ม "ดู CV" ที่หน้า Home เป็นตัวเปิดอ่านในแท็บใหม่
-           สองปุ่มชี้ไฟล์เดียวกันแต่คนละการกระทำ ตั้งใจให้ไม่ซ้ำกัน -->
-      <a href="pdf/CV.pdf" download="CV-ณันธภัทร์ ลิ่มเจริญ.pdf" class="nav-cv-btn">
+      <!-- CV สองปุ่ม ชี้ไฟล์เดียวกันแต่คนละการกระทำ: View เปิดอ่านในแท็บใหม่ · Download บันทึกลงเครื่อง
+           View เป็นปุ่มรอง (ขอบ) Download เป็นปุ่มหลัก (ทึบ) จะได้ไม่แย่งสายตากัน -->
+      <div class="nav-cv">
+      <a href="pdf/CV.pdf" target="_blank" rel="noopener noreferrer" class="nav-cv-view" aria-label="View CV (เปิดในแท็บใหม่)" title="View CV">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        <span class="nav-cv-label">View CV</span>
+      </a>
+      <a href="pdf/CV.pdf" download="CV-ณันธภัทร์ ลิ่มเจริญ.pdf" class="nav-cv-btn" aria-label="Download CV">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
           stroke-linecap="round" aria-hidden="true" focusable="false">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        Download CV
+        <span><span class="nav-cv-word">Download </span>CV</span>
       </a>
+      </div>
 
       <button class="hamburger" id="hamburger" type="button" aria-label="menu"
               aria-expanded="false" aria-controls="mobileMenu">
@@ -1233,7 +1245,7 @@
   <!-- Back to Top Button -->
   <button id="backToTop" aria-label="Back to top" title="Back to Top">↑</button>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260917"></script>
 </body>
 
 </html>

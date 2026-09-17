@@ -1977,6 +1977,60 @@ html {
   box-shadow: 0 8px 20px rgba(196, 118, 58, 0.3);
 }
 
+.nav-cv {
+  display: flex;
+  /* stretch ให้สองปุ่มสูงเท่ากันเสมอ แม้ปุ่ม View จะเหลือแต่ไอคอน */
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* ปุ่มรอง: ขอบกรมท่า พื้นโปร่ง ขนาดเท่าปุ่ม Download (padding ลบขอบ 1px ไว้แล้ว) */
+.nav-cv-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--accent2);
+  border-radius: 100px;
+  color: var(--accent2);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--trans), color var(--trans), transform var(--trans);
+}
+
+.nav-cv-view:hover {
+  background: var(--accent2);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+}
+
+/* ที่ว่างใน navbar ไม่พอให้สองปุ่มมีข้อความเต็ม (วัดจริงก่อนตัด):
+   961-1199px เมนูยังเรียงเต็มแถว ที่ 961 ปุ่ม View ชนกับลิงก์ Contact พอดี · 601-960 เมนูยุบเป็นแฮมเบอร์เกอร์แล้ว เหลือที่ 240px+ ใส่ข้อความได้
+   ≤600px ที่แคบลงเรื่อย ๆ จนที่ 375 โลโก้ชนปุ่ม -> ปุ่ม View เหลือแค่ไอคอนรูปตา · ชื่อปุ่มยังอยู่ใน aria-label */
+@media (min-width: 961px) and (max-width: 1199px), (max-width: 600px) {
+  .nav-cv-view {
+    padding: 0 15px;
+  }
+
+  .nav-cv-label {
+    display: none;
+  }
+}
+
+/* ≤480px: ตัดคำ "Download " เหลือ "⬇ CV" ไม่งั้นจอ 320-375 โลโก้ ปุ่ม และแฮมเบอร์เกอร์ล้นแถว
+   ไอคอนลูกศรลง vs รูปตา บอกความต่างของสองปุ่มแทนคำ */
+@media (max-width: 480px) {
+  .nav-cv-word {
+    display: none;
+  }
+
+  .nav-cv-btn {
+    padding: 10px 16px;
+  }
+}
+
 /* ═══════════════════════════════════════════════
    ACCESSIBILITY
 ═══════════════════════════════════════════════ */
