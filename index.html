@@ -17,10 +17,10 @@
   <meta property="og:title" content="ณันธภัทร์ ลิ่มเจริญ · IT Portfolio" />
   <meta property="og:description"
     content="นิสิตสาขาเทคโนโลยีสารสนเทศ ม.เกษตรศาสตร์ · ผลงาน IoT, การวิเคราะห์ระบบ และใบรับรองจาก HackerRank" />
-  <meta property="og:image" content="images/myku.jpg" />
+  <meta property="og:image" content="https://nanthapat3751.github.io/My-Portfolio/images/myproflie.png" />
   <!-- เมื่อ deploy แล้วให้ใส่ URL เต็มของเว็บ เช่น https://nanthapat3751.github.io/portfolio/
        ทั้งใน og:url และ og:image (Facebook ต้องการ URL เต็ม ไม่รับ path สั้น) -->
-  <!-- <meta property="og:url" content="" /> -->
+  <meta property="og:url" content="https://nanthapat3751.github.io/My-Portfolio/" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +29,18 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <noscript>
+    <!-- ไม่มี JS = IntersectionObserver ไม่ทำงาน = .reveal ค้างที่ opacity 0 ทั้งหน้า
+         กฎนี้บังคับให้เนื้อหาโผล่ครบ ยอมทิ้งอนิเมชันไป -->
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .hamburger { display: none !important; }
+      /* ปุ่ม "รายละเอียด" เปิดกล่องด้วย JS ถ้า JS ไม่ทำงานมันจะเป็นปุ่มตาย
+         ซ่อนไปเลยดีกว่าให้คนกดแล้วไม่เกิดอะไรขึ้น
+         (เนื้อหาในกล่องยังอยู่ในหน้า Google กับโปรแกรมอ่านหน้าจอยังเห็น) */
+      .doc-card [data-open] { display: none !important; }
+    </style>
+  </noscript>
 </head>
 
 <body>
@@ -131,8 +143,8 @@
       <title>diagrams.net</title><path d="M19.69 13.419h-2.527l-2.667-4.555a1.292 1.292 0 001.035-1.28V4.16c0-.725-.576-1.312-1.302-1.312H9.771c-.726 0-1.312.576-1.312 1.301v3.435c0 .619.426 1.152 1.034 1.28l-2.666 4.555H4.309c-.725 0-1.312.576-1.312 1.301v3.435c0 .725.576 1.312 1.302 1.312h4.458c.726 0 1.312-.576 1.312-1.302v-3.434c0-.726-.576-1.312-1.301-1.312h-.437l2.645-4.523h2.059l2.656 4.523h-.438c-.725 0-1.312.576-1.312 1.301v3.435c0 .725.576 1.312 1.302 1.312H19.7c.726 0 1.312-.576 1.312-1.302v-3.434c0-.726-.576-1.312-1.301-1.312zM24 22.976c0 .565-.459 1.024-1.013 1.024H1.024A1.022 1.022 0 010 22.987V1.024C0 .459.459 0 1.013 0h21.963C23.541 0 24 .459 24 1.013z"/>
     </symbol>
 
-    <symbol id="logo-miro" viewBox="0 0 24 24" fill="#050038">
-      <title>Miro</title><path d="M17.392 0H13.9L17 4.808 10.444 0H6.949l3.102 6.3L3.494 0H0l3.05 8.131L0 24h3.494L10.05 6.985 6.949 24h3.494L17 5.494 13.899 24h3.493L24 3.672 17.392 0z"/>
+    <symbol id="logo-miro" viewBox="0 0 400 400" fill="none">
+      <title>Miro</title><path d="M3 100.754C3 46.2604 47.2435 2 101.754 2H299.246C353.756 2 398 46.2435 398 100.754V298.246C398 352.756 353.756 397 299.246 397H101.754C47.2435 397 3 352.756 3 298.246V100.754Z" fill="#FFDD33"/><path fill-rule="evenodd" clip-rule="evenodd" d="M265.573 77.3491H229.74L259.629 129.85L193.906 77.3491H158.072L190.934 141.468L122.238 77.3491H86.4041L122.238 159.031L86.4041 322.377H122.238L190.934 147.396L158.072 322.377H193.906L259.629 135.693L229.74 322.377H265.573L331.297 118.232L265.573 77.4335V77.3491Z" fill="#1C1C1E"/>
     </symbol>
 
     <symbol id="logo-postman" viewBox="0 0 256 256" preserveAspectRatio="xMidYMid">
@@ -276,33 +288,34 @@
       </defs>
     </symbol>
 
-    <symbol id="icon-wireframe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <path d="M3 9h18M9 9v12" />
+
+
+    <symbol id="logo-visio" viewBox="0 0 48 48">
+      <title>Microsoft Visio</title><path fill="#1976d2" d="M26.5,33h15c0.828,0,1.5-0.672,1.5-1.5v-15c0-0.828-0.672-1.5-1.5-1.5h-15c-0.828,0-1.5,0.672-1.5,1.5v15C25,32.328,25.672,33,26.5,33z"/><path fill="#42a5f5" d="M34.517,16.061l-8.457,8.457c-0.586,0.586-1.536,0.586-2.121,0l-8.457-8.457c-0.586-0.586-0.586-1.536,0-2.121l8.457-8.457c0.586-0.586,1.536-0.586,2.121,0l8.457,8.457C35.103,14.525,35.103,15.475,34.517,16.061z"/><circle cx="25" cy="34" r="10" fill="#0d47a1"/><path fill="#1565c0" d="M23.319,34H6.681C5.753,34,5,33.247,5,32.319V15.681C5,14.753,5.753,14,6.681,14h16.638C24.247,14,25,14.753,25,15.681v16.638C25,33.247,24.247,34,23.319,34z"/><path fill="#fff" d="M14.493,25.618c0.283,0.832,0.45,1.358,0.503,1.576h0.034c0.051-0.218,0.232-0.781,0.545-1.687L17.813,19h2.058l-3.797,10H13.87l-3.741-10h2.116L14.493,25.618z"/>
     </symbol>
 
-    <symbol id="icon-prototype" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="2" y="5" width="7.5" height="14" rx="1.5" />
-      <rect x="14.5" y="5" width="7.5" height="14" rx="1.5" />
-      <path d="M10.5 12h3M12.6 10.7 13.9 12l-1.3 1.3" />
+    <symbol id="logo-pytorch" viewBox="0 0 24 24" fill="#EE4C2C">
+      <title>PyTorch</title><path d="M12.005 0L4.952 7.053a9.865 9.865 0 000 14.022 9.866 9.866 0 0014.022 0c3.984-3.9 3.986-10.205.085-14.023l-1.744 1.743c2.904 2.905 2.904 7.634 0 10.538s-7.634 2.904-10.538 0-2.904-7.634 0-10.538l4.647-4.646.582-.665zm3.568 3.899a1.327 1.327 0 00-1.327 1.327 1.327 1.327 0 001.327 1.328A1.327 1.327 0 0016.9 5.226 1.327 1.327 0 0015.573 3.9z"/>
+    </symbol>
+    <symbol id="logo-roboflow" viewBox="0 0 24 24" fill="#6706CE">
+      <title>Roboflow</title><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0m.512 3.6a9.6 9.6 0 0 1 2.594.39c1.764.52 3.511 1.747 3.823 3.68.066.41.065.829.007 1.24-.208 1.466-1.09 2.777-2.09 3.83-1.063 1.122-2.417 1.854-3.54 2.898-.657.611-.925 1.36-.132 1.995 1.084.553 1.986.266 2.97-.332.582-.353 1.08-.823 1.511-1.345.219-.264.422-.542.617-.825.164-.24.317-.517.537-.716a.8.8 0 0 1 .502-.267.69.69 0 0 1 .7.406c.118.28.013.64-.113.9-.652 1.346-1.368 2.25-1.867 2.78-1.486 1.653-3.809 2.736-5.955 1.846-1.234-.51-2.198-1.658-2.37-2.998-.32-2.502 2.588-3.95 4.12-5.368.937-.868 1.965-2.203 1.486-3.562-.459-1.302-1.988-1.868-3.246-2-1.24-.128-2.5.128-3.624.654-.882.412-1.625 1.038-2.32 1.711-.23.223-.45.46-.688.673-.206.184-.453.352-.732.39-.417.056-.813-.248-.76-.688.086-.712.592-1.332 1.036-1.862q.412-.493.884-.928a9.3 9.3 0 0 1 2.397-1.6 9.9 9.9 0 0 1 4.253-.901m-2.22 5.264c1.558-.055 1.92 1.034.882 1.843-1.763 1.372-3.997 2.745-4.224 4.95-.092.887.352 2.293.89 3.24.04.07.061.153.058.24-.01.231-.19.42-.428.409-.162-.008-.311-.09-.45-.176-.639-.395-1.238-.89-1.705-1.481a5 5 0 0 1-.665-1.116 4.6 4.6 0 0 1-.323-1.196 4.6 4.6 0 0 1 .011-1.238q.045-.315.128-.62c.673-2.49 3.377-4.564 5.498-4.828q.172-.021.328-.027"/>
+    </symbol>
+    <symbol id="logo-yolo" viewBox="0 0 24 24" fill="#111F68">
+      <title>Ultralytics</title><path d="m12.736 7.341-.002 2.897c.012 3.953-3.188 7.177-7.098 7.171-1.553-.003-2.967-.48-4.112-1.313 2.056 3.725 5.999 6.24 10.48 6.245 6.511-.003 11.891-5.343 11.992-11.91l-.002-.027c.006-.151 0-2.951.006-3.075-.01-3.116-2.538-5.677-5.63-5.67-3.105-.006-5.645 2.54-5.634 5.683zM5.629 4.573C2.525 4.573 0 7.118 0 10.246s2.525 5.673 5.63 5.673c3.103 0 5.629-2.545 5.629-5.673s-2.526-5.673-5.63-5.673"/>
+    </symbol>
+    <symbol id="logo-openai" viewBox="0 0 256 260" fill="#000000">
+      <title>OpenAI</title><path d="M239.184 106.203a64.716 64.716 0 0 0-5.576-53.103C219.452 28.459 191 15.784 163.213 21.74A65.586 65.586 0 0 0 52.096 45.22a64.716 64.716 0 0 0-43.23 31.36c-14.31 24.602-11.061 55.634 8.033 76.74a64.665 64.665 0 0 0 5.525 53.102c14.174 24.65 42.644 37.324 70.446 31.36a64.72 64.72 0 0 0 48.754 21.744c28.481.025 53.714-18.361 62.414-45.481a64.767 64.767 0 0 0 43.229-31.36c14.137-24.558 10.875-55.423-8.083-76.483Zm-97.56 136.338a48.397 48.397 0 0 1-31.105-11.255l1.535-.87 51.67-29.825a8.595 8.595 0 0 0 4.247-7.367v-72.85l21.845 12.636c.218.111.37.32.409.563v60.367c-.056 26.818-21.783 48.545-48.601 48.601Zm-104.466-44.61a48.345 48.345 0 0 1-5.781-32.589l1.534.921 51.722 29.826a8.339 8.339 0 0 0 8.441 0l63.181-36.425v25.221a.87.87 0 0 1-.358.665l-52.335 30.184c-23.257 13.398-52.97 5.431-66.404-17.803ZM23.549 85.38a48.499 48.499 0 0 1 25.58-21.333v61.39a8.288 8.288 0 0 0 4.195 7.316l62.874 36.272-21.845 12.636a.819.819 0 0 1-.767 0L41.353 151.53c-23.211-13.454-31.171-43.144-17.804-66.405v.256Zm179.466 41.695-63.08-36.63L161.73 77.86a.819.819 0 0 1 .768 0l52.233 30.184a48.6 48.6 0 0 1-7.316 87.635v-61.391a8.544 8.544 0 0 0-4.4-7.213Zm21.742-32.69-1.535-.922-51.619-30.081a8.39 8.39 0 0 0-8.492 0L99.98 99.808V74.587a.716.716 0 0 1 .307-.665l52.233-30.133a48.652 48.652 0 0 1 72.236 50.391v.205ZM88.061 139.097l-21.845-12.585a.87.87 0 0 1-.41-.614V65.685a48.652 48.652 0 0 1 79.757-37.346l-1.535.87-51.67 29.825a8.595 8.595 0 0 0-4.246 7.367l-.051 72.697Zm11.868-25.58 28.138-16.217 28.188 16.218v32.434l-28.086 16.218-28.188-16.218-.052-32.434Z"/>
+    </symbol>
+    <symbol id="logo-claude" viewBox="0 0 24 24" fill="#D97757">
+      <title>Claude</title><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/>
+    </symbol>
+    <symbol id="logo-gemini" viewBox="0 0 24 24" fill="#8E75B2">
+      <title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
+    </symbol>
+    <symbol id="logo-copilot" viewBox="0 0 24 24" fill="#000000">
+      <title>GitHub Copilot</title><path d="M23.922 16.997C23.061 18.492 18.063 22.02 12 22.02 5.937 22.02.939 18.492.078 16.997A.641.641 0 0 1 0 16.741v-2.869a.883.883 0 0 1 .053-.22c.372-.935 1.347-2.292 2.605-2.656.167-.429.414-1.055.644-1.517a10.098 10.098 0 0 1-.052-1.086c0-1.331.282-2.499 1.132-3.368.397-.406.89-.717 1.474-.952C7.255 2.937 9.248 1.98 11.978 1.98c2.731 0 4.767.957 6.166 2.093.584.235 1.077.546 1.474.952.85.869 1.132 2.037 1.132 3.368 0 .368-.014.733-.052 1.086.23.462.477 1.088.644 1.517 1.258.364 2.233 1.721 2.605 2.656a.841.841 0 0 1 .053.22v2.869a.641.641 0 0 1-.078.256Zm-11.75-5.992h-.344a4.359 4.359 0 0 1-.355.508c-.77.947-1.918 1.492-3.508 1.492-1.725 0-2.989-.359-3.782-1.259a2.137 2.137 0 0 1-.085-.104L4 11.746v6.585c1.435.779 4.514 2.179 8 2.179 3.486 0 6.565-1.4 8-2.179v-6.585l-.098-.104s-.033.045-.085.104c-.793.9-2.057 1.259-3.782 1.259-1.59 0-2.738-.545-3.508-1.492a4.359 4.359 0 0 1-.355-.508Zm2.328 3.25c.549 0 1 .451 1 1v2c0 .549-.451 1-1 1-.549 0-1-.451-1-1v-2c0-.549.451-1 1-1Zm-5 0c.549 0 1 .451 1 1v2c0 .549-.451 1-1 1-.549 0-1-.451-1-1v-2c0-.549.451-1 1-1Zm3.313-6.185c.136 1.057.403 1.913.878 2.497.442.544 1.134.938 2.344.938 1.573 0 2.292-.337 2.657-.751.384-.435.558-1.15.558-2.361 0-1.14-.243-1.847-.705-2.319-.477-.488-1.319-.862-2.824-1.025-1.487-.161-2.192.138-2.533.529-.269.307-.437.808-.438 1.578v.021c0 .265.021.562.063.893Zm-1.626 0c.042-.331.063-.628.063-.894v-.02c-.001-.77-.169-1.271-.438-1.578-.341-.391-1.046-.69-2.533-.529-1.505.163-2.347.537-2.824 1.025-.462.472-.705 1.179-.705 2.319 0 1.211.175 1.926.558 2.361.365.414 1.084.751 2.657.751 1.21 0 1.902-.394 2.344-.938.475-.584.742-1.44.878-2.497Z"/>
     </symbol>
 
-    <symbol id="icon-diagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="6" height="6" rx="1" />
-      <rect x="15" y="3" width="6" height="6" rx="1" />
-      <rect x="9" y="15" width="6" height="6" rx="1" />
-      <path d="M6 9v3h12V9M12 12v3" />
-    </symbol>
-
-    <symbol id="icon-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
-    </symbol>
-
-    <symbol id="icon-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="4" y="4" width="16" height="16" rx="2" />
-      <rect x="9" y="9" width="6" height="6" rx="1" />
-      <path d="M15 2v2M15 20v2M9 2v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2" />
-    </symbol>
   </svg>
 
   <!-- ══ NAVBAR ══ -->
@@ -313,32 +326,25 @@
         <li><a href="#about">About</a></li>
         <li><a href="#brings">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#workshop">Workshop</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#certificates">Certificates</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <!--<a href="pdf/CV.pdf" download="CV.pdf" class="nav-cv-btn">
+      <!-- ปุ่มนี้เป็น "ดาวน์โหลด" ส่วนปุ่ม "ดู CV" ที่หน้า Home เป็นตัวเปิดอ่านในแท็บใหม่
+           สองปุ่มชี้ไฟล์เดียวกันแต่คนละการกระทำ ตั้งใจให้ไม่ซ้ำกัน -->
+      <a href="pdf/CV.pdf" download="CV-ณันธภัทร์ ลิ่มเจริญ.pdf" class="nav-cv-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round">
+          stroke-linecap="round" aria-hidden="true" focusable="false">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        CV
-      </a>-->
-
-      <a href="pdf/CV.pdf" target="_blank" rel="noopener noreferrer" class="nav-cv-view">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round">
-          <circle cx="12" cy="12" r="10" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-        View CV
+        Download CV
       </a>
 
-      <button class="hamburger" id="hamburger" aria-label="menu">
+      <button class="hamburger" id="hamburger" type="button" aria-label="menu"
+              aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -349,21 +355,25 @@
     <a href="#about">About</a>
     <a href="#brings">Skills</a>
     <a href="#projects">Projects</a>
-    <a href="#workshop">Workshop</a>
     <a href="#education">Education</a>
     <a href="#certificates">Certificates</a>
     <a href="#contact">Contact</a>
   </div>
 
+  <!-- หัวข้อหลักของหน้า ซ่อนจากสายตาแต่โปรแกรมอ่านหน้าจอและ Google อ่านได้ -->
+  <h1 class="sr-only">ณันธภัทร์ ลิ่มเจริญ — พอร์ตโฟลิโอ นิสิตเทคโนโลยีสารสนเทศ</h1>
+
   <!-- ══ ABOUT ══ -->
   <section class="section about-hero" id="about">
     <div class="container">
-      <div class="section-label reveal">About Me</div>
+      <h2 class="section-label reveal">About Me</h2>
       <div class="about-grid">
         <div class="about-text reveal">
           <!--<h2 class="section-title">About Me</h2>-->
           <p class="about-role">
-            <span class="typing-text" id="typingText"></span>
+            <!-- ใส่ประโยคแรกไว้ในหน้าเลย เผื่อ JS ไม่ทำงาน บรรทัดนี้จะได้ไม่หายไปทั้งบรรทัด
+                 JS จะเขียนทับทันทีที่เริ่มพิมพ์ ผู้ใช้ทั่วไปจึงไม่เห็นความต่าง -->
+            <span class="typing-text" id="typingText">เข้าใจทั้งธุรกิจและเทคโนโลยี</span>
             <span class="cursor-blink"></span>
           </p>
           <p>กำลังศึกษาอยู่ที่มหาวิทยาลัยเกษตรศาสตร์ สาขาเทคโนโลยีสารสนเทศ
@@ -381,7 +391,7 @@
         <div class="about-visual reveal reveal-delay">
           <div class="avatar-wrap">
             <div class="avatar-placeholder clickable-image">
-              <img src="images/myku.jpg" alt="Profile Photo">
+              <img src="images/myproflie.png" width="1098" height="1433" alt="รูปโปรไฟล์ ณันธภัทร์ ลิ่มเจริญ">
             </div>
           </div>
         </div>
@@ -392,7 +402,7 @@
   <!-- ══ WHAT I BRING ══ -->
   <section class="section section-alt" id="brings">
     <div class="container">
-      <div class="section-label reveal">Skills &amp; technology</div>
+      <h2 class="section-label reveal">Skills &amp; technology</h2>
       <!--<h2 class="section-title reveal">Tools<br /><em>that I use.</em></h2>-->
       <!-- Logo Loop: โลโก้วิ่งวน · ตัวแถบเป็นภาพประกอบล้วน จึงกั้น aria-hidden ไว้
            แล้วให้รายชื่อข้างล่างนี้เป็นตัวบอกโปรแกรมอ่านหน้าจอแทน (Docker ไม่ได้ถูกพูดถึงในการ์ดข้างล่าง) -->
@@ -427,9 +437,7 @@
         </div>
       </div>
 
-      <!-- ทุกอย่างเป็นไทล์โลโก้ แบ่ง 4 หมวด
-           5 อย่างที่ไม่มีโลโก้แบรนด์ในคลัง (Visio, Netpie, Wokwi, Wireframing, Prototype)
-           ใช้ไอคอนเส้นวาดเองสีเดียวกับตัวหนังสือ ตั้งใจให้ต่างจากโลโก้จริงชัด ๆ -->
+      <!-- ทุกอย่างเป็นไทล์โลโก้แบรนด์จริง แบ่ง 4 หมวด ไม่มีไอคอนวาดเองแล้ว -->
       <h3 class="tech-tier-label reveal">Languages &amp; Frameworks</h3>
       <div class="tech-grid reveal">
           <div class="tech-tile">
@@ -498,6 +506,46 @@
           </div>
       </div>
 
+      <!-- สองหมวดนี้แยกกันตั้งใจ: แถวบนคือเครื่องมือที่ใช้ "สร้างโมเดลเอง" ซึ่งมีงานจริงรองรับ
+           (โมเดลแยกเกรดชีส — ป้ายภาพ 1,300 รูป เทรน YOLO11 200 รอบ ดูได้ในส่วน Workshop)
+           แถวล่างคือ AI ที่ใช้เร่งงานประจำ ซึ่งใครก็ใช้ได้ ถ้ารวมเป็นหมวดเดียวกัน
+           ทักษะเทรนโมเดลจะถูกอ่านว่าเท่ากับ "ใช้ ChatGPT เป็น" ซึ่งไม่จริง -->
+      <h3 class="tech-tier-label reveal">AI &amp; Machine Learning</h3>
+      <div class="tech-grid reveal">
+          <div class="tech-tile">
+            <svg data-logo="logo-pytorch" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-pytorch" /></svg>
+            <span>PyTorch</span>
+          </div>
+          <div class="tech-tile">
+            <svg data-logo="logo-roboflow" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-roboflow" /></svg>
+            <span>Roboflow</span>
+          </div>
+          <div class="tech-tile">
+            <svg data-logo="logo-yolo" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-yolo" /></svg>
+            <span>YOLO</span>
+          </div>
+      </div>
+
+      <h3 class="tech-tier-label reveal">AI Assistants</h3>
+      <div class="tech-grid reveal">
+          <div class="tech-tile">
+            <svg data-logo="logo-openai" viewBox="0 0 256 260" aria-hidden="true"><use href="#logo-openai" /></svg>
+            <span>ChatGPT</span>
+          </div>
+          <div class="tech-tile">
+            <svg data-logo="logo-claude" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-claude" /></svg>
+            <span>Claude</span>
+          </div>
+          <div class="tech-tile">
+            <svg data-logo="logo-gemini" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-gemini" /></svg>
+            <span>Gemini</span>
+          </div>
+          <div class="tech-tile">
+            <svg data-logo="logo-copilot" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-copilot" /></svg>
+            <span>GitHub Copilot</span>
+          </div>
+      </div>
+
       <h3 class="tech-tier-label reveal">Design &amp; UX</h3>
       <div class="tech-grid reveal">
           <div class="tech-tile">
@@ -509,16 +557,8 @@
             <span>Draw.io</span>
           </div>
           <div class="tech-tile">
-            <svg data-logo="logo-miro" viewBox="0 0 24 24" aria-hidden="true"><use href="#logo-miro" /></svg>
+            <svg data-logo="logo-miro" viewBox="0 0 400 400" aria-hidden="true"><use href="#logo-miro" /></svg>
             <span>Miro</span>
-          </div>
-          <div class="tech-tile">
-            <svg class="generic-icon" data-logo="icon-wireframe" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-wireframe" /></svg>
-            <span>Wireframing</span>
-          </div>
-          <div class="tech-tile">
-            <svg class="generic-icon" data-logo="icon-prototype" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-prototype" /></svg>
-            <span>Prototype</span>
           </div>
       </div>
 
@@ -545,16 +585,8 @@
             <span>Postman</span>
           </div>
           <div class="tech-tile">
-            <svg class="generic-icon" data-logo="icon-diagram" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-diagram" /></svg>
+            <svg data-logo="logo-visio" viewBox="0 0 48 48" aria-hidden="true"><use href="#logo-visio" /></svg>
             <span>Visio</span>
-          </div>
-          <div class="tech-tile">
-            <svg class="generic-icon" data-logo="icon-cloud" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cloud" /></svg>
-            <span>Netpie</span>
-          </div>
-          <div class="tech-tile">
-            <svg class="generic-icon" data-logo="icon-chip" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chip" /></svg>
-            <span>Wokwi</span>
           </div>
           <div class="tech-tile">
             <svg data-logo="logo-excel" viewBox="0 0 486 500" aria-hidden="true"><use href="#logo-excel" /></svg>
@@ -579,7 +611,7 @@
   <!-- ══ PROJECTS ══ -->
   <section class="section" id="projects">
     <div class="container">
-      <div class="section-label reveal">Projects &amp; Activities</div>
+      <h2 class="section-label reveal">Projects &amp; Activities</h2>
       <!--<h2 class="section-title reveal">Work that speaks<br /><em>louder than words.</em></h2>-->
 
       <div class="projects-grid">
@@ -590,7 +622,7 @@
           </div>-->
           <h3>IoT Project เครื่องวัดแอลกอฮอล์</h3>
           <div class="project-img">
-            <img src="images/IoT.jpg" alt="IoT Alcohol Detector">
+            <img src="images/IoT.jpg" width="1108" height="1099" loading="lazy" decoding="async" alt="IoT Alcohol Detector">
           </div>
           <p>ออกแบบและพัฒนา IoT เครื่องวัดแอลกอฮอล์ โดยใช้ Wokwi จำลองการทำงานของอุปกรณ์และประดิษฐ์อุปกรณ์จริงด้วย
             แล้วมีการสร้างแอพ เชื่อมต่อ Firebase สำหรับจัดเก็บข้อมูลแบบ real-time
@@ -607,7 +639,7 @@
           </div>-->
           <h3>ดูงาน บริษัท อินเทอร์เน็ตแห่งประเทศไทย</h3>
           <div class="project-img">
-            <img src="images/INET.jpg" alt="INET Data Center">
+            <img src="images/INET.jpg" width="2048" height="1368" loading="lazy" decoding="async" alt="INET Data Center">
           </div>
           <p>
             เข้าศึกษาดูงาน Data Center ของบริษัท อินเทอร์เน็ตแห่งประเทศไทย (INET)
@@ -626,7 +658,7 @@
           </div>-->
           <h3>Zahira Farm</h3>
           <div class="project-img">
-            <img src="images/Zahira.jpg" alt="Zahira Farm">
+            <img src="images/Zahira.jpg" width="2048" height="1368" loading="lazy" decoding="async" alt="Zahira Farm">
           </div>
           <p>
             เข้าศึกษาดูงาน Zahira Farm เพื่อเรียนรู้การนำเทคโนโลยี IoT มาประยุกต์ใช้ในภาคเกษตร
@@ -644,7 +676,7 @@
           </div>-->
           <h3>เปิดโลกทักษะ AI และทักษะทางไซเบอร์</h3>
           <div class="project-img">
-            <img src="images/skill_ai.jpg" alt="Skill AI">
+            <img src="images/skill_ai.jpg" width="2048" height="1365" loading="lazy" decoding="async" alt="Skill AI">
           </div>
           <p>
             เข้าร่วมอบรม “เปิดโลกทักษะ AI และทักษะทางไซเบอร์” เพื่อเรียนรู้พื้นฐานเกี่ยวกับปัญญาประดิษฐ์ (AI)
@@ -660,9 +692,9 @@
   </section>
 
   <!-- == WORKSHOP == -->
-  <section class="section" id="workshop">
+  <section class="section section-tight section-alt" id="workshop">
     <div class="container">
-      <div class="section-label reveal">Workshop</div>
+      <h2 class="section-label reveal">Workshop</h2>
       <!--<h2 class="section-title reveal">Hands-on<br /><em>Experience.</em></h2>-->
 
       <!-- การ์ดใบละเอกสาร · เดิมเป็นการ์ดใบเดียวใน .projects-grid ซึ่งเป็นกริด 2 คอลัมน์
@@ -674,9 +706,10 @@
             <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
           </div>
           <h3 class="doc-title">ระบบจองโต๊ะร้านอาหาร</h3>
-          <p class="doc-meta">91 หน้า · PDF · 2567</p>
+          <p class="doc-meta">91 หน้า · PDF · 2566</p>
           <div class="doc-actions">
-            <a href="pdf/restaurant-booking-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <button type="button" class="btn btn-sm" data-open="dm-1" aria-haspopup="dialog">รายละเอียด</button>
+            <a href="pdf/restaurant-booking-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">ดูเอกสาร</a>
             <a href="pdf/restaurant-booking-system.pdf" download="ระบบจองโต๊ะร้านอาหาร.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
           </div>
         </article>
@@ -687,9 +720,10 @@
             <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
           </div>
           <h3 class="doc-title">ระบบจัดตารางเรียน</h3>
-          <p class="doc-meta">74 หน้า · PDF · 2567</p>
+          <p class="doc-meta">74 หน้า · PDF · 2566</p>
           <div class="doc-actions">
-            <a href="pdf/class-scheduling-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <button type="button" class="btn btn-sm" data-open="dm-2" aria-haspopup="dialog">รายละเอียด</button>
+            <a href="pdf/class-scheduling-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">ดูเอกสาร</a>
             <a href="pdf/class-scheduling-system.pdf" download="ระบบจัดตารางเรียน.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
           </div>
         </article>
@@ -700,9 +734,10 @@
             <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
           </div>
           <h3 class="doc-title">ระบบช่วยบริหารเงิน</h3>
-          <p class="doc-meta">86 หน้า · PDF · 2567</p>
+          <p class="doc-meta">86 หน้า · PDF · 2566</p>
           <div class="doc-actions">
-            <a href="pdf/personal-finance-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <button type="button" class="btn btn-sm" data-open="dm-3" aria-haspopup="dialog">รายละเอียด</button>
+            <a href="pdf/personal-finance-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">ดูเอกสาร</a>
             <a href="pdf/personal-finance-system.pdf" download="ระบบช่วยบริหารเงิน.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
           </div>
         </article>
@@ -713,20 +748,296 @@
             <span class="doc-kind">สไลด์นำเสนอ</span>
           </div>
           <h3 class="doc-title">การเทรน AI สำหรับแยกประเภทชีส</h3>
-          <p class="doc-meta">22 หน้า · PDF · 2567</p>
+          <p class="doc-meta">22 หน้า · PDF · งานกลุ่ม</p>
           <div class="doc-actions">
-            <a href="pdf/Cheese.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
-            <a href="pdf/Cheese.pdf" download class="btn btn-outline btn-sm">ดาวน์โหลด</a>
+            <button type="button" class="btn btn-sm" data-open="dm-4" aria-haspopup="dialog">รายละเอียด</button>
+            <a href="pdf/Cheese.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">ดูเอกสาร</a>
+            <a href="pdf/Cheese.pdf" download="การเทรน AI แยกประเภทชีส.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
           </div>
         </article>
       </div>
+
+      <!-- กล่องรายละเอียดของแต่ละเอกสาร · ใช้แท็ก dialog ของเบราว์เซอร์โดยตรง
+           จึงได้ Esc ปิด · โฟกัสไม่หลุดออกนอกกล่อง · ฉากหลังหรี่ มาให้เองโดยไม่ต้องเขียน
+           เนื้อหาอยู่ใน HTML ตรง ๆ แก้ได้เลย และยังอยู่ในหน้าแม้ JS ไม่ทำงาน -->
+
+      <dialog class="doc-modal" id="dm-1" aria-labelledby="dm-1-t">
+        <div class="dm-head">
+          <div class="dm-head-text">
+            <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
+            <h3 class="dm-title" id="dm-1-t">ระบบจองโต๊ะร้านอาหารออนไลน์</h3>
+            <p class="dm-meta">91 หน้า · PDF · ปีการศึกษา 2566 · วิชา 02739322 การวิเคราะห์และออกแบบระบบสารสนเทศ</p>
+          </div>
+          <button type="button" class="dm-close" data-close aria-label="ปิดหน้าต่างรายละเอียด">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" aria-hidden="true" focusable="false">
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="dm-body">
+          <span class="dm-role">บทบาท · Business Analyst</span>
+
+          <h4>โจทย์</h4>
+          <p>ร้านอาหารยังรับจองโต๊ะทางโทรศัพท์แล้วจดลงสมุด ทำให้จองซ้ำซ้อนเพราะไม่มีใครเห็นสถานะโต๊ะว่างพร้อมกันแบบเรียลไทม์ ข้อมูลเสี่ยงสูญหายและค้นย้อนหลังยาก ลูกค้าเองก็ไม่รู้ว่าช่วงเวลาที่อยากมามีโต๊ะว่างไหม และเจ้าของร้านไม่มีข้อมูลสรุปไปใช้วางแผนต่อ</p>
+
+          <h4>สิ่งที่ทำ</h4>
+          <ul>
+            <li>เก็บความต้องการด้วยแบบสอบถาม คำถามปลายปิด 5 ข้อ และปลายเปิด 5 ข้อ เพื่อแยกสิ่งที่ผู้ใช้ต้องการจริง ออกจากสิ่งที่ผู้ใช้แค่เคยชิน</li>
+            <li>เขียนข้อเสนอโครงการ ระบุที่มาของปัญหา วัตถุประสงค์ 5 ข้อ ขอบเขตระบบ และความต้องการของระบบใหม่</li>
+            <li>แปลงความต้องการเป็นแบบด้วย HTA, Context Diagram และ ER Diagram</li>
+            <li>เขียนคำอธิบายกระบวนการด้วย Structured English, Decision Tree และ Decision Table สำหรับเงื่อนไขการจองซ้ำและการจองนอกเวลาทำการ</li>
+            <li>ออกแบบฐานข้อมูลด้วย Normalization แล้วทำ Data Dictionary ครบทั้งระดับ Flow, Structure, Element และ Store</li>
+            <li>ออกแบบเชิงวัตถุด้วย Use Case, Class, Activity และ Sequence Diagram</li>
+          </ul>
+
+          <h4>สิ่งที่ได้จากงานนี้</h4>
+          <ul>
+            <li>ได้ฝึกเปลี่ยนคำพูดของเจ้าของร้านให้กลายเป็นเงื่อนไขที่เขียนเป็นโปรแกรมได้จริง โดยเฉพาะกฎกันจองซ้ำ ที่ต้องนิยามให้ชัดก่อนว่าคำว่า “ซ้ำ” แปลว่าอะไร</li>
+            <li>เข้าใจว่าทำไมต้องจัดโครงสร้างฐานข้อมูลให้เรียบร้อยก่อนออกแบบหน้าจอ ไม่ใช่ทำย้อนกลับกัน</li>
+            <li>ได้เห็นว่าเอกสารชุดเดียวต้องอ่านรู้เรื่องทั้งกับเจ้าของร้านและกับคนเขียนโค้ด จึงต้องมีทั้งภาพและตารางควบคู่กัน</li>
+          </ul>
+
+          <h4>สิ่งที่อยู่ในเล่ม</h4>
+          <div class="dm-tags">
+            <span>Requirement</span>
+            <span>Proposal</span>
+            <span>HTA</span>
+            <span>Context Diagram</span>
+            <span>ER Diagram</span>
+            <span>Structured English</span>
+            <span>Decision Tree</span>
+            <span>Decision Table</span>
+            <span>Normalization</span>
+            <span>Data Dictionary</span>
+            <span>Use Case Diagram</span>
+            <span>Class Diagram</span>
+            <span>Activity Diagram</span>
+            <span>Sequence Diagram</span>
+          </div>
+        </div>
+
+        <div class="dm-foot">
+          <div class="dm-actions">
+            <a href="pdf/restaurant-booking-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <a href="pdf/restaurant-booking-system.pdf" download="ระบบจองโต๊ะร้านอาหาร.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
+          </div>
+          <div class="dm-nav">
+            <button type="button" class="dm-nav-btn" data-open="dm-4">&lsaquo; ก่อนหน้า</button>
+            <span class="dm-count">1 / 4</span>
+            <button type="button" class="dm-nav-btn" data-open="dm-2">ถัดไป &rsaquo;</button>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog class="doc-modal" id="dm-2" aria-labelledby="dm-2-t">
+        <div class="dm-head">
+          <div class="dm-head-text">
+            <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
+            <h3 class="dm-title" id="dm-2-t">ระบบจัดตารางเรียน</h3>
+            <p class="dm-meta">74 หน้า · PDF · ปีการศึกษา 2566 · วิชา 02739322 การวิเคราะห์และออกแบบระบบสารสนเทศ</p>
+          </div>
+          <button type="button" class="dm-close" data-close aria-label="ปิดหน้าต่างรายละเอียด">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" aria-hidden="true" focusable="false">
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="dm-body">
+          <span class="dm-role">บทบาท · Business Analyst</span>
+
+          <h4>โจทย์</h4>
+          <p>สถาบันการศึกษาจัดตารางเรียนด้วยเอกสาร ทำให้เกิดข้อผิดพลาดได้ง่าย และตรวจความทับซ้อนของห้องเรียน เวลา และผู้สอนพร้อมกันได้ยาก</p>
+
+          <h4>สิ่งที่ทำ</h4>
+          <ul>
+            <li>นิยามระบบให้เป็นศูนย์กลางข้อมูลรายวิชา ห้องเรียน และเวลา สำหรับใช้สนับสนุนการตัดสินใจวางแผน ไม่ใช่เป็นแค่ที่เก็บข้อมูล</li>
+            <li>ออกแบบหน้าเข้าสู่ระบบที่แบ่งสิทธิ์การใช้งานตามบทบาท</li>
+            <li>ออกแบบฟังก์ชันจัดการข้อมูลพื้นฐาน เพิ่ม แก้ไข ลบ และหน้าจัดวางตารางเรียน</li>
+            <li>ออกแบบกฎตรวจความทับซ้อนของตารางเรียน</li>
+            <li>เขียน HTA, Context Diagram, Data Flow Diagram และ ER Diagram</li>
+            <li>ออกแบบฐานข้อมูลด้วย Normalization พร้อม Data Dictionary และออกแบบเชิงวัตถุครบชุด</li>
+          </ul>
+
+          <h4>สิ่งที่ได้จากงานนี้</h4>
+          <ul>
+            <li>เล่มนี้เพิ่ม Data Flow Diagram เข้ามาจากเล่มแรก ทำให้เห็นว่าข้อมูลไหลผ่านกระบวนการไหนบ้าง ไม่ใช่แค่เห็นว่าระบบคุยกับใคร</li>
+            <li>โจทย์ตารางเรียนบังคับให้คิดเรื่องเงื่อนไขชนกันหลายแกนพร้อมกัน ทั้งห้อง เวลา และผู้สอน ซึ่งซับซ้อนกว่าการจองโต๊ะที่ชนกันแกนเดียว</li>
+            <li>ได้ฝึกออกแบบสิทธิ์การใช้งานตั้งแต่ต้น แทนที่จะไปเพิ่มทีหลังตอนระบบเสร็จแล้ว</li>
+          </ul>
+
+          <h4>สิ่งที่อยู่ในเล่ม</h4>
+          <div class="dm-tags">
+            <span>Requirement</span>
+            <span>Proposal</span>
+            <span>HTA</span>
+            <span>Context Diagram</span>
+            <span>Data Flow Diagram</span>
+            <span>ER Diagram</span>
+            <span>Normalization</span>
+            <span>Data Dictionary</span>
+            <span>Use Case Diagram</span>
+            <span>Class Diagram</span>
+            <span>Activity Diagram</span>
+            <span>Sequence Diagram</span>
+          </div>
+        </div>
+
+        <div class="dm-foot">
+          <div class="dm-actions">
+            <a href="pdf/class-scheduling-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <a href="pdf/class-scheduling-system.pdf" download="ระบบจัดตารางเรียน.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
+          </div>
+          <div class="dm-nav">
+            <button type="button" class="dm-nav-btn" data-open="dm-1">&lsaquo; ก่อนหน้า</button>
+            <span class="dm-count">2 / 4</span>
+            <button type="button" class="dm-nav-btn" data-open="dm-3">ถัดไป &rsaquo;</button>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog class="doc-modal" id="dm-3" aria-labelledby="dm-3-t">
+        <div class="dm-head">
+          <div class="dm-head-text">
+            <span class="doc-kind">รายงานวิเคราะห์ระบบ</span>
+            <h3 class="dm-title" id="dm-3-t">ระบบช่วยบริหารการเงินส่วนบุคคล</h3>
+            <p class="dm-meta">86 หน้า · PDF · ปีการศึกษา 2566 · วิชา 02739322 การวิเคราะห์และออกแบบระบบสารสนเทศ</p>
+          </div>
+          <button type="button" class="dm-close" data-close aria-label="ปิดหน้าต่างรายละเอียด">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" aria-hidden="true" focusable="false">
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="dm-body">
+          <span class="dm-role">บทบาท · Business Analyst</span>
+
+          <h4>โจทย์</h4>
+          <p>คนจดรายรับรายจ่ายลงสมุดบัญชี ทำให้มองภาพรวมกระแสเงินสดของตัวเองไม่ออก และมักรู้ตัวว่าใช้จ่ายเกินงบก็ต่อเมื่อสายไปแล้ว</p>
+
+          <h4>สิ่งที่ทำ</h4>
+          <ul>
+            <li>นิยามเป้าหมายระบบให้ชัดว่าผู้ใช้ต้องเห็น Cashflow ของตัวเอง ไม่ใช่แค่มีที่บันทึกรายการ</li>
+            <li>ออกแบบการบันทึกธุรกรรมรายรับ-รายจ่าย พร้อมการจัดหมวดหมู่</li>
+            <li>ออกแบบการประมวลผลกระแสเงินสดและยอดคงเหลือแบบเรียลไทม์</li>
+            <li>ออกแบบกลไกแจ้งเตือนเมื่อผู้ใช้ใช้จ่ายใกล้เกินงบประมาณที่ตั้งไว้ในแต่ละเดือน</li>
+            <li>เขียน HTA, Context Diagram, Data Flow Diagram และ ER Diagram</li>
+            <li>ออกแบบฐานข้อมูลด้วย Normalization พร้อม Data Dictionary และออกแบบเชิงวัตถุครบชุด</li>
+          </ul>
+
+          <h4>สิ่งที่ได้จากงานนี้</h4>
+          <ul>
+            <li>เล่มนี้ต่างจากสองเล่มแรกตรงที่ผลลัพธ์ไม่ใช่รายการที่บันทึกไว้ แต่เป็นตัวเลขที่คำนวณต่อ จึงต้องตัดสินใจว่าคำนวณตอนไหนและเก็บอะไรไว้บ้าง</li>
+            <li>ได้ฝึกออกแบบการแจ้งเตือนเชิงป้องกัน ซึ่งบังคับให้กำหนดเกณฑ์ให้ชัดว่าคำว่า “ใกล้เกิน” คือเท่าไหร่</li>
+            <li>เข้าใจว่าการจัดหมวดหมู่ตั้งแต่ตอนบันทึก คือสิ่งที่ตัดสินว่ารายงานปลายทางจะมีประโยชน์หรือไม่</li>
+          </ul>
+
+          <h4>สิ่งที่อยู่ในเล่ม</h4>
+          <div class="dm-tags">
+            <span>Requirement</span>
+            <span>Proposal</span>
+            <span>HTA</span>
+            <span>Context Diagram</span>
+            <span>Data Flow Diagram</span>
+            <span>ER Diagram</span>
+            <span>Normalization</span>
+            <span>Data Dictionary</span>
+            <span>Use Case Diagram</span>
+            <span>Class Diagram</span>
+            <span>Activity Diagram</span>
+            <span>Sequence Diagram</span>
+          </div>
+        </div>
+
+        <div class="dm-foot">
+          <div class="dm-actions">
+            <a href="pdf/personal-finance-system.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <a href="pdf/personal-finance-system.pdf" download="ระบบช่วยบริหารเงิน.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
+          </div>
+          <div class="dm-nav">
+            <button type="button" class="dm-nav-btn" data-open="dm-2">&lsaquo; ก่อนหน้า</button>
+            <span class="dm-count">3 / 4</span>
+            <button type="button" class="dm-nav-btn" data-open="dm-4">ถัดไป &rsaquo;</button>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog class="doc-modal" id="dm-4" aria-labelledby="dm-4-t">
+        <div class="dm-head">
+          <div class="dm-head-text">
+            <span class="doc-kind">สไลด์นำเสนอ</span>
+            <h3 class="dm-title" id="dm-4-t">การเทรน AI สำหรับแยกประเภทชีส</h3>
+            <p class="dm-meta">22 หน้า · PDF · วิชา 02739242 Introduction to Data Science · งานกลุ่ม 3 คน</p>
+          </div>
+          <button type="button" class="dm-close" data-close aria-label="ปิดหน้าต่างรายละเอียด">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" aria-hidden="true" focusable="false">
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="dm-body">
+          <span class="dm-role">งานกลุ่ม · 3 คน</span>
+
+          <h4>โจทย์</h4>
+          <p>ให้ AI แยกประเภทชีสจากภาพได้ เพื่อใช้ควบคุมคุณภาพให้ผลิตภัณฑ์ได้มาตรฐานสม่ำเสมอ และช่วยผู้บริโภคที่แยกไม่ออกว่าชีสตรงหน้าคือชนิดไหน</p>
+
+          <h4>สิ่งที่ทำ</h4>
+          <ul>
+            <li>เลือกชีส 5 ชนิดเป็นคลาสที่จะให้โมเดลแยก คือ Cheddar, Feta, Parmesan, Mozzarella และ Swiss พร้อมนิยามลักษณะเด่นของแต่ละชนิด</li>
+            <li>รวบรวมภาพแล้วเพิ่มจำนวนด้วย Roboflow จนได้ชุดข้อมูลราว 1,300 ภาพ</li>
+            <li>ตั้งสภาพแวดล้อมสำหรับเทรนด้วย PyTorch และ CUDA 12.6 เพื่อเร่งการประมวลผลด้วย GPU</li>
+            <li>เทรนโมเดล YOLO11 จำนวน 200 รอบ แล้วเทียบผลระหว่างน้ำหนักตั้งต้น yolo11n.pt กับ best.pt ที่ได้จากการเทรน</li>
+            <li>แยกสคริปต์ train.py สำหรับเทรน และ detect.py สำหรับตรวจความแม่นยำ</li>
+          </ul>
+
+          <h4>สิ่งที่ได้จากงานนี้</h4>
+          <ul>
+            <li>ได้เห็นว่าจำนวนและคุณภาพของข้อมูลมีผลกับความแม่นยำมากกว่าการไปปรับตัวโมเดล ภาพจริงที่หามาได้ไม่พอ ต้องเพิ่มจำนวนก่อนถึงเทรนได้</li>
+            <li>ได้ลองเทียบน้ำหนักโมเดลสองตัวบนข้อมูลชุดเดียวกัน แทนที่จะเชื่อค่าเริ่มต้นแล้วจบ</li>
+            <li>เป็นงานเดียวในชุดนี้ที่ทำเป็นทีม จึงต้องแบ่งงานกันและเอาผลของแต่ละคนมาต่อกัน</li>
+          </ul>
+
+          <h4>เครื่องมือที่ใช้</h4>
+          <div class="dm-tags">
+            <span>Roboflow</span>
+            <span>PyTorch</span>
+            <span>CUDA 12.6</span>
+            <span>YOLO11</span>
+            <span>VS Code</span>
+            <span>Python</span>
+          </div>
+        </div>
+
+        <div class="dm-foot">
+          <div class="dm-actions">
+            <a href="pdf/Cheese.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ดูเอกสาร</a>
+            <a href="pdf/Cheese.pdf" download="การเทรน AI แยกประเภทชีส.pdf" class="btn btn-outline btn-sm">ดาวน์โหลด</a>
+          </div>
+          <div class="dm-nav">
+            <button type="button" class="dm-nav-btn" data-open="dm-3">&lsaquo; ก่อนหน้า</button>
+            <span class="dm-count">4 / 4</span>
+            <button type="button" class="dm-nav-btn" data-open="dm-1">ถัดไป &rsaquo;</button>
+          </div>
+        </div>
+      </dialog>
     </div>
   </section>
 
   <!-- ══ EDUCATION ══ -->
-  <section class="section section-alt" id="education">
+  <section class="section section-tight" id="education">
     <div class="container">
-      <div class="section-label reveal">Education</div>
+      <h2 class="section-label reveal">Education</h2>
       <!--<h2 class="section-title reveal">Academic<br /><em>Background.</em></h2>-->
       <div class="timeline">
 
@@ -762,18 +1073,18 @@
   </section>
 
   <!-- ══ CERTIFICATES ══ -->
-  <section class="section" id="certificates">
+  <section class="section section-tight section-alt" id="certificates">
     <div class="container">
-      <div class="section-label reveal">Certificates</div>
+      <h2 class="section-label reveal">Certificates</h2>
       <!-- <h2 class="section-title reveal">Always learning,<br /><em>always growing.</em></h2> -->
       <div class="certs-grid">
         <div class="cert-card reveal reveal-delay">
           <div class="brings-icon">
             <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
           </div>
-          <img src="images/css_certificate.jpg" class="cert-img" alt="ใบรับรอง CSS (Basic) จาก HackerRank">
+          <img src="images/css_certificate.jpg" width="4961" height="3780" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง CSS (Basic) จาก HackerRank">
           <div class="cert-info">
-            <h4>CSS (Basic) Certificate</h4>
+            <h3>CSS (Basic) Certificate</h3>
             <span class="cert-issuer">Issued by HackerRank</span>
             <span class="cert-date">2024</span>
           </div>
@@ -783,9 +1094,9 @@
           <div class="brings-icon">
             <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
           </div>
-          <img src="images/java_basic certificate.jpg" class="cert-img" alt="ใบรับรอง Java (Basic) จาก HackerRank">
+          <img src="images/java_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Java (Basic) จาก HackerRank">
           <div class="cert-info">
-            <h4>Java (Basic) Certificate</h4>
+            <h3>Java (Basic) Certificate</h3>
             <span class="cert-issuer">Issued by HackerRank</span>
             <span class="cert-date">2024</span>
           </div>
@@ -795,22 +1106,9 @@
           <div class="brings-icon">
             <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
           </div>
-          <img src="images/javascript_basic certificate.jpg" class="cert-img" alt="ใบรับรอง JavaScript (Basic) จาก HackerRank">
+          <img src="images/javascript_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง JavaScript (Basic) จาก HackerRank">
           <div class="cert-info">
-            <h4>JavaScript (Basic) Certificate</h4>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
-        </div>
-
-
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/nodejs_basic certificate.jpg" class="cert-img" alt="ใบรับรอง Node.js (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h4>Node.js (Basic) Certificate</h4>
+            <h3>JavaScript (Basic) Certificate</h3>
             <span class="cert-issuer">Issued by HackerRank</span>
             <span class="cert-date">2024</span>
           </div>
@@ -821,9 +1119,9 @@
           <div class="brings-icon">
             <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
           </div>
-          <img src="images/sql_intermediate certificate.jpg" class="cert-img" alt="ใบรับรอง SQL (Intermediate) จาก HackerRank">
+          <img src="images/nodejs_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Node.js (Basic) จาก HackerRank">
           <div class="cert-info">
-            <h4>SQL (Intermediate) Certificate</h4>
+            <h3>Node.js (Basic) Certificate</h3>
             <span class="cert-issuer">Issued by HackerRank</span>
             <span class="cert-date">2024</span>
           </div>
@@ -834,9 +1132,22 @@
           <div class="brings-icon">
             <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
           </div>
-          <img src="images/python_basic certificate.jpg" class="cert-img" alt="ใบรับรอง Python (Basic) จาก HackerRank">
+          <img src="images/sql_intermediate certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง SQL (Intermediate) จาก HackerRank">
           <div class="cert-info">
-            <h4>Python (Basic) Certificate</h4>
+            <h3>SQL (Intermediate) Certificate</h3>
+            <span class="cert-issuer">Issued by HackerRank</span>
+            <span class="cert-date">2024</span>
+          </div>
+        </div>
+
+
+        <div class="cert-card reveal reveal-delay">
+          <div class="brings-icon">
+            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
+          </div>
+          <img src="images/python_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Python (Basic) จาก HackerRank">
+          <div class="cert-info">
+            <h3>Python (Basic) Certificate</h3>
             <span class="cert-issuer">Issued by HackerRank</span>
             <span class="cert-date">2024</span>
           </div>
@@ -849,25 +1160,36 @@
   <!-- ══ CONTACT ══ -->
   <section class="section contact-section" id="contact">
     <div class="container">
-      <div class="contact-wrap reveal">
-        <div class="section-label">Contact</div>
-        <!-- <h2 class="section-title">Let's work<br /><em>together.</em></h2> -->
-        <p class="contact-desc">สนใจร่วมงานหรืออยากพูดคุยเพิ่มเติม? ยินดีรับ Opportunity ทุกรูปแบบครับ</p>
-        <div class="contact-links">
-          <a href="https://www.instagram.com/ntpxtt.s/" class="contact-item" target="_blank" rel="noopener noreferrer">
-            <div class="brings-icon"><svg aria-hidden="true" focusable="false"><use href="#icon-instagram" /></svg></div>
-            <div>
-              <div class="ci-label">Instagram</div>
-              <div class="ci-val">ntpxtt.s</div>
-            </div>
+      <div class="contact-grid reveal">
+
+        <div class="contact-intro">
+          <h2 class="section-label">Contact</h2>
+          <p class="contact-desc">สนใจร่วมงานหรืออยากพูดคุยเพิ่มเติม? ยินดีรับ Opportunity ทุกรูปแบบครับ</p>
+
+          <!-- ไอคอนเป็นเส้นสี currentColor ไม่ใช่โลโก้ Gmail สีจริง
+               เพราะปุ่มเปลี่ยนพื้นเป็นสีทองตอนเอาเมาส์ชี้ โลโก้สี่สีบนพื้นทองจะดูมั่ว -->
+          <a href="mailto:tangpun2547@gmail.com" class="contact-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-10 6L2 7" />
+            </svg>
+            tangpun2547@gmail.com
           </a>
-          <a href="https://www.facebook.com/nanthapat.tang?locale=th_TH" class="contact-item" target="_blank" rel="noopener noreferrer">
-            <div class="brings-icon"><svg aria-hidden="true" focusable="false"><use href="#icon-facebook" /></svg></div>
-            <div>
-              <div class="ci-label">Facebook</div>
-              <div class="ci-val">nanthapat.tang</div>
-            </div>
-          </a>
+
+          <!-- เผื่อเครื่องที่กดแล้วไม่มีโปรแกรมอีเมลเปิดขึ้นมา · ซ่อนไว้ก่อน
+               JS จะเปิดให้เฉพาะเบราว์เซอร์ที่คัดลอกได้จริง ไม่งั้นจะเป็นปุ่มกดแล้วไม่เกิดอะไร -->
+          <button type="button" class="contact-copy" id="copyEmail" data-email="tangpun2547@gmail.com" hidden>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span class="cc-text" aria-live="polite">คัดลอกอีเมล</span>
+          </button>
+        </div>
+
+        <div class="contact-channels">
           <a href="https://github.com/nanthapat3751" class="contact-item" target="_blank" rel="noopener noreferrer">
             <div class="brings-icon"><svg aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></div>
             <div>
@@ -875,16 +1197,21 @@
               <div class="ci-val">github.com/nanthapat3751</div>
             </div>
           </a>
-          <a href="mailto:tangpun2547@gmail.com" class="contact-item">
-            <div class="brings-icon">
-              <svg aria-hidden="true" focusable="false"><use href="#icon-gmail" /></svg>
-            </div>
-            <div>
-              <div class="ci-label">Gmail</div>
-              <div class="ci-val">tangpun2547@gmail.com</div>
-            </div>
-          </a>
+
+          <!-- โซเชียลส่วนตัวเป็นชั้นรอง ย่อลงเป็นชิป
+               แต่โลโก้ยังต้องนั่งบนแผ่นขาวเหมือนเดิม สีแบรนด์วางบนพื้นกรมท่าตรง ๆ ได้แค่ IG 2.49 · FB 2.55 : 1 -->
+          <div class="contact-social">
+            <a href="https://www.instagram.com/ntpxtt.s/" class="contact-chip" target="_blank" rel="noopener noreferrer">
+              <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-instagram" /></svg></span>
+              <span>ntpxtt.s</span>
+            </a>
+            <a href="https://www.facebook.com/nanthapat.tang?locale=th_TH" class="contact-chip" target="_blank" rel="noopener noreferrer">
+              <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-facebook" /></svg></span>
+              <span>nanthapat.tang</span>
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -893,6 +1220,11 @@
   <footer class="footer">
     <div class="footer-inner">
       <span class="nav-logo">Portfolio<span class="dot">.</span></span>
+
+      <p class="footer-credit">
+        ไอคอนจาก <a href="https://thesvg.org" target="_blank" rel="noopener noreferrer">TheSVG</a>
+        และ <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">Icons8</a>
+      </p>
 
       <a href="#about" class="back-top">↑ Top</a>
     </div>
