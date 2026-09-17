@@ -13,9 +13,9 @@ No framework, no bundler, nothing to install — open `index.html` and it runs.
 ## Highlights
 
 **No build step, no dependencies** — the entire site is three files: `index.html`, `style.css`, `script.js`.
-Total payload of the code itself is about 145 KB, uncompressed.
+Total payload of the code itself is about 200 KB, uncompressed.
 
-**One inline SVG sprite instead of 38 image requests** — every icon and technology logo is a
+**One inline SVG sprite instead of 41 image requests** — every icon and technology logo is a
 `<symbol>` defined once at the top of the document and reused with `<use href="#id">`. Logos stay
 crisp at any size, inherit color from CSS, and cost zero extra network round-trips.
 
@@ -24,7 +24,7 @@ are drawn with `:focus-visible` so keyboard users can tab the whole page, and bo
 JavaScript respect `prefers-reduced-motion`: the marquee, the scroll reveals, and the hover
 transitions all stand down for anyone who has asked their OS to reduce motion.
 
-**Responsive from 1440px to 375px** — a design-token system (23 CSS custom properties) drives every
+**Responsive from 1440px to 375px** — a design-token system (28 CSS custom properties) drives every
 color, radius, and transition, so the palette is changed in one place rather than hunted through
 rules.
 
@@ -34,13 +34,13 @@ rules.
 
 | Section | What's in it |
 |---|---|
-| About | Introduction and profile |
-| Skills | 32 tools and languages, shown as an animated logo marquee plus a categorized tile grid |
+| About | Introduction and profile, with a typed tagline — the page opens here |
+| Skills | 35 tools and languages, shown as an animated logo marquee plus a categorized tile grid. The AI categories are split in two: tools used to build and train models, and assistants used in day-to-day work |
 | Projects | 4 projects — IoT alcohol-detection device, an industry visit report, Zahira Farm, and an AI/cyber-skills workshop |
-| Workshop | 4 documents — three system-analysis reports (74–91 pages each) and a presentation deck |
+| Workshop | 4 documents — three system-analysis reports (74–91 pages each) and a presentation deck. Each card opens a dialog with the brief, what was done, what was learned, and the deliverables it contains |
 | Education | Academic background |
 | Certificates | 6 HackerRank skill certificates |
-| Contact | Email, GitHub, Instagram, Facebook, and a downloadable CV |
+| Contact | Two columns — an email call-to-action with a copy button on the left, and the other channels on the right, ordered by how likely a recruiter is to use them: GitHub as a full card, Instagram and Facebook as small chips |
 
 ---
 
@@ -75,7 +75,7 @@ Or use the **Live Server** extension in VS Code.
 
 ```
 My-Portfolio/
-├── index.html    # the whole site — 7 sections + the SVG sprite
+├── index.html    # the whole site — 8 sections + the SVG sprite
 ├── style.css     # design tokens and every component style
 ├── script.js     # nav, mobile menu, scroll reveals, logo marquee
 ├── images/       # profile, project photos, certificates, favicon

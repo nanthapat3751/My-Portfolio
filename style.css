@@ -1,14 +1,30 @@
-/* ── Design Tokens ── */
+/* ── Design Tokens · ธีมสว่างเดิม (Cream / Gold / Navy) ──
+   คืนค่ากลับจากธีมมืดตามที่เจ้าของสั่ง · คงชื่อ token ชุดใหม่ไว้
+   (--bg/--surface/--elevated คือ --cream/--white/--sand เดิม เปลี่ยนแค่ชื่อ)
+   ค่าพื้น/ขอบ/--muted เป็นค่าหลัง ISSUE-43 ไม่ใช่ค่าใน git ซึ่งเก่ากว่านั้นหนึ่งรอบ */
 :root {
-  --cream: #F0F4FA;        /* off-white อมฟ้า */
-  --white: #FFFFFF;
-  --sand: #E4EBF5;         /* พื้นรอง อมฟ้าอ่อน */
-  --accent: #C9960C;       /* Gold */
-  --accent2: #1a2a5e;      /* Deep Indigo */
+  --bg: #E4EBF5;           /* พื้นหน้าเว็บ — ISSUE-43 ทำให้เข้มขึ้นจาก #F0F4FA เพื่อให้แถบสลับเห็นจริง */
+  --surface: #FFFFFF;      /* พื้นการ์ด */
+  --elevated: #D8E2F0;     /* ชิป · เมนูมือถือ · navbar ตอนเลื่อนแล้ว */
+  --border: #C6D5EA;       /* ขอบการ์ด — 1.24:1 บนพื้น · 1.49:1 บนขาว */
   --text: #0F1B42;         /* Navy เข้ม */
-  --muted: #5C6E9A;        /* Indigo-gray */
-  --dim: #9AA5C0;
-  --border: #D8E2F0;       /* ขอบอมฟ้า */
+  --muted: #4F6089;        /* ตัวหนังสือรอง — วัดจากพื้นที่เข้มที่สุดที่มันไปโผล่ คือชิป --elevated
+                              4.86:1 บนชิป · 5.30:1 บนพื้นเว็บ · 6.36:1 บนการ์ดขาว
+                              ค่าเดิม #556793 ได้แค่ 4.36:1 บนชิป (ตอนนั้นวัดกับพื้นเว็บอย่างเดียว) */
+  --dim: #9AA5C0;          /* ใช้บนพื้นกรมท่าของส่วน Contact ที่เดียว (5.54:1)
+                              ห้ามเอาไปวางบนพื้นสว่าง บนการ์ดขาวมันได้แค่ 2.50:1 */
+  --accent: #C9960C;       /* Gold — ใช้เป็นเส้น ขอบ และพื้น */
+  --accent2: #1a2a5e;      /* Deep Indigo — พื้นเข้มของปุ่มและส่วน Contact */
+  --on-accent: #FFFFFF;    /* ตัวหนังสือบนพื้น --accent2 */
+  --on-accent-light: #1a2a5e;
+                           /* ตัวหนังสือบนพื้นทอง --accent — ธีมเดิมใช้ขาวซึ่งได้แค่ 2.67:1
+                              กรมท่าบนทองได้ 5.17:1 และยังอยู่ในพาเลตเดิม */
+  --on-accent-muted: rgba(255, 255, 255, 0.72);
+                           /* ตัวหนังสือรองบนพื้น --accent2 (ส่วน Contact ซึ่งเป็นกรมท่าทั้งธีมมืดและสว่าง) */
+  --accent-text: #7B5C05;  /* ทองเข้มสำหรับใช้เป็น 'ตัวหนังสือ' โดยเฉพาะ
+                              ทอง #C9960C วางบนพื้นสว่างได้แค่ 2.42:1 อ่านแทบไม่ออก
+                              ค่านี้ได้ 4.79:1 บนชิป --elevated · 5.22:1 บนพื้นเว็บ · 6.26:1 บนการ์ดขาว
+                              จุดคับที่สุดคือชิป ถ้าจะปรับให้สว่างขึ้นต้องวัดกับ --elevated ก่อน */
 
   --tag-blue-bg: rgba(26, 42, 94, 0.08);
   --tag-blue-c: #1a2a5e;
@@ -20,7 +36,11 @@
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Outfit', sans-serif;
 
+  /* เงาเป็นฐานกรมท่าจาง ๆ ไม่ใช่ดำ — ดำบนพื้นสว่างจะดูเปื้อน */
   --shadow-sm: 0 2px 8px rgba(15, 27, 66, 0.07);
+  --shadow-md: 0 8px 24px rgba(15, 27, 66, 0.10);
+  --shadow-lg: 0 16px 40px rgba(15, 27, 66, 0.16);
+
   --radius: 14px;
   --radius-lg: 22px;
   --trans: 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -42,6 +62,9 @@ html {
 
 img {
   max-width: 100%;
+  /* คู่กับ width/height ใน HTML — ถ้าไม่มีบรรทัดนี้ ความสูงจะถูกล็อกตามตัวเลขใน HTML
+     พอกรอบแคบลงรูปจะถูกบีบผิดสัดส่วน */
+  height: auto;
   display: block;
 }
 
@@ -51,7 +74,7 @@ a {
 }
 
 body {
-  background: var(--cream);
+  background: var(--bg);
   color: var(--text);
   font-family: 'Inter', sans-serif;
   font-size: 17px;
@@ -82,6 +105,9 @@ body {
 }
 
 .navbar.scrolled {
+  /* ต้องทึบ ไม่ใช่แค่ 0.88 — เนื้อหาที่เลื่อนลอดใต้แถบจะดันสีพื้นให้เปลี่ยนไป
+     แล้วตัวหนังสือเมนูตกเกณฑ์ · blur ทำให้ดูสวยแต่ไม่ได้ช่วยเรื่องคอนทราสต์เลย */
+  background: var(--elevated);
   border-color: var(--border);
   box-shadow: var(--shadow-sm);
 }
@@ -100,11 +126,18 @@ body {
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--accent2);
+  color: var(--text);
   letter-spacing: -0.02em;
 }
 
 .dot {
+  /* ทอง --accent บนพื้นสว่างได้แค่ 2.40:1 · ตัวคั่นก็ยังเป็นตัวหนังสือ ต้องใช้ตัวที่อ่านออก */
+  color: var(--accent-text);
+}
+
+/* จุดคั่นอันเดียวกันนี้ไปโผล่ใน footer ซึ่งพื้นเป็นกรมท่า ทิศทางเลยกลับด้าน
+   ทองเข้มบนกรมท่าเหลือ 2.20:1 ต้องกลับไปใช้ทองสว่างซึ่งได้ 5.17:1 */
+.footer .dot {
   color: var(--accent);
 }
 
@@ -150,7 +183,7 @@ body {
 /* สถานะบอกด้วยสีตัวอักษรด้วย ไม่ได้พึ่งเส้นทองอย่างเดียว */
 .nav-links a:hover,
 .nav-links a.active-link {
-  color: var(--accent2);
+  color: var(--accent-text);
 }
 
 .nav-links a:hover::after,
@@ -165,14 +198,17 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  /* เกณฑ์พื้นที่กด 24x24 — ขีดสามเส้นรวมกันสูงแค่ 14.5px จึงต้องดันด้วย padding */
+  padding: 9px 4px;
+  align-items: center;
+  justify-content: center;
 }
 
 .hamburger span {
   display: block;
   width: 24px;
   height: 1.5px;
-  background: var(--accent2);
+  background: var(--text);
   border-radius: 2px;
   transition: var(--trans);
 }
@@ -184,7 +220,7 @@ body {
   left: 0;
   right: 0;
   z-index: 99;
-  background: var(--white);
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -195,8 +231,9 @@ body {
 }
 
 .mobile-menu.open {
-  /* 7 links x 57.8px (16px x 1.8 + 28 padding + 1 border) + 24 padding = ~429px */
-  max-height: 480px;
+  /* 6 links x 57.8px (16px x 1.8 + 28 padding + 1 border) + 24 padding = ~371px
+     เพิ่มลิงก์เมื่อไหร่ต้องขยายค่านี้ตาม ไม่งั้นลิงก์ท้าย ๆ โดน overflow ตัดหาย */
+  max-height: 420px;
   padding: 12px 0;
 }
 
@@ -235,7 +272,10 @@ body {
 }
 
 .mobile-menu a:hover {
-  color: var(--accent2);
+  /* ทอง --accent เป็นสีสำหรับเส้น/ขอบ/พื้น ไม่ใช่สำหรับตัวหนังสือ
+     บนพื้นสว่างมันได้แค่ 2.2-2.7:1 · ตัวหนังสือต้องใช้ --accent-text
+     (ในส่วน Contact กับ footer ซึ่งพื้นเป็นกรมท่า ทิศทางกลับกัน ตรงนั้นใช้ --accent ถูกแล้ว) */
+  color: var(--accent-text);
   background: rgba(196, 118, 58, 0.05);
 }
 
@@ -244,8 +284,30 @@ body {
   padding: 100px 0;
 }
 
+/* จังหวะหนัก-เบา: ส่วนเปิดได้ที่หายใจมากสุด ส่วนท้าย ๆ ที่เป็นรายการกระชับลง */
+.section-open {
+  padding: 120px 0;
+}
+
+.section-tight {
+  padding: 80px 0;
+}
+
+/* About เป็นส่วนแรกของหน้า (เอาหน้า Home ออกแล้ว) navbar ลอยทับขอบบนอยู่ 67px
+   ถ้าใช้ padding ของ .section เฉย ๆ หัวข้อจะชิดใต้ navbar เกินไป บนมือถือห่างแค่ 3px */
+.about-hero {
+  padding-top: 160px;
+}
+
+/* แถบสลับต้องเริ่มและจบด้วยสีพื้น แล้วค่อยเป็นขาวเต็มที่ระยะ 130px จากขอบ
+   ถ้าใช้สีขาวทึบทั้งแถบจะเกิดเส้นคมตรงรอยต่อ ซึ่งเห็นชัดมากเพราะ section
+   4 ใน 7 อันเตี้ยกว่าความสูงจอ จอจึงเหลือที่ให้แถบข้างเคียงโผล่เสมอ */
 .section-alt {
-  background: var(--white);
+  background: linear-gradient(180deg,
+    var(--bg) 0%,
+    var(--surface) 130px,
+    var(--surface) calc(100% - 130px),
+    var(--bg) 100%);
 }
 
 .section-label {
@@ -254,7 +316,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 20px;
 }
 
@@ -264,19 +326,29 @@ body {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.025em;
-  color: var(--accent2);
+  color: var(--text);
   margin-bottom: 56px;
 }
 
 .section-title em {
-  color: var(--accent);
+  /* ทอง --accent เป็นสีสำหรับเส้น/ขอบ/พื้น ไม่ใช่สำหรับตัวหนังสือ
+     บนพื้นสว่างมันได้แค่ 2.2-2.7:1 · ตัวหนังสือต้องใช้ --accent-text
+     (ในส่วน Contact กับ footer ซึ่งพื้นเป็นกรมท่า ทิศทางกลับกัน ตรงนั้นใช้ --accent ถูกแล้ว) */
+  color: var(--accent-text);
   font-style: italic;
 }
 
 /* ═══ ABOUT ═══ */
+/* รูปเป็นแนวตั้ง (1098x1433) คอลัมน์รูปจึงสูงกว่าคอลัมน์ข้อความเสมอ
+   ความกว้างของคอลัมน์นี้คือสิ่งเดียวที่คุมความสูงของทั้ง section
+   เดิม 380px -> รูปสูง 491px ส่วนข้อความสูง 277px เหลือที่ว่าง 238px
+   280px -> รูปสูง 360px เหลือที่ว่าง 120px  (section 798px -> 608px)
+
+   ห้ามใช้ align-items: center — .section-label อยู่นอกกริด พอข้อความถูกดันลงไปกลาง
+   หัวข้อจะลอยห่างจากข้อความของตัวเองไป 80px ดูเหมือนคนละก้อน */
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 280px;
   gap: 64px;
   align-items: start;
 }
@@ -290,7 +362,7 @@ body {
 }
 
 .about-text strong {
-  color: var(--accent2);
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -308,7 +380,7 @@ body {
 .about-pills span {
   padding: 6px 16px;
   background: linear-gradient(135deg, rgba(27, 38, 81, 0.07) 0%, rgba(196, 118, 58, 0.04) 100%);
-  color: var(--accent2);
+  color: var(--muted);
   border-radius: 100px;
   font-size: 13px;
   font-weight: 500;
@@ -319,9 +391,12 @@ body {
 
 .about-pills span:hover {
   background: linear-gradient(135deg, rgba(27, 38, 81, 0.12) 0%, rgba(196, 118, 58, 0.08) 100%);
+  /* พื้นเข้มขึ้นตอน hover ถ้าปล่อยให้ตัวหนังสือเป็น --muted จะเหลือ 4.16:1
+     เปลี่ยนเป็นสีหลักไปเลย ซึ่งก็อ่านเป็น "เน้น" พอดี */
+  color: var(--text);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(27, 38, 81, 0.1);
-  border-color: var(--accent2);
+  border-color: var(--accent);
 }
 
 /* Clickable Image Animation */
@@ -402,7 +477,7 @@ body {
   flex-shrink: 0;
   width: 48px;
   height: 48px;
-  background: #fff;
+  background: var(--surface);
   border-radius: 12px;
   font-size: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
@@ -432,14 +507,16 @@ body {
 
 }
 
+/* ไม่มีอะไรต่อท้ายรูปแล้ว margin ล่างจึงเป็นที่ว่างเปล่า ๆ */
 .avatar-wrap {
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .avatar-placeholder {
   width: 100%;
-  aspect-ratio: 4/3;
-  background: var(--sand);
+  /* ไม่ตั้ง aspect-ratio — ของเดิมตั้ง 4/3 ไว้ตั้งแต่ตอนยังเป็นกล่องเปล่า
+     พอมีรูปแนวตั้งอยู่ข้างใน กล่องก็สูงตามรูปอยู่ดี ค่านั้นเลยไม่เคยมีผล */
+  background: var(--elevated);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
@@ -456,8 +533,11 @@ body {
 .proj-tag {
   display: inline-block;
   padding: 5px 13px;
-  background: rgba(196, 118, 58, 0.1);
-  color: var(--accent);
+  /* มาร์กอัปของชิปนี้ยังถูกคอมเมนต์ไว้ใน index.html จึงไม่มีตัวตรวจไหนจับได้
+     แต่คู่สีเดิม (ฟ้าจางโปร่ง + --accent-text) วัดได้ 4.00:1 ซึ่งตกเกณฑ์
+     แก้ไว้ก่อน เอามาร์กอัปกลับมาใช้เมื่อไหร่จะได้ไม่พังเงียบ ๆ */
+  background: var(--elevated);
+  color: var(--accent-text);
   border-radius: 100px;
   font-size: 13px;
   font-weight: 700;
@@ -470,7 +550,10 @@ body {
 
 .proj-tag:hover {
   background: rgba(196, 118, 58, 0.18);
-  color: var(--accent2);
+  /* ทอง --accent เป็นสีสำหรับเส้น/ขอบ/พื้น ไม่ใช่สำหรับตัวหนังสือ
+     บนพื้นสว่างมันได้แค่ 2.2-2.7:1 · ตัวหนังสือต้องใช้ --accent-text
+     (ในส่วน Contact กับ footer ซึ่งพื้นเป็นกรมท่า ทิศทางกลับกัน ตรงนั้นใช้ --accent ถูกแล้ว) */
+  color: var(--accent-text);
   border-color: var(--accent);
 }
 
@@ -491,7 +574,8 @@ body {
 
 .proj-year {
   font-size: 13px;
-  color: var(--dim);
+  /* เหตุผลเดียวกับ .cert-date — มาร์กอัปยังคอมเมนต์อยู่ แก้ไว้ก่อนกันพังเงียบ */
+  color: var(--muted);
   font-family: 'Outfit', sans-serif;
 }
 
@@ -503,7 +587,7 @@ body {
 }
 
 .project-card {
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
@@ -530,7 +614,7 @@ body {
 
 .project-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(27, 38, 81, 0.12);
+  box-shadow: var(--shadow-lg);
   border-color: var(--accent);
 }
 
@@ -548,7 +632,7 @@ body {
   font-family: var(--font-display);
   font-size: 1.45rem;
   font-weight: 700;
-  color: var(--accent2);
+  color: var(--text);
   letter-spacing: -0.01em;
 }
 
@@ -568,7 +652,7 @@ body {
 
 .proj-stack span {
   padding: 5px 11px;
-  background: var(--sand);
+  background: var(--elevated);
   color: var(--muted);
   border-radius: 100px;
   font-size: 13px;
@@ -579,8 +663,8 @@ body {
 }
 
 .proj-stack span:hover {
-  background: linear-gradient(135deg, var(--sand) 0%, rgba(196, 118, 58, 0.1) 100%);
-  color: var(--accent);
+  background: linear-gradient(135deg, var(--elevated) 0%, rgba(196, 118, 58, 0.1) 100%);
+  color: var(--accent-text);
   transform: translateY(-2px);
   border-color: var(--accent);
 }
@@ -617,12 +701,12 @@ body {
   height: 16px;
   border-radius: 50%;
   background: var(--accent);
-  border: 3px solid var(--cream);
+  border: 3px solid var(--bg);
   box-shadow: 0 0 0 2px var(--accent);
 }
 
 .tl-card {
-  background: linear-gradient(135deg, var(--cream) 0%, rgba(248, 245, 240, 0.8) 100%);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 32px;
@@ -658,7 +742,7 @@ body {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
   margin-bottom: 10px;
 }
@@ -667,7 +751,7 @@ body {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent2);
+  color: var(--text);
   margin-bottom: 4px;
   letter-spacing: -0.01em;
 }
@@ -696,7 +780,7 @@ body {
 .tl-highlights span {
   padding: 5px 13px;
   background: rgba(27, 38, 81, 0.08);
-  color: var(--accent2);
+  color: var(--muted);
   border-radius: 100px;
   font-size: 13px;
   font-weight: 600;
@@ -707,9 +791,9 @@ body {
 
 .tl-highlights span:hover {
   background: rgba(27, 38, 81, 0.12);
-  color: var(--accent);
+  color: var(--accent-text);
   transform: translateY(-2px);
-  border-color: var(--accent2);
+  border-color: var(--accent);
 }
 
 /* ═══ CERTIFICATES ═══ */
@@ -720,7 +804,7 @@ body {
 }
 
 .cert-card {
-  background: linear-gradient(135deg, var(--cream) 0%, rgba(228, 235, 245, 0.6) 100%);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
@@ -762,11 +846,11 @@ body {
   gap: 4px;
 }
 
-.cert-info h4 {
+.cert-info h3 {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--accent2);
+  color: var(--text);
   letter-spacing: -0.01em;
 }
 
@@ -778,7 +862,8 @@ body {
 
 .cert-date {
   font-size: 13px;
-  color: var(--dim);
+  /* ห้ามใช้ --dim ตรงนี้ มันเป็นสีสำหรับพื้นกรมท่า บนการ์ดขาวได้ 2.50:1 */
+  color: var(--muted);
   font-weight: 600;
   letter-spacing: 0.2px;
 }
@@ -789,34 +874,148 @@ body {
 }
 
 .contact-section .section-label {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--on-accent-muted);
 }
 
 .contact-section .section-title {
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .contact-section .section-title em {
-  color: rgba(196, 118, 58, 0.9);
+  color: var(--accent);
 }
 
-.contact-wrap {
-  max-width: 680px;
+/* สองคอลัมน์: ซ้ายคำชวน+อีเมล ขวาช่องทางอื่น
+   ของเดิมเป็นคอลัมน์เดียวล็อก max-width 680px ในกรอบ 1100 เหลือที่ว่างขวามือ 420px ไม่ได้ใช้เลย
+   และการ์ด 4 ใบเรียงลงมารวม 380px ทั้งที่แต่ละใบมีแค่สองบรรทัด */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* คุมความยาวบรรทัดไว้ ไม่ให้คำโปรยลากยาวเต็มคอลัมน์จนอ่านยาก */
+.contact-intro {
+  max-width: 420px;
 }
 
 .contact-desc {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   line-height: 1.8;
   letter-spacing: 0.2px;
 }
 
-.contact-links {
+/* ปุ่มหลักของทั้งส่วน — พื้นขาวบนกรมท่า ไม่ใช่ .btn ปกติ
+   .btn เป็นพื้นกรมท่าซึ่งจมหายไปกับพื้น section และ .btn-outline ก็เป็นตัวหนังสือกรมท่าเหมือนกัน */
+.contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  background: var(--surface);
+  color: var(--accent2);
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+  box-shadow: var(--shadow-md);
+  transition: background var(--trans), color var(--trans), transform var(--trans), box-shadow var(--trans);
+}
+
+.contact-cta:hover {
+  background: var(--accent);
+  color: var(--on-accent-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.contact-copy {
+  /* flex ไม่ใช่ inline-flex — ต้องให้ขึ้นบรรทัดใหม่ใต้ปุ่มหลัก
+     ไม่งั้นมันจะไปนั่งข้าง ๆ ปุ่มซึ่งเป็น inline-flex เหมือนกัน
+     แล้ว fit-content กันไม่ให้พื้นที่กดลากยาวเต็มคอลัมน์ */
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 4px 2px;
+  background: none;
+  border: 0;
+  /* ปุ่มไม่สืบทอดฟอนต์จาก body เอง ต้องสั่งเอง ไม่งั้นได้ฟอนต์ระบบ */
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--on-accent-muted);
+  cursor: pointer;
+  transition: color var(--trans);
+}
+
+.contact-copy:hover {
+  color: var(--on-accent);
+}
+
+/* จำเป็น — display ที่ตั้งไว้ข้างบนจะไปทับ [hidden] ของเบราว์เซอร์
+   ปุ่มจะโผล่ค้างแม้ JS สั่งซ่อนไว้ */
+.contact-copy[hidden] {
+  display: none;
+}
+
+.contact-channels {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 40px;
+}
+
+.contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* โซเชียลส่วนตัวเป็นชั้นรอง เลยย่อจากการ์ดเต็มใบเหลือชิป */
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 18px 7px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: background var(--trans), border-color var(--trans), transform var(--trans);
+}
+
+.contact-chip:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(196, 118, 58, 0.4);
+  transform: translateY(-2px);
+}
+
+/* แผ่นขาวรองโลโก้ — เป็นเรื่องอ่านออก ไม่ใช่การตกแต่ง
+   สีแบรนด์วางบนพื้นกรมท่าตรง ๆ ได้ IG 2.49 · FB 2.55 · GitHub 1.66 : 1 ซึ่งตกหมด
+   พอวางบนพื้นขาวได้ 4.34 / 4.82 / 17.89 : 1 */
+.ci-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.ci-badge svg {
+  display: block;
+  width: 17px;
+  height: 17px;
 }
 
 .contact-item {
@@ -839,7 +1038,7 @@ body {
 
 .ci-label {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--on-accent-muted);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 700;
@@ -855,7 +1054,7 @@ body {
 /* ═══ FOOTER ═══ */
 .footer {
   background: var(--accent2);
-  border-top: 1px solid rgb(238, 238, 238);
+  border-top: 1px solid var(--border);
   padding: 24px 40px;
 }
 
@@ -873,10 +1072,33 @@ body {
 
 .back-top {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--on-accent-muted);
   font-weight: 700;
   letter-spacing: 0.2px;
   transition: color var(--trans);
+}
+
+/* บรรทัดเครดิตไอคอน — icons8 แบบใช้ฟรีบังคับให้มีลิงก์กลับบนหน้าที่ใช้ไอคอน */
+.footer-credit {
+  font-size: 0.78rem;
+  color: var(--on-accent-muted);
+}
+
+.footer-credit a {
+  /* inline-block + padding เพื่อให้พื้นที่กดสูงถึง 24px ตามเกณฑ์
+     margin ลบดึงกลับ ไม่ให้บรรทัดถ่างออกจากเดิม */
+  display: inline-block;
+  padding: 5px 2px;
+  margin: -5px 0;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--trans);
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  color: var(--accent);
 }
 
 .back-top:hover {
@@ -896,6 +1118,15 @@ body {
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-intro {
+    max-width: none;
   }
 
   .projects-grid {
@@ -924,6 +1155,10 @@ body {
 @media (max-width: 600px) {
   .section {
     padding: 70px 0;
+  }
+
+  .about-hero {
+    padding-top: 130px;
   }
 
   .certs-grid {
@@ -961,7 +1196,7 @@ body {
   width: 50px;
   height: 50px;
   background: linear-gradient(135deg, var(--accent2) 0%, #0d1835 100%);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -973,7 +1208,7 @@ body {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity var(--trans), transform var(--trans);
-  box-shadow: 0 8px 24px rgba(196, 118, 58, 0.25);
+  box-shadow: var(--shadow-md);
   pointer-events: none;
 }
 
@@ -984,7 +1219,8 @@ body {
 }
 
 #backToTop:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, #b56a32 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #E3B23C 100%);
+  color: var(--on-accent-light);
   box-shadow: 0 12px 32px rgba(196, 118, 58, 0.4);
   transform: translateY(-3px);
 }
@@ -1001,14 +1237,17 @@ body {
 
 }
 
-.about-role {
-  font-size: 16px;
-  color: #8892a4;
-  margin-top: 10px;
+/* บรรทัดพิมพ์ดีดในส่วน About (ย้ายกลับมาจากหน้า Home ตามที่เจ้าของขอ) */
+/* ต้องเขียนเป็น .about-text .about-role — ถ้าเขียน .about-role เฉย ๆ จะแพ้ .about-text p ที่น้ำหนักมากกว่า */
+.about-text .about-role {
+  /* จองความสูงหนึ่งบรรทัดไว้ ไม่งั้นตอนข้อความถูกลบจนว่าง
+     ย่อหน้าข้างล่างทั้งหมดจะเด้งขึ้นลงทุกรอบ */
+  min-height: 1.85em;
+  margin-bottom: 12px;
 }
 
 .typing-text {
-  color: #60748e;
+  color: var(--muted);
   /* โทนเขียวดู professional */
   font-weight: 500;
 }
@@ -1017,7 +1256,7 @@ body {
   display: inline-block;
   width: 2px;
   height: 1em;
-  background: #3f5a6b;
+  background: var(--accent);
   margin-left: 3px;
   animation: blink 1.2s infinite;
 }
@@ -1129,7 +1368,10 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--accent2);
+  /* ทอง --accent เป็นสีสำหรับเส้น/ขอบ/พื้น ไม่ใช่สำหรับตัวหนังสือ
+     บนพื้นสว่างมันได้แค่ 2.2-2.7:1 · ตัวหนังสือต้องใช้ --accent-text
+     (ในส่วน Contact กับ footer ซึ่งพื้นเป็นกรมท่า ทิศทางกลับกัน ตรงนั้นใช้ --accent ถูกแล้ว) */
+  color: var(--accent-text);
   margin: 48px 0 18px;
 }
 
@@ -1147,7 +1389,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 22px 10px 16px;
-  background: var(--white);
+  background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
   transition: border-color var(--trans), box-shadow var(--trans), transform var(--trans);
@@ -1191,18 +1433,11 @@ body {
   transform: scale(1.35);
 }
 
-/* 5 อย่างที่ไม่มีโลโก้แบรนด์ในคลัง วาดเป็นไอคอนเส้นเอง ใช้ currentColor
-   ตั้งใจให้หน้าตาต่างจากโลโก้สีของจริงชัด ๆ จะได้ไม่หลอกว่าเป็นโลโก้ทางการ */
-.tech-tile svg.generic-icon {
-  color: var(--accent2);
-  transform: scale(0.94);
-}
-
 .tech-tile span {
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.2px;
-  color: var(--accent2);
+  color: var(--text);
   text-align: center;
 }
 
@@ -1279,6 +1514,8 @@ body {
   }
 }
 /* ═══ REVEAL (นิยามเดียวในไฟล์) ═══ */
+/* ถ้า JS ไม่ทำงาน IntersectionObserver จะไม่มีวันเติมคลาส visible ให้
+   ทุกอย่างจะค้างที่ opacity 0 = หน้าขาวทั้งหน้า จึงต้องมี noscript ใน HTML คู่กับกฎนี้เสมอ */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -1304,7 +1541,7 @@ body {
 
 .cert-card:hover .cert-img {
   transform: scale(1.03);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-md);
 }
 
 .project-img {
@@ -1339,7 +1576,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 26px 26px 22px;
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
@@ -1360,7 +1597,7 @@ body {
 
 .doc-icon {
   display: flex;
-  color: var(--accent);
+  color: var(--accent-text);
   flex-shrink: 0;
 }
 
@@ -1368,7 +1605,7 @@ body {
 .doc-kind {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .doc-title {
@@ -1394,6 +1631,261 @@ body {
   padding-top: 20px;
 }
 
+/* ═══ WORKSHOP · กล่องรายละเอียดเอกสาร ═══ */
+
+/* เผื่อที่ของแถบเลื่อนไว้ตลอด เวลาเปิดกล่องแล้วล็อกการเลื่อนหน้า
+   เนื้อหาจะได้ไม่กระตุกไปทางขวาเพราะแถบเลื่อนหายไป */
+html {
+  scrollbar-gutter: stable;
+}
+
+.doc-modal {
+  /* ห้ามตั้ง display ตรงนี้ ไม่งั้นจะไปทับ display:none ที่เบราว์เซอร์ใช้ซ่อนกล่องตอนปิด */
+  /* reset ของเว็บตั้ง margin: 0 ให้ทุกอย่าง ซึ่งไปทับ margin: auto ที่เบราว์เซอร์
+     ใช้จัดกล่องให้อยู่กลางจอ ถ้าไม่เขียนคืนตรงนี้ กล่องจะไปกองอยู่มุมซ้ายบน */
+  margin: auto;
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(84vh, 780px);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.doc-modal[open] {
+  display: flex;
+  flex-direction: column;
+  animation: dmIn 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dmIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ไม่ใช้ backdrop-filter เพราะเคยเจอว่ามันซ้อนกับ blur ของ navbar แล้วหน่วง */
+.doc-modal::backdrop {
+  background: rgba(15, 27, 66, 0.55);
+}
+
+.dm-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 26px 26px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dm-head-text {
+  min-width: 0;
+}
+
+.dm-title {
+  font-size: 1.32rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.dm-meta {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.dm-close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--trans), border-color var(--trans), background var(--trans);
+}
+
+.dm-close:hover,
+.dm-close:focus-visible {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--elevated);
+}
+
+.dm-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 22px 26px 28px;
+}
+
+.dm-role {
+  display: inline-block;
+  padding: 6px 16px;
+  margin-bottom: 22px;
+  border-radius: 100px;
+  /* พื้นทึบสีหลักไปเลย ไม่ใช่ชิปจาง ๆ ที่เอาขอบสีมาแปะ
+     ของเดิมใช้ทรงและพื้น --elevated เหมือน .dm-tags span ทุกอย่าง ต่างแค่ขอบทอง
+     ซึ่ง (1) ขอบอุ่นบนพื้นเทาอมฟ้าตีกันเอง และ (2) บทบาทเป็นข้อความหลักของกล่อง
+     ไม่ควรหน้าตาเท่าชิปรายละเอียดข้างล่าง
+     ห้ามกลับไปใช้พื้นจาง ๆ เพราะมันทับพื้นการ์ดแล้วดันพื้นให้เปลี่ยน ตัวหนังสือจะตกเกณฑ์ (เคยวัดได้ 4.00:1) */
+  background: var(--accent2);
+  color: var(--on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.dm-body h4 {
+  margin: 24px 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.dm-body h4:first-of-type {
+  margin-top: 0;
+}
+
+.dm-body p {
+  color: var(--muted);
+  line-height: 1.95;
+}
+
+.dm-body ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dm-body li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.dm-body li::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.74em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.dm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dm-tags span {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--elevated);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dm-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px 26px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.dm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dm-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dm-nav-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--trans), background var(--trans);
+}
+
+.dm-nav-btn:hover,
+.dm-nav-btn:focus-visible {
+  color: var(--accent-text);
+  background: var(--surface);
+}
+
+.dm-count {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* การ์ดมี 3 ปุ่มแล้ว ต้องให้ตกบรรทัดได้ตอนจอแคบ */
+.doc-actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .doc-modal {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    height: 100dvh;
+    border: none;
+    border-radius: 0;
+  }
+
+  .dm-head,
+  .dm-foot {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .dm-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .dm-foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dm-nav {
+    justify-content: space-between;
+  }
+}
+
 /* ═══ BUTTONS ═══ */
 /* ปุ่มหลัก - พื้นทึบ */
 .btn {
@@ -1405,7 +1897,7 @@ body {
   border: 1.5px solid transparent;
   border-radius: 100px;
   background: var(--accent2);
-  color: var(--white);
+  color: var(--on-accent);
   font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;
@@ -1418,6 +1910,7 @@ body {
 
 .btn:hover {
   background: var(--accent);
+  color: var(--on-accent-light);
   box-shadow: 0 6px 16px rgba(201, 150, 12, 0.28);
   transform: translateY(-2px);
 }
@@ -1429,13 +1922,15 @@ body {
 /* ปุ่มรอง - ขอบบาง พื้นโปร่ง (ต้องมาหลัง .btn เพื่อทับค่าพื้นหลัง/สีตัวอักษร) */
 .btn-outline {
   background: transparent;
-  color: var(--accent2);
+  color: var(--text);
   border-color: var(--border);
 }
 
 .btn-outline:hover {
-  background: var(--white);
-  color: var(--accent2);
+  background: var(--surface);
+  /* พื้น hover ของปุ่มนี้เป็นสีเข้ม (--surface) ไม่ใช่ฟ้าสว่างเหมือนปุ่มอื่น
+     ตัวหนังสือจึงต้องเป็นสีสว่าง ถ้าใช้ --on-accent-light จะได้ 1.40:1 คือหายไปเลย */
+  color: var(--text);
   border-color: var(--accent);
   box-shadow: var(--shadow-sm);
 }
@@ -1464,7 +1959,7 @@ body {
   gap: 8px;
   padding: 10px 24px;
   background: linear-gradient(135deg, var(--accent2) 0%, #0d1835 100%);
-  color: #fff !important;
+  color: var(--on-accent) !important;
   border-radius: 100px;
   font-weight: 600;
   font-size: 0.82rem;
@@ -1476,31 +1971,8 @@ body {
 }
 
 .nav-cv-btn:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, #a37a0a 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(196, 118, 58, 0.3);
-}
-
-.nav-cv-view {
-display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  gap: 6px;
-  background: linear-gradient(135deg, var(--accent2) 0%, #0d1835 100%);
-  color: #fff !important;
-  border-radius: 100px;
-  font-weight: 600;
-  font-size: 0.82rem;
-  text-decoration: none;
-  white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(196, 118, 58, 0.1);
-  transition: background var(--trans), transform var(--trans), box-shadow var(--trans);
-}
-
-.nav-cv-view:hover {
- background: linear-gradient(135deg, var(--accent) 0%, #a37a0a 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #E3B23C 100%);
+  color: var(--on-accent-light) !important;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(196, 118, 58, 0.3);
 }

@@ -59,6 +59,7 @@ let menuOpen = false;
 hamburger.addEventListener('click', () => {
   menuOpen = !menuOpen;
   mobileMenu.classList.toggle('open', menuOpen);
+  hamburger.setAttribute('aria-expanded', String(menuOpen));
   // Animate hamburger → X
   const spans = hamburger.querySelectorAll('span');
   if (menuOpen) {
@@ -75,6 +76,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
     menuOpen = false;
     mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
     hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   });
 });
@@ -90,12 +92,20 @@ function setActiveLink() {
     const height = sec.offsetHeight;
     const id     = sec.getAttribute('id');
     if (scrollY >= top && scrollY < top + height) {
-      navLinks.forEach(a => a.classList.remove('active-link'));
-      document.querySelector(`.nav-links a[href="#${id}"]`)?.classList.add('active-link');
+      // บาง section ไม่มีลิงก์ในเมนู (เช่น Workshop) ถ้าล้างไฮไลต์ทิ้งก่อน
+      // เมนูจะว่างเปล่าตอนเลื่อนผ่าน จึงเช็กว่ามีลิงก์จริงก่อนค่อยสลับ
+      const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+      if (link) {
+        navLinks.forEach(a => a.classList.remove('active-link'));
+        link.classList.add('active-link');
+      }
     }
   });
 }
 window.addEventListener('scroll', setActiveLink, { passive: true });
+// ต้องเรียกครั้งแรกเองด้วย ไม่งั้นเปิดหน้ามาเฉย ๆ จะไม่มีเมนูไหนถูกไฮไลต์
+// จนกว่าผู้ใช้จะเลื่อนจอ (และถ้าเปิดมาพร้อม #contact ท้าย URL ก็ไฮไลต์ผิดด้วย)
+setActiveLink();
 
 /* ── Intersection Observer: reveal animations ── */
 const revealEls = document.querySelectorAll('.reveal');
@@ -140,6 +150,48 @@ document.querySelectorAll('.project-card').forEach(card => {
   });
 });
 
+/* ── Workshop: กล่องรายละเอียดเอกสาร ──
+   ใช้ <dialog> ของเบราว์เซอร์ จึงไม่ต้องเขียน focus trap / ปุ่ม Esc / ฉากหลังเอง
+   เบราว์เซอร์เก่าที่ไม่มี showModal จะไม่ผูกปุ่มให้เลย ปุ่มจะเฉย ๆ แทนที่จะพังทั้งหน้า */
+const docModals = document.querySelectorAll('.doc-modal');
+
+if (docModals.length && typeof HTMLDialogElement === 'function' && HTMLDialogElement.prototype.showModal) {
+  let lastFocused = null;
+
+  const openDocModal = id => {
+    const next = document.getElementById(id);
+    if (!next) return;
+    document.querySelectorAll('.doc-modal[open]').forEach(o => o.close());
+    next.showModal();
+    const body = next.querySelector('.dm-body');
+    if (body) body.scrollTop = 0;   // เปิดเล่มถัดไปต้องเริ่มอ่านจากบนสุด
+    document.body.style.overflow = 'hidden';
+  };
+
+  document.querySelectorAll('[data-open]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // จำปุ่มที่เปิดไว้ เพื่อคืนโฟกัสตอนปิด แต่ไม่นับปุ่มก่อนหน้า/ถัดไปที่อยู่ในกล่อง
+      if (!btn.closest('.doc-modal')) lastFocused = btn;
+      openDocModal(btn.dataset.open);
+    });
+  });
+
+  docModals.forEach(dlg => {
+    dlg.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => dlg.close()));
+
+    // คลิกฉากหลังนอกกล่องแล้วปิด — กล่องตั้ง padding: 0 ไว้
+    // พื้นที่ที่เหลือของ dialog จึงเป็นฉากหลังล้วน ไม่มีขอบให้กดพลาด
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+    dlg.addEventListener('close', () => {
+      // กด "ถัดไป" จะปิดอันเก่าแล้วเปิดอันใหม่ทันที อย่าเพิ่งคืนค่าถ้ายังมีกล่องเปิดอยู่
+      if (document.querySelector('.doc-modal[open]')) return;
+      document.body.style.overflow = '';
+      if (lastFocused) { lastFocused.focus(); lastFocused = null; }
+    });
+  });
+}
+
 /* ── Keyboard shortcuts ── */
 document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
@@ -147,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && menuOpen) {
       menuOpen = false;
       mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.focus();
       hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
     }
   });
@@ -235,4 +289,27 @@ if (track && !reduceMotion) {
   const oneSet = track.innerHTML;
   const setsPerHalf = Math.max(1, Math.ceil(MIN_HALF_WIDTH / track.offsetWidth));
   track.innerHTML = oneSet.repeat(setsPerHalf * 2);
+}
+
+// ปุ่มคัดลอกอีเมล — มีไว้เผื่อเครื่องที่กด mailto แล้วไม่มีโปรแกรมอีเมลเปิดขึ้นมา
+// ปุ่มถูกซ่อนไว้ใน HTML แล้วเปิดตรงนี้ เพราะ clipboard ใช้ไม่ได้ถ้าเปิดไฟล์แบบ file://
+// หรือเสิร์ฟผ่าน http ธรรมดา ถ้าโชว์ไว้เฉย ๆ จะกลายเป็นปุ่มกดแล้วไม่เกิดอะไร
+const copyBtn = document.getElementById('copyEmail');
+
+if (copyBtn && navigator.clipboard && window.isSecureContext) {
+  const label = copyBtn.querySelector('.cc-text');
+  const idle = label.textContent;
+  let resetTimer = null;
+
+  copyBtn.hidden = false;
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(copyBtn.dataset.email)
+      .then(() => { label.textContent = 'คัดลอกแล้ว'; })
+      .catch(() => { label.textContent = 'คัดลอกไม่สำเร็จ'; })
+      .then(() => {
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => { label.textContent = idle; }, 2000);
+      });
+  });
 }
