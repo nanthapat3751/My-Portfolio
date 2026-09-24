@@ -15,7 +15,7 @@ No framework, no bundler, nothing to install — open `index.html` and it runs.
 **No build step, no dependencies** — the entire site is three files: `index.html`, `style.css`, `script.js`.
 Total payload of the code itself is about 200 KB, uncompressed.
 
-**One inline SVG sprite instead of 41 image requests** — every icon and technology logo is a
+**One inline SVG sprite instead of 44 image requests** — every icon and technology logo is a
 `<symbol>` defined once at the top of the document and reused with `<use href="#id">`. Logos stay
 crisp at any size, inherit color from CSS, and cost zero extra network round-trips.
 
@@ -35,7 +35,7 @@ rules.
 | Section | What's in it |
 |---|---|
 | About | Introduction and profile, with a typed tagline — the page opens here |
-| Skills | 35 tools and languages, shown as an animated logo marquee plus a categorized tile grid. The AI categories are split in two: tools used to build and train models, and assistants used in day-to-day work |
+| Skills | 38 tools and languages, shown as an animated logo marquee plus a categorized tile grid. The AI categories are split in two: tools used to build and train models, and assistants used in day-to-day work |
 | Projects | 4 projects — IoT alcohol-detection device, an industry visit report, Zahira Farm, and an AI/cyber-skills workshop |
 | Workshop | 4 documents — three system-analysis reports (74–91 pages each) and a presentation deck. Each card opens a dialog with the brief, what was done, what was learned, and the deliverables it contains |
 | Education | Academic background |
