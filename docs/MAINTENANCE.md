@@ -8,20 +8,84 @@
 
 ## เพิ่มผลงาน (section Projects)
 
-หาคำว่า `<div class="projects-grid">` แล้วเพิ่ม:
+ส่วนนี้เป็น**รางเลื่อนแนวนอน** ไม่ใช่กริดแล้ว — หาคำว่า `<ul class="pc-track" id="projTrack">`
+แล้ว copy `<li class="pc-item">` ใบที่ใกล้เคียงที่สุดมาทั้งก้อน เปลี่ยนค่าข้างใน
 
 ```html
-<div class="project-card reveal">
-  <h3>ชื่อผลงาน</h3>
-  <div class="project-img">
-    <img src="images/ชื่อไฟล์.jpg" alt="คำอธิบายรูปสั้น ๆ">
-  </div>
-  <p>อธิบายว่าทำอะไร ใช้อะไร ได้ผลยังไง</p>
-  <div class="proj-stack">
-    <span>เครื่องมือ 1</span><span>เครื่องมือ 2</span>
-  </div>
-</div>
+<li class="pc-item">
+  <article class="proj-card">
+    <div class="proj-thumb">
+      <img src="images/ชื่อไฟล์.jpg" width="1600" height="1000" loading="lazy" decoding="async"
+        alt="ภาพหน้าจอของระบบ">
+    </div>
+    <h3>ชื่อผลงาน</h3>
+    <p>อธิบายว่าทำอะไร ใช้อะไร ได้ผลยังไง</p>
+    <ul class="proj-chips">
+      <li><svg viewBox="0 0 1052 1052" aria-hidden="true" focusable="false"><use href="#logo-javascript" /></svg>JavaScript</li>
+      <li>ชื่อเครื่องมือที่ไม่มีโลโก้</li>
+    </ul>
+    <div class="proj-foot">
+      <div class="proj-links">
+        <a href="ลิงก์เว็บจริง" target="_blank" rel="noopener noreferrer" aria-label="เปิดเว็บ ...">
+          <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+        </a>
+        <a href="ลิงก์ repo" target="_blank" rel="noopener noreferrer" aria-label="ดูโค้ดบน GitHub">
+          <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg>
+        </a>
+      </div>
+      <a class="btn btn-outline btn-sm proj-more" href="ลิงก์" target="_blank" rel="noopener noreferrer">
+        อ่านเพิ่มเติม
+        <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+      </a>
+    </div>
+  </article>
+</li>
 ```
+
+ไม่ต้องแตะปุ่มลูกศรหรือ JS — `script.js` นับการ์ดเองจาก DOM
+
+**กฎของส่วนนี้**
+
+| กฎ | เหตุผล |
+|---|---|
+| **`viewBox` ของชิปโลโก้ต้องลอกจาก `<symbol>` ต้นทาง ห้ามเดา** | symbol แต่ละตัวมี viewBox ไม่เท่ากัน · firebase คือ `0 0 600 600` ไม่ใช่ `0 0 24 24` · ใส่ผิดแล้วรูปถูกครอปเหลือมุมเดียว ไม่ error ให้เห็น · ดูค่าที่ถูกได้จากที่ส่วน Skills เรียกใช้อยู่ |
+| **ยังไม่มีภาพหน้าจอ ให้ใช้ไทล์โลโก้ `class="proj-thumb is-mark"`** | ข้างในเป็น `<svg><use href="#logo-xxx" /></svg>` ของเทคโนโลยีหลัก + `<span>` ป้ายหมวด เช่น Data Pipeline · อ่านเป็นงานออกแบบ ไม่ใช่ช่องที่ลืมใส่รูป · พอได้ภาพจริงแล้วแทนทั้งบล็อกด้วย `<div class="proj-thumb"><img ...></div>` ธรรมดา |
+| **อย่าใส่รูปกิจกรรมแทนภาพหน้าจอระบบ** | การ์ดจะโกหกว่าเป็นหน้าจอของแอป |
+| **อยากแคปหน้า dashboard ของงาน pipeline ใหม่ ให้เปิด Docker Desktop ก่อนแล้วรัน `docker compose up -d` ในโฟลเดอร์ repo นั้น** | ทั้ง 3 งาน (cost-of-living, crypto, football) หน้าเว็บเป็นแค่เปลือก ตัวเลขอยู่ใน PostgreSQL ที่ Airflow เติมให้ ถ้าไม่เปิด Docker จะได้หน้าเปล่า · **cost-of-living กับ football ชน port 5433 และ 8080 ห้ามเปิดพร้อมกัน** (crypto ใช้ 5435/8081/8002 ไม่ชนใคร) · dashboard อยู่ที่ cost `:8001` · crypto `:8002` · football `:8501` |
+| **cost-of-living ไม่ต้องรัน backfill 2 ชั่วโมง ใช้ snapshot สำเร็จรูปแทน** | `bash scripts/restore_snapshot.sh` ได้ CPI 3.3 ล้านแถวใน 1-3 นาที · ถ้าโหลดตรงจาก GitHub Release ไม่ได้ (504) ให้ดึงผ่าน API แทน: `curl -L -H "Accept: application/octet-stream" -o snap.tar.gz https://api.github.com/repos/Catboyz-45/cost-of-living-pipeline/releases/assets/605581112` แล้วส่งไฟล์เป็น argument: `bash scripts/restore_snapshot.sh snap.tar.gz` |
+| **ถ้า Flask ของ football ขึ้น "ยังไม่มีข้อมูลใน PostgreSQL" ทั้งที่ตารางมีแถวอยู่ ให้ดู log ก่อนโทษ DAG** | `docker logs football-pipeline-web-1` · สาเหตุที่เจอคือรหัสผ่านใน `.env` ไม่ตรงกับที่ค้างใน volume เก่า (Postgres ตั้งรหัสตอน init ครั้งแรกครั้งเดียว) แก้ด้วย `docker exec football-pipeline-football-db-1 psql -U football -d football -c "ALTER USER football WITH PASSWORD '...';"` แล้ว restart web · **`q()` ใน `web/app.py` ดัก `psycopg2.Error` ทิ้ง** หน้าเว็บเลยขึ้นว่า "ไม่มีข้อมูล" แทนที่จะ error ให้เห็น |
+| **ShabuQ ยังเป็นไทล์โลโก้ เพราะเป็นแอป Flutter ไม่ใช่เว็บ** | repo รองรับ `flutter build web` (มีโฟลเดอร์ `web/`) และ Flutter SDK อยู่ที่ `C:\Development\FlutterSDK` แต่แอปเปิดมาเจอหน้าล็อกอินก่อน และ Firebase เป็นโปรเจกต์จริงบนคลาวด์ (`ftf3-4c575`) **ห้ามสมัครบัญชีหรือล็อกอินเพื่อแคปรูป** · ถ้าอยากได้ภาพหน้าจอจริงให้เจ้าของรันบน emulator แล้วแคปเอง |
+| **คำอธิบายถูกตัดที่ 4 บรรทัดด้วย `-webkit-line-clamp`** | ให้การ์ดทุกใบสูงใกล้กัน · เขียนยาวได้แต่คนจะเห็นแค่ 4 บรรทัด |
+| **ปุ่มลูกศรซ่อนด้วย `opacity: 0` ต้องมี `pointer-events: none` คู่เสมอ** | ปุ่มที่โปร่งใสยังกินคลิกอยู่ · ถ้าลืม ปุ่มที่มองไม่เห็นจะไปบังปุ่มในการ์ดข้างใต้ และจะหาสาเหตุไม่เจอเพราะไม่มีอะไรให้เห็น |
+| **ปุ่มลูกศรต้องโผล่ทั้งตอน `:hover` และ `:focus-within` ของ `.pc-wrap`** | คนที่ใช้คีย์บอร์ดกด Tab เข้ามาจะโฟกัสปุ่มที่มองไม่เห็น ถ้าเปิดด้วย hover อย่างเดียว |
+| **อย่าเพิ่มตัวบอกว่า "เลื่อนได้" กลับเข้าไปอีก** | ตอนนี้มี **2 อย่างต่ออุปกรณ์ และไม่ซ้ำกันเลย** — เดสก์ท็อป: การ์ดโผล่ขอบ + ลูกศรลอยตอน hover · มือถือ: การ์ดโผล่ขอบ + จุด · เคยมีแถบเลื่อน ม่านจาง และข้อความ "ปัดเพื่อดูเพิ่ม" ด้วย รวมเป็น 4 อย่างที่สื่อเรื่องเดียวกัน รกและซ้ำซ้อน |
+| **จุดกับลูกศรใช้เงื่อนไข media query ตัวเดียวกัน ห้ามแยกจากกัน** | `@media (hover: none), (max-width: 820px)` ซ่อนลูกศรและโชว์จุดในบล็อกเดียว · ถ้าแยกเมื่อไหร่จะมีช่วงความกว้างที่โผล่พร้อมกันทั้งคู่ หรือหายไปทั้งคู่ |
+| **ไม่ต้องเติมจุดเองตอนเพิ่มการ์ด** | `script.js` สร้างจุดจากจำนวน `.pc-item` ที่มีจริง และดึง `aria-label` จาก `<h3>` ของการ์ด |
+| **ถ้าแก้ `padding-inline` ของ `.pc-track` ต้องแก้ทั้ง 2 ที่** | ค่าปกติ `max(40px, calc((100vw - 1100px)/2 + 40px))` กับค่าที่ `@media (max-width: 960px)` เป็น 24px · ตัวเลขต้องตรงกับ `.container` ไม่งั้นการ์ดใบแรกจะไม่ตรงขอบกับหัวข้อ |
+
+---
+
+## เพิ่มกิจกรรม / ดูงาน (section Activities)
+
+คนละส่วนกับ Projects — หา `<div class="act-grid">` แล้วเพิ่ม:
+
+```html
+<article class="act-item reveal">
+  <div class="act-thumb">
+    <img src="images/ชื่อไฟล์.jpg" width="2048" height="1368" loading="lazy" decoding="async"
+      alt="คำอธิบายรูปสั้น ๆ">
+  </div>
+  <div class="act-body">
+    <p class="act-kind">ดูงาน</p>
+    <h3>ชื่อที่ไป</h3>
+    <p>ได้เรียนรู้อะไร สั้น ๆ 2 บรรทัด</p>
+  </div>
+</article>
+```
+
+**การ์ดนี้ตั้งใจให้ดู "เงียบ" กว่าการ์ดโปรเจกต์** — รูปเล็กอยู่ข้าง ไม่มีชิป ไม่มีปุ่ม พื้นโปร่งไม่มีเงา
+**อย่าเอาการ์ดทรงเดียวกับโปรเจกต์มาใช้** ต่อให้อยู่คนละ section คนก็ยังกวาดตารวมเป็นกองเดียว
+ซึ่งเป็นปัญหาเดิมตอนที่สองอย่างนี้อยู่ใต้หัวข้อ `Projects & Activities` เดียวกัน
 
 ---
 

@@ -30,7 +30,7 @@
     rel="stylesheet">
   <!-- ?v= คือเลขรุ่นกันแคช · แก้ style.css หรือ script.js เมื่อไหร่ ต้องเปลี่ยนเลขนี้ทั้งสองจุดก่อนอัปขึ้น GitHub
        ไม่งั้นเบราว์เซอร์ของคนที่เคยเปิดเว็บจะใช้ไฟล์เก่าที่จำไว้คู่กับ HTML ใหม่ หน้าเพี้ยน (เคยทำรูปโปรไฟล์ยืดมาแล้ว) -->
-  <link rel="stylesheet" href="style.css?v=20260924" />
+  <link rel="stylesheet" href="style.css?v=20261106" />
   <noscript>
     <!-- ไม่มี JS = IntersectionObserver ไม่ทำงาน = .reveal ค้างที่ opacity 0 ทั้งหน้า
          กฎนี้บังคับให้เนื้อหาโผล่ครบ ยอมทิ้งอนิเมชันไป -->
@@ -58,6 +58,11 @@
       <line x1="9" y1="15" x2="16" y2="15" stroke="currentColor" stroke-width="1.5" />
     </symbol>
 
+    <symbol id="icon-external" viewBox="0 0 24 24" fill="none">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M10 14 21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
     <symbol id="icon-slides" viewBox="0 0 24 24" fill="none">
       <rect x="2.5" y="4" width="19" height="12.5" rx="1.5" stroke="currentColor" stroke-width="1.5" />
       <path d="M12 16.5V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -648,85 +653,298 @@
   </section>
 
   <!-- ══ PROJECTS ══ -->
+  <!-- รางเลื่อนแนวนอน · นิ้วปัดบนมือถือ · บนเดสก์ท็อปปุ่มลูกศรจะโผล่ตอนเอาเมาส์เข้าราง
+       ตัวบอกว่า "เลื่อนได้" มีแค่ 2 อย่างคือการ์ดใบขวาสุดที่โผล่พ้นขอบ กับปุ่มลูกศรตอน hover
+       เคยมีแถบเลื่อน + ม่านจาง + ข้อความ "ปัดเพื่อดูเพิ่ม" ด้วย เจ้าของบอกว่าเยอะเกิน เลยตัดออกหมด -->
   <section class="section" id="projects">
     <div class="container">
-      <h2 class="section-label reveal">Projects &amp; Activities</h2>
-      <!--<h2 class="section-title reveal">Work that speaks<br /><em>louder than words.</em></h2>-->
+      <h2 class="section-label reveal">Projects</h2>
+    </div>
 
-      <div class="projects-grid">
-        <div class="project-card reveal">
-          <!--<div class="pc-header">
-            <span class="proj-tag tag-blue">Data Analysis</span>
-            <span class="proj-year">2024</span>
-          </div>-->
-          <h3>IoT Project เครื่องวัดแอลกอฮอล์</h3>
-          <div class="project-img">
-            <img src="images/IoT.jpg" width="1108" height="1099" loading="lazy" decoding="async" alt="IoT Alcohol Detector">
-          </div>
-          <p>ออกแบบและพัฒนา IoT เครื่องวัดแอลกอฮอล์ โดยใช้ Wokwi จำลองการทำงานของอุปกรณ์และประดิษฐ์อุปกรณ์จริงด้วย
-            แล้วมีการสร้างแอพ เชื่อมต่อ Firebase สำหรับจัดเก็บข้อมูลแบบ real-time
-            สามารถแสดงผลและติดตามข้อมูลได้ทันที</p>
-          <div class="proj-stack">
-            <span>Visual Studio Code</span><span>Firebase</span><span>Wokwi</span>
-          </div>
-        </div>
+    <div class="pc-wrap reveal">
+      <button type="button" class="pc-arrow pc-prev" data-dir="-1" aria-controls="projTrack"
+        aria-label="เลื่อนโปรเจกต์ไปทางซ้าย">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button type="button" class="pc-arrow pc-next" data-dir="1" aria-controls="projTrack"
+        aria-label="เลื่อนโปรเจกต์ไปทางขวา">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
 
-        <div class="project-card reveal reveal-delay">
-          <!--<div class="pc-header">
-            <span class="proj-tag tag-green">UX / Figma</span>
-            <span class="proj-year">2024</span>
-          </div>-->
-          <h3>ดูงาน บริษัท อินเทอร์เน็ตแห่งประเทศไทย</h3>
-          <div class="project-img">
-            <img src="images/INET.jpg" width="2048" height="1368" loading="lazy" decoding="async" alt="INET Data Center">
-          </div>
-          <p>
-            เข้าศึกษาดูงาน Data Center ของบริษัท อินเทอร์เน็ตแห่งประเทศไทย (INET)
-            เพื่อเรียนรู้โครงสร้างระบบเครือข่าย การจัดการเซิร์ฟเวอร์ และมาตรฐานความปลอดภัยของศูนย์ข้อมูล
-            ช่วยให้เข้าใจการทำงานของระบบ IT Infrastructure ในสภาพแวดล้อมจริง
-          </p>
-          <div class="proj-stack">
-            <span>Network</span>
-          </div>
-        </div>
+      <ul class="pc-track" id="projTrack" tabindex="0" aria-label="รายการโปรเจกต์ · เลื่อนซ้ายขวาได้">
 
-        <div class="project-card reveal">
-          <!--<div class="pc-header">
-            <span class="proj-tag tag-purple">Python</span>
-            <span class="proj-year">2023</span>
-          </div>-->
-          <h3>Zahira Farm</h3>
-          <div class="project-img">
-            <img src="images/Zahira.jpg" width="2048" height="1368" loading="lazy" decoding="async" alt="Zahira Farm">
-          </div>
-          <p>
-            เข้าศึกษาดูงาน Zahira Farm เพื่อเรียนรู้การนำเทคโนโลยี IoT มาประยุกต์ใช้ในภาคเกษตร
-            ช่วยให้เข้าใจการใช้เทคโนโลยีเพื่อเพิ่มประสิทธิภาพและลดต้นทุนในการดำเนินงาน
-          </p>
-          <div class="proj-stack">
-            <span>IoT</span>
-          </div>
-        </div>
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-nestly.jpg" width="800" height="500" loading="lazy" decoding="async"
+                alt="ภาพหน้าจอหน้าเข้าสู่ระบบของ Nestly แพลตฟอร์มบริหารหอพัก">
+            </div>
+            <h3>Nestly · แพลตฟอร์มบริหารหอพัก</h3>
+            <p>ระบบ SaaS บริหารหอพักหลายแห่งในที่เดียว ห้อง ผู้เช่า สัญญาเช่า บิลค่าน้ำค่าไฟ งานซ่อม พัสดุ
+              ประกาศ และแชต · แยกข้อมูลของแต่ละหอด้วย propertyId และตรวจสิทธิ์ทุกครั้งที่ฝั่งเซิร์ฟเวอร์
+              · มีชุดทดสอบ E2E และตรวจคุณภาพโค้ดด้วย SonarQube</p>
+            <ul class="proj-chips">
+              <li>Next.js</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-typescript" /></svg>TypeScript</li>
+              <li>PostgreSQL</li>
+              <li>Prisma</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-docker" /></svg>Docker</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://nestlyspace.tech" target="_blank" rel="noopener noreferrer"
+                  aria-label="เปิดเว็บ Nestly"><svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg></a>
+                <a href="https://github.com/Catboyz-45/it-project" target="_blank" rel="noopener noreferrer"
+                  aria-label="ดูโค้ด Nestly บน GitHub"><svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://nestlyspace.tech"
+                target="_blank" rel="noopener noreferrer">
+                เปิดเว็บจริง
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
 
-        <div class="project-card reveal">
-          <!--<div class="pc-header">
-            <span class="proj-tag tag-purple">Python</span>
-            <span class="proj-year">2023</span>
-          </div>-->
-          <h3>เปิดโลกทักษะ AI และทักษะทางไซเบอร์</h3>
-          <div class="project-img">
-            <img src="images/skill_ai.jpg" width="2048" height="1365" loading="lazy" decoding="async" alt="Skill AI">
-          </div>
-          <p>
-            เข้าร่วมอบรม “เปิดโลกทักษะ AI และทักษะทางไซเบอร์” เพื่อเรียนรู้พื้นฐานเกี่ยวกับปัญญาประดิษฐ์ (AI)
-            และความปลอดภัยทางไซเบอร์ (Cybersecurity) รวมถึงแนวทางการประยุกต์ใช้เทคโนโลยีในงานจริง
-            ช่วยเสริมความเข้าใจด้านเทคโนโลยีสมัยใหม่และการป้องกันความเสี่ยงทางดิจิทัล
-          </p>
-          <div class="proj-stack">
-            <span>AI</span><span>Cybersecurity</span>
-          </div>
-        </div>
-      </div>
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-cost-of-living.jpg" width="800" height="505" loading="lazy" decoding="async"
+                alt="หน้า dashboard ค่าครองชีพไทย แสดงว่าของที่ปีก่อนจ่าย 100 บาท วันนี้จ่าย 102.53 บาท พร้อมการ์ดพยากรณ์ AI และตัวเลขค่าอาหาร น้ำมัน แก๊สโซฮอล์ และค่าแรงขั้นต่ำ">
+            </div>
+            <h3>Thai Cost of Living Pipeline</h3>
+            <p>ไปป์ไลน์ Apache Airflow ดึงดัชนีราคาผู้บริโภครายจังหวัดหลักล้านแถวจากหน่วยงานรัฐ
+              เก็บราคาจริงของของกินและน้ำมันด้วย web scraping และ SOAP Web Service เทียบกับค่าแรงขั้นต่ำ
+              แล้วเทรนโมเดล ML พยากรณ์ว่าเดือนหน้าแต่ละหมวดในแต่ละจังหวัดจะแพงขึ้นหรือถูกลง
+              แสดงผลบนเว็บ FastAPI และส่งออก CSV ให้ Power BI</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="#logo-python" /></svg>Python</li>
+              <li>Apache Airflow</li>
+              <li>FastAPI</li>
+              <li>Power BI</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-docker" /></svg>Docker</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/Catboyz-45/cost-of-living-pipeline" target="_blank" rel="noopener noreferrer"
+                  aria-label="ดูโค้ด Thai Cost of Living Pipeline บน GitHub"><svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://github.com/Catboyz-45/cost-of-living-pipeline"
+                target="_blank" rel="noopener noreferrer">
+                อ่านเพิ่มเติม
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-crypto.jpg" width="800" height="505" loading="lazy" decoding="async"
+                alt="หน้า dashboard ราคาคริปโตในตลาดไทย ธีมมืด แสดงแท่งเทียน 10,763,585 แถวใน Data Lake จาก 54 เหรียญ ย้อนหลัง 406 วัน พร้อมแถวขั้นตอนของไปป์ไลน์ bronze silver gold และ ML">
+            </div>
+            <h3>Crypto Price Thailand</h3>
+            <p>งาน Big Data ดึงแท่งเทียนรายนาทีของเหรียญยอดนิยมบน Bitkub ย้อนหลัง 1 ปี หลักสิบล้านแถว
+              เก็บเป็น Data Lake แบบ Medallion แล้วตรวจจับรูปแบบ pump &amp; dump
+              พร้อมพยากรณ์ volume และความผันผวน · เป็นงานวิเคราะห์เพื่อการศึกษา
+              บอกได้แค่รูปแบบที่น่าสงสัย ไม่ใช่คำแนะนำการลงทุน</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="#logo-python" /></svg>Python</li>
+              <li>Apache Airflow</li>
+              <li>DuckDB</li>
+              <li>SeaweedFS</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-docker" /></svg>Docker</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/nattapat3743/crypto-price-thailand" target="_blank" rel="noopener noreferrer"
+                  aria-label="ดูโค้ด Crypto Price Thailand บน GitHub"><svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://github.com/nattapat3743/crypto-price-thailand"
+                target="_blank" rel="noopener noreferrer">
+                อ่านเพิ่มเติม
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-football.jpg" width="800" height="500" loading="lazy" decoding="async"
+                alt="หน้า dashboard Football Hub รวมข้อมูล 130 ทีมจาก 7 ลีก มีตารางคะแนนพรีเมียร์ลีก กราฟประตูเฉลี่ยต่อนัดแยกตามลีก และอันดับดาวซัลโว">
+            </div>
+            <h3>Football Data Pipeline</h3>
+            <p>รวมข้อมูลฟุตบอล 5 ลีกใหญ่ยุโรปและไทยลีก 1–2 จาก 3 แหล่งด้วย Apache Airflow — REST API,
+              scraping ตาราง HTML และ scraping JSON — แปลงทุกแหล่งให้เป็น schema เดียว
+              ตัดทีมซ้ำข้ามแหล่งด้วยตาราง alias และการเทียบสถิติ มีขั้นตรวจคุณภาพที่แยกแถวเสียไป quarantine
+              และยังรวมข้อมูลต่อได้แม้แหล่งใดแหล่งหนึ่งล่ม · แสดงผลบน dashboard Flask + Chart.js</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="#logo-python" /></svg>Python</li>
+              <li>Apache Airflow</li>
+              <li>PostgreSQL</li>
+              <li>Flask</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-docker" /></svg>Docker</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/nanthapat3751/02739452-14-6621653751" target="_blank"
+                  rel="noopener noreferrer" aria-label="ดูโค้ด Football Data Pipeline บน GitHub"><svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more"
+                href="https://github.com/nanthapat3751/02739452-14-6621653751"
+                target="_blank" rel="noopener noreferrer">
+                อ่านเพิ่มเติม
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/IoT.jpg" width="1108" height="1099" loading="lazy" decoding="async"
+                alt="อุปกรณ์ IoT เครื่องวัดแอลกอฮอล์ที่ประกอบเสร็จแล้ว">
+            </div>
+            <h3>IoT เครื่องวัดแอลกอฮอล์</h3>
+            <p>ออกแบบวงจรบน Wokwi แล้วประกอบอุปกรณ์จริงด้วย ESP32 ส่งค่าที่วัดได้ขึ้น Firebase แบบ real-time
+              พร้อมแอป Flutter อ่านค่าสดและเก็บประวัติย้อนหลัง</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 256 288" aria-hidden="true" focusable="false"><use href="#logo-cpp" /></svg>C++</li>
+              <li>ESP32</li>
+              <li><svg viewBox="0 0 600 600" aria-hidden="true" focusable="false"><use href="#logo-firebase" /></svg>Firebase</li>
+              <li><svg viewBox="0 0 256 317" aria-hidden="true" focusable="false"><use href="#logo-flutter" /></svg>Flutter</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/nanthapat3751/Project-IoT-Alcohol-test" target="_blank"
+                  rel="noopener noreferrer" aria-label="ดูโค้ดฝั่งฮาร์ดแวร์บน GitHub">
+                  <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg>
+                </a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://github.com/nanthapat3751/Project-IoT-Alcohol-App"
+                target="_blank" rel="noopener noreferrer">
+                repo แอป
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-computer-repair.jpg" width="800" height="500" loading="lazy" decoding="async"
+                alt="ภาพหน้าจอหน้าแรกของระบบแจ้งซ่อมคอมพิวเตอร์">
+            </div>
+            <h3>ระบบแจ้งซ่อมคอมพิวเตอร์</h3>
+            <p>ระบบแจ้งซ่อมสำหรับร้านซ่อมคอมพิวเตอร์ บันทึก แก้ไข และลบรายการแจ้งซ่อม ดูสถานะงานในตาราง
+              พร้อมหน้าแสดงราคาซ่อมแยกตามประเภทอุปกรณ์และ QR ชำระเงิน · หน้าเว็บเรียก REST API
+              บน Node.js + Express ที่ต่อ MySQL ผ่าน Docker Compose</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 1052 1052" aria-hidden="true" focusable="false"><use href="#logo-javascript" /></svg>JavaScript</li>
+              <li><svg viewBox="0 0 256 289" aria-hidden="true" focusable="false"><use href="#logo-nodejs" /></svg>Node.js</li>
+              <li>Express</li>
+              <li><svg viewBox="0 0 256 252" aria-hidden="true" focusable="false"><use href="#logo-mysql" /></svg>MySQL</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo-docker" /></svg>Docker</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/nanthapat3751/Project-computer-repair" target="_blank"
+                  rel="noopener noreferrer" aria-label="ดูโค้ดระบบแจ้งซ่อมคอมพิวเตอร์บน GitHub">
+                  <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg>
+                </a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://github.com/nanthapat3751/Project-computer-repair"
+                target="_blank" rel="noopener noreferrer">
+                อ่านเพิ่มเติม
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <!-- TODO เจ้าของ: แคปหน้าจอแอปจากมือถือหรือ emulator มาใส่ แล้วเปลี่ยนทั้งบล็อกนี้เป็น <div class="proj-thumb"><img ...></div> -->
+            <div class="proj-thumb is-mark" role="img" aria-label="ไทล์แทนภาพหน้าจอ">
+              <svg viewBox="0 0 256 317" aria-hidden="true" focusable="false"><use href="#logo-flutter" /></svg>
+              <span>Mobile App</span>
+            </div>
+            <h3>ShabuQ · แอปจองคิวร้านชาบู</h3>
+            <p>แอปมือถือจองคิวและที่นั่งร้านชาบูย่านกำแพงแสนและนครปฐม เลือกร้าน ดูเมนู เลือกโซนและจำนวนคน
+              จ่ายหน้าร้านหรือสแกน QR แล้วอัปโหลดสลิป พร้อมหน้าติดตามคิวของตัวเองที่ปัดเพื่อยกเลิกได้ ·
+              สมัครและเข้าสู่ระบบด้วย Firebase Auth เก็บสลิปใน Firebase Storage</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#logo-dart" /></svg>Dart</li>
+              <li><svg viewBox="0 0 256 317" aria-hidden="true" focusable="false"><use href="#logo-flutter" /></svg>Flutter</li>
+              <li><svg viewBox="0 0 600 600" aria-hidden="true" focusable="false"><use href="#logo-firebase" /></svg>Firebase</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://github.com/nanthapat3751/Project-Table-booking-app" target="_blank"
+                  rel="noopener noreferrer" aria-label="ดูโค้ด ShabuQ บน GitHub">
+                  <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg>
+                </a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://github.com/nanthapat3751/Project-Table-booking-app"
+                target="_blank" rel="noopener noreferrer">
+                อ่านเพิ่มเติม
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li class="pc-item">
+          <article class="proj-card">
+            <div class="proj-thumb">
+              <img src="images/shot-portfolio.jpg" width="800" height="505" loading="lazy" decoding="async"
+                alt="ภาพหน้าจอเว็บพอร์ตโฟลิโอ ส่วนแนะนำตัวและแถบทักษะ">
+            </div>
+            <h3>Personal Portfolio</h3>
+            <p>เว็บพอร์ตโฟลิโอหน้านี้เอง เขียนด้วย HTML/CSS/JavaScript ล้วนโดยไม่ใช้เฟรมเวิร์ก
+              ตรวจคอนทราสต์สีผ่านเกณฑ์ WCAG AA ทุกจุด และ deploy ผ่าน GitHub Pages</p>
+            <ul class="proj-chips">
+              <li><svg viewBox="0 0 452 520" aria-hidden="true" focusable="false"><use href="#logo-html" /></svg>HTML</li>
+              <li><svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><use href="#logo-css" /></svg>CSS</li>
+              <li><svg viewBox="0 0 1052 1052" aria-hidden="true" focusable="false"><use href="#logo-javascript" /></svg>JavaScript</li>
+            </ul>
+            <div class="proj-foot">
+              <div class="proj-links">
+                <a href="https://nanthapat3751.github.io/My-Portfolio/" target="_blank" rel="noopener noreferrer"
+                  aria-label="เปิดเว็บพอร์ตโฟลิโอ">
+                  <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+                </a>
+                <a href="https://github.com/nanthapat3751/My-Portfolio" target="_blank" rel="noopener noreferrer"
+                  aria-label="ดูโค้ดเว็บพอร์ตโฟลิโอบน GitHub">
+                  <svg width="15" height="15" aria-hidden="true" focusable="false"><use href="#icon-github" /></svg>
+                </a>
+              </div>
+              <a class="btn btn-outline btn-sm proj-more" href="https://nanthapat3751.github.io/My-Portfolio/"
+                target="_blank" rel="noopener noreferrer">
+                เปิดเว็บจริง
+                <svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#icon-external" /></svg>
+              </a>
+            </div>
+          </article>
+        </li>
+
+      </ul>
+
+      <!-- จุดบอกตำแหน่ง · โผล่เฉพาะจอสัมผัส/จอแคบ ที่ปุ่มลูกศรถูกซ่อน
+           ปุ่มข้างในสร้างจาก script.js ตามจำนวนการ์ดที่มีจริง เพิ่มการ์ดแล้วไม่ต้องมาเติมจุดเอง
+           และถ้า JS ไม่ทำงาน กล่องนี้จะว่าง ไม่เหลือปุ่มที่กดแล้วไม่เกิดอะไร -->
+      <div class="pc-dots" id="projDots"></div>
     </div>
   </section>
 
@@ -1073,8 +1291,56 @@
     </div>
   </section>
 
+  <!-- ══ ACTIVITIES ══ -->
+  <!-- แยกออกมาจากส่วน Projects เมื่อ ISSUE ดีไซน์รอบ พ.ย. 2026
+       การ์ดตั้งใจให้ "เงียบ" กว่าการ์ดโปรเจกต์ — รูปเล็กอยู่ข้าง ไม่มีชิป ไม่มีปุ่ม พื้นโปร่ง
+       ถ้าใช้การ์ดทรงเดียวกับโปรเจกต์ คนจะอ่านรวมเป็นกองเดียวอีกเหมือนของเดิม -->
+  <section class="section section-tight" id="activities">
+    <div class="container">
+      <h2 class="section-label reveal">Activities &amp; Site Visits</h2>
+
+      <div class="act-grid">
+        <article class="act-item reveal">
+          <div class="act-thumb">
+            <img src="images/INET.jpg" width="2048" height="1368" loading="lazy" decoding="async"
+              alt="เข้าศึกษาดูงาน Data Center ของ INET">
+          </div>
+          <div class="act-body">
+            <p class="act-kind">ดูงาน</p>
+            <h3>INET Data Center</h3>
+            <p>โครงสร้างระบบเครือข่าย การจัดการเซิร์ฟเวอร์ และมาตรฐานความปลอดภัยของศูนย์ข้อมูล</p>
+          </div>
+        </article>
+
+        <article class="act-item reveal reveal-delay">
+          <div class="act-thumb">
+            <img src="images/Zahira.jpg" width="2048" height="1368" loading="lazy" decoding="async"
+              alt="เข้าศึกษาดูงานการใช้ IoT ในภาคเกษตรที่ Zahira Farm">
+          </div>
+          <div class="act-body">
+            <p class="act-kind">ดูงาน</p>
+            <h3>Zahira Farm</h3>
+            <p>การนำ IoT มาประยุกต์ใช้ในภาคเกษตร เพื่อเพิ่มประสิทธิภาพและลดต้นทุนการดำเนินงาน</p>
+          </div>
+        </article>
+
+        <article class="act-item reveal reveal-delay-2">
+          <div class="act-thumb">
+            <img src="images/skill_ai.jpg" width="2048" height="1365" loading="lazy" decoding="async"
+              alt="เข้าร่วมอบรมเปิดโลกทักษะ AI และทักษะทางไซเบอร์">
+          </div>
+          <div class="act-body">
+            <p class="act-kind">อบรม</p>
+            <h3>ทักษะ AI และไซเบอร์</h3>
+            <p>พื้นฐานปัญญาประดิษฐ์และความปลอดภัยทางไซเบอร์ พร้อมแนวทางประยุกต์ใช้ในงานจริง</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ EDUCATION ══ -->
-  <section class="section section-tight" id="education">
+  <section class="section section-tight section-alt" id="education">
     <div class="container">
       <h2 class="section-label reveal">Education</h2>
       <!--<h2 class="section-title reveal">Academic<br /><em>Background.</em></h2>-->
@@ -1112,7 +1378,7 @@
   </section>
 
   <!-- ══ CERTIFICATES ══ -->
-  <section class="section section-tight section-alt" id="certificates">
+  <section class="section section-tight" id="certificates">
     <div class="container">
       <h2 class="section-label reveal">Certificates</h2>
       <!-- <h2 class="section-title reveal">Always learning,<br /><em>always growing.</em></h2> -->
@@ -1272,7 +1538,7 @@
   <!-- Back to Top Button -->
   <button id="backToTop" aria-label="Back to top" title="Back to Top">↑</button>
 
-  <script src="script.js?v=20260924"></script>
+  <script src="script.js?v=20261106"></script>
 </body>
 
 </html>

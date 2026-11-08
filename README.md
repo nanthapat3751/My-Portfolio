@@ -36,8 +36,9 @@ rules.
 |---|---|
 | About | Introduction and profile, with a typed tagline — the page opens here |
 | Skills | 38 tools and languages, shown as an animated logo marquee plus a categorized tile grid. The AI categories are split in two: tools used to build and train models, and assistants used in day-to-day work |
-| Projects | 4 projects — IoT alcohol-detection device, an industry visit report, Zahira Farm, and an AI/cyber-skills workshop |
+| Projects | 8 code projects in a horizontal, swipeable carousel — a dormitory-management SaaS, three Airflow data pipelines (Thai cost of living, Bitkub crypto, multi-source football), an IoT alcohol-detection device, a computer-repair web app, a restaurant queue-booking app, and this site. Each card carries a screenshot of the running app (the Flutter one shows a logo tile instead), the stack as logo chips, and links to the live site and the GitHub repo |
 | Workshop | 4 documents — three system-analysis reports (74–91 pages each) and a presentation deck. Each card opens a dialog with the brief, what was done, what was learned, and the deliverables it contains |
+| Activities | 3 site visits and workshops — INET's data centre, Zahira Farm, and an AI/cybersecurity workshop. Deliberately quieter cards than the project ones, so coursework and code don't read as the same thing |
 | Education | Academic background |
 | Certificates | 6 HackerRank skill certificates |
 | Contact | Two columns — an email call-to-action with a copy button on the left, and the other channels on the right, ordered by how likely a recruiter is to use them: GitHub as a full card, Instagram and Facebook as small chips |
@@ -75,7 +76,7 @@ Or use the **Live Server** extension in VS Code.
 
 ```
 My-Portfolio/
-├── index.html    # the whole site — 8 sections + the SVG sprite
+├── index.html    # the whole site — 9 sections + the SVG sprite
 ├── style.css     # design tokens and every component style
 ├── script.js     # nav, mobile menu, scroll reveals, logo marquee
 ├── images/       # profile, project photos, certificates, favicon

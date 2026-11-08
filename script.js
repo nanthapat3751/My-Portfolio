@@ -136,7 +136,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 /* ── Project card tilt on hover (subtle) ── */
-document.querySelectorAll('.project-card').forEach(card => {
+document.querySelectorAll('.proj-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 4;
@@ -149,6 +149,69 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.style.transition = 'transform 280ms cubic-bezier(0.4,0,0.2,1), box-shadow 280ms cubic-bezier(0.4,0,0.2,1)';
   });
 });
+
+/* ── Projects carousel ──
+   ราง .pc-track เลื่อนเองได้อยู่แล้วด้วย overflow-x (นิ้วปัด / trackpad / Shift+ล้อเมาส์)
+   ส่วนนี้เพิ่มปุ่มลูกศรลอยริมขอบสำหรับเมาส์ (สั่ง disabled เมื่อสุดทาง แล้ว CSS เอาไปซ่อนต่อ)
+   กับจุดบอกตำแหน่งสำหรับมือถือ ซึ่ง CSS สลับให้โผล่ทีละอย่างตามอุปกรณ์ */
+(() => {
+  const track = document.getElementById('projTrack');
+  if (!track) return;
+
+  const arrows = document.querySelectorAll('.pc-arrow[aria-controls="projTrack"]');
+  const dotBox = document.getElementById('projDots');
+  const items  = track.querySelectorAll('.pc-item');
+
+  // จุดสร้างจากจำนวนการ์ดจริง · การ์ดใบเดียวไม่ต้องมีจุด ไม่มีอะไรให้เลื่อน
+  const dots = [];
+  if (dotBox && items.length > 1) {
+    items.forEach((item, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-controls', 'projTrack');
+      const name = item.querySelector('h3');
+      b.setAttribute('aria-label', name ? name.textContent.trim() : 'โปรเจกต์ที่ ' + (i + 1));
+      b.addEventListener('click', () => {
+        track.scrollTo({ left: i * step(), behavior: scrollBehavior });
+      });
+      dotBox.appendChild(b);
+      dots.push(b);
+    });
+  }
+
+  // เลื่อนทีละ "หนึ่งใบ + ช่องไฟ" ไม่ใช่ทีละความกว้างจอ ไม่งั้นจะกระโดดข้ามการ์ด
+  const step = () => {
+    const item = track.querySelector('.pc-item');
+    if (!item) return track.clientWidth;
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return item.getBoundingClientRect().width + gap;
+  };
+
+  const sync = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const x   = track.scrollLeft;
+    arrows.forEach(btn => {
+      btn.disabled = Number(btn.dataset.dir) < 0 ? x <= 1 : x >= max - 1;
+    });
+    if (dots.length) {
+      // ปัดสุดทางแล้วการ์ดใบท้าย ๆ มักค้างไม่ตรงช่อง ต้องบังคับให้จุดสุดท้ายติดเอง
+      const at = x >= max - 1 ? dots.length - 1 : Math.round(x / step());
+      dots.forEach((b, i) => b.setAttribute('aria-current', String(i === at)));
+    }
+  };
+
+  arrows.forEach(btn => {
+    btn.addEventListener('click', () => {
+      track.scrollBy({ left: Number(btn.dataset.dir) * step(), behavior: scrollBehavior });
+    });
+  });
+
+  track.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  // รูปในการ์ดเป็น lazy ความกว้างรวมเลยเปลี่ยนหลังโหลด ต้องคำนวณใหม่อีกรอบ
+  window.addEventListener('load', sync);
+  sync();
+})();
 
 /* ── Workshop: กล่องรายละเอียดเอกสาร ──
    ใช้ <dialog> ของเบราว์เซอร์ จึงไม่ต้องเขียน focus trap / ปุ่ม Esc / ฉากหลังเอง
