@@ -51,7 +51,7 @@ rules.
 |---|---|
 | **Markup / styling** | HTML5 · CSS3 (Grid, Flexbox, custom properties, `@media`) |
 | **Scripting** | Vanilla JavaScript (ES6) — `IntersectionObserver`, `matchMedia` |
-| **Icons** | Inline SVG sprite · Font Awesome (CDN) |
+| **Icons** | Inline SVG sprite |
 | **Fonts** | Google Fonts — Inter · Cormorant Garamond · Outfit |
 | **Hosting** | GitHub Pages (static) |
 

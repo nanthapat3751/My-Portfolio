@@ -490,7 +490,9 @@ body {
 
 /* ต่ำกว่า 1040px แถบเริ่มแคบกว่ากรอบ 1100 -> บีบอีกขั้นก่อนสลับไป hamburger ที่ 960px
    (ที่ 961px ซึ่งแคบสุดของช่วงนี้ ยังเหลือช่องว่างริมข้างละ ~21px) */
-@media (max-width: 1040px) {
+/* navbar เท่านั้น: 961–1199px เมนูยังเรียงเต็มแถวแต่ที่เริ่มไม่พอ ต้องบีบช่องไฟ
+   เดิมเป็น 1040px แยกจากจุดที่ปุ่ม CV หด (1199px) รวมเป็นค่าเดียวกันแล้ว */
+@media (max-width: 1199px) {
   .nav-links {
     gap: 2px;
   }
@@ -500,7 +502,7 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .brings-icon {
     font-size: 2.5rem;
   }
@@ -930,11 +932,15 @@ body {
   }
 }
 
-@media (max-width: 640px) {
+/* auto-fit แทนการตั้งจำนวนคอลัมน์ตายตัว: กล่องกว้างพอสองใบ (≥ ~650px) ก็ได้สองคอลัมน์
+   แคบกว่านั้นเหลือคอลัมน์เดียวเอง ไม่ต้องมี breakpoint เพิ่มอีกค่า */
+@media (max-width: 768px) {
   .act-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   }
+}
 
+@media (max-width: 480px) {
   /* การ์ดกว้าง 80vw เพื่อให้ใบถัดไปโผล่มาให้เห็นเสมอ คนจะได้รู้ว่าปัดได้ */
   .pc-item {
     flex-basis: 80vw;
@@ -986,7 +992,7 @@ body {
 
 /* จอสัมผัสเปิดปุ่มลูกศรด้วย hover ไม่ได้ และนิ้วปัดเอาสะดวกกว่าอยู่แล้ว · ปุ่มจะเหลือแค่บังการ์ด
    จอแคบก็ซ่อนด้วย เพราะปุ่มจะไปทับรูปในการ์ดใบแรก/ใบสุดท้ายเยอะเกิน */
-@media (hover: none), (max-width: 820px) {
+@media (hover: none), (max-width: 768px) {
   .pc-arrow {
     display: none;
   }
@@ -996,189 +1002,314 @@ body {
   }
 }
 
-/* ═══ EDUCATION ═══ */
+/* ═══ EDUCATION ═══
+   เส้นเวลาที่ "วาด" ตามการเลื่อนหน้า — script.js เป็นคนคุม (ดูบล็อก Education ในนั้น)
+   ค่าตั้งต้นในไฟล์นี้คือหน้าตาตอน "สว่างครบแล้ว" ส่วนหน้าตาตอนยังไม่ถึงอยู่ใต้ .tl-live
+   ซึ่ง JS เป็นคนเติมให้ · ถ้า JS ไม่ทำงาน หรือผู้ใช้ตั้งลดการเคลื่อนไหวไว้
+   จะไม่มี .tl-live และเนื้อหาเห็นครบทันที ไม่มีอะไรค้างจาง */
 .timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
   position: relative;
-  padding-left: 32px;
+  display: grid;
+  gap: 34px;
 }
 
-.timeline::before {
-  content: '';
+/* รางเทา + เส้นทองที่ยืดตาม --tl-progress (0 ถึง 1)
+   left = คอลัมน์ปี 140px + ครึ่งคอลัมน์จุด 31px − ครึ่งความหนาเส้น 1px */
+.tl-rail {
   position: absolute;
-  left: 7px;
-  top: 16px;
-  bottom: 0;
-  width: 1.5px;
+  left: 170px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
   background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tl-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: top;
+}
+
+.timeline.tl-live .tl-fill {
+  transform: scaleY(var(--tl-progress, 0));
+  will-change: transform;
 }
 
 .tl-item {
-  position: relative;
-  padding-bottom: 40px;
+  display: grid;
+  grid-template-columns: 140px 62px 1fr;
+  align-items: start;
+}
+
+.tl-year {
+  text-align: right;
+  padding-top: 2px;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  /* Cormorant ตั้งต้นเป็นเลขแบบเก่าที่สูงต่ำไม่เท่ากัน (2O23) บังคับให้สูงเท่ากันทุกตัว */
+  font-variant-numeric: lining-nums;
+  color: var(--text);
+  transition: color 500ms ease;
+}
+
+.tl-year small {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
 }
 
 .tl-dot {
-  position: absolute;
-  left: -32px;
-  top: 20px;
-  width: 16px;
-  height: 16px;
+  justify-self: center;
+  margin-top: 12px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--accent);
-  border: 3px solid var(--bg);
-  box-shadow: 0 0 0 2px var(--accent);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 6px rgba(201, 150, 12, 0.16);
+  transform: scale(1.15);
+  position: relative;
+  z-index: 1;
+  transition: background var(--trans-slow), border-color var(--trans-slow),
+    transform var(--trans-slow), box-shadow var(--trans-slow);
 }
 
 .tl-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px 32px;
-  transition: box-shadow var(--trans), transform var(--trans), border-color var(--trans);
-  position: relative;
-  overflow: hidden;
-}
-
-.tl-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity var(--trans);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-md);
+  transition: opacity 600ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--trans), border-color var(--trans);
 }
 
 .tl-card:hover {
-  box-shadow: 0 12px 32px rgba(196, 118, 58, 0.12);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
   border-color: var(--accent);
 }
 
-.tl-card:hover::before {
-  opacity: 1;
+/* ── ยังเลื่อนไม่ถึง: ปีจาง · จุดกลวง · การ์ดจางและเยื้องขวา ── */
+.timeline.tl-live .tl-item:not(.is-on) .tl-year {
+  color: var(--border);
 }
 
-.tl-year {
+.timeline.tl-live .tl-item:not(.is-on) .tl-dot {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: none;
+  transform: none;
+}
+
+.timeline.tl-live .tl-item:not(.is-on) .tl-card {
+  opacity: 0.25;
+  transform: translateX(28px);
+  box-shadow: none;
+}
+
+/* ป้าย "กำลังศึกษา" — ใส่เฉพาะรายการที่ยังเรียนอยู่ */
+.tl-now {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 4px 12px 4px 10px;
+  border-radius: 100px;
+  background: rgba(201, 150, 12, 0.14);
+  color: var(--accent-text);
   font-family: var(--font-body);
   font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent-text);
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.tl-now::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: tl-pulse 2s infinite;
+}
+
+@keyframes tl-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(201, 150, 12, 0.55); }
+  70% { box-shadow: 0 0 0 9px rgba(201, 150, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 150, 12, 0); }
 }
 
 .tl-card h3 {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
+  line-height: 1.3;
   color: var(--text);
-  margin-bottom: 4px;
   letter-spacing: -0.01em;
 }
 
 .tl-place {
-  font-size: 15px;
-  color: var(--muted);
-  margin-bottom: 10px;
-  letter-spacing: 0.2px;
-}
-
-.tl-card p {
-  font-size: 15px;
+  margin: 2px 0 12px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text);
-  line-height: 1.8;
   letter-spacing: 0.2px;
 }
 
-.tl-highlights {
+/* ชิปรายละเอียด: คณะ · สาขา · แผนการเรียน · เกรดเฉลี่ย */
+.tl-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 14px;
+  list-style: none;
 }
 
-.tl-highlights span {
-  padding: 5px 13px;
-  background: rgba(27, 38, 81, 0.08);
-  color: var(--muted);
+.tl-meta li {
+  padding: 4px 12px;
   border-radius: 100px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background var(--trans), color var(--trans), transform var(--trans), border-color var(--trans);
-  border: 1px solid transparent;
-  letter-spacing: 0.2px;
+  background: var(--bg);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
-.tl-highlights span:hover {
-  background: rgba(27, 38, 81, 0.12);
-  color: var(--accent-text);
-  transform: translateY(-2px);
-  border-color: var(--accent);
+/* จอแคบ: รางชิดซ้าย ปีขึ้นไปอยู่เหนือการ์ด */
+@media (max-width: 768px) {
+  .timeline {
+    gap: 30px;
+  }
+
+  .tl-rail {
+    left: 8px;
+  }
+
+  .tl-item {
+    grid-template-columns: 18px 1fr;
+    column-gap: 20px;
+  }
+
+  .tl-year {
+    grid-column: 2;
+    margin-bottom: 12px;
+    padding-top: 0;
+    text-align: left;
+    font-size: 2.2rem;
+  }
+
+  .tl-year small {
+    display: inline;
+    margin-left: 8px;
+  }
+
+  .tl-dot {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 8px;
+  }
+
+  .tl-card {
+    grid-column: 2;
+    padding: 20px;
+  }
+
+  /* "มัธยมศึกษาตอนปลาย" ที่ขนาดปกติจะตกบรรทัดกลางคำบนจอ 375px */
+  .tl-card h3 {
+    font-size: 1.35rem;
+  }
+
+  /* เยื้องขวาบนจอแคบจะดันหน้าให้เลื่อนแนวนอนได้ ใช้เยื้องลงแทน */
+  .timeline.tl-live .tl-item:not(.is-on) .tl-card {
+    transform: translateY(18px);
+  }
 }
 
-/* ═══ CERTIFICATES ═══ */
-.certs-grid {
+/* ═══ CERTIFICATES ═══
+   Coverflow 3D — ใบกลางหันตรง ใบข้างเอียงลึกเข้าไป · script.js เป็นคนคุม (ดูบล็อก Certificates)
+   ค่าตั้งต้นในไฟล์นี้คือกริด 3 คอลัมน์ธรรมดา ส่วนหน้าตา 3D อยู่ใต้ .is-live ที่ JS เติมให้
+   ถ้า JS ไม่ทำงาน ผู้ชมยังเห็นใบรับรองครบทุกใบพร้อมชื่อ */
+.cert-flow {
+  /* ความกว้างของใบรับรองเทียบกับเวที · ความสูงเวทีคิดจากค่านี้ แก้ที่เดียวพอ */
+  --cert-w: 50%;
+}
+
+.cert-stage {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.cert-card {
-  background: var(--surface);
+.cert-shot {
+  display: block;
+  width: 100%;
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans);
-  position: relative;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
+  font: inherit;
+  color: inherit;
+  transition: border-color var(--trans), box-shadow var(--trans);
 }
 
-.cert-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, rgba(201, 150, 12, 0.1) 0%, transparent 70%);
-  transition: all var(--trans);
-  border-radius: 50%;
-}
-
-.cert-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(201, 150, 12, 0.15);
-  border-color: var(--accent);
-}
-
-.cert-card:hover::before {
-  top: -20%;
-  right: -20%;
+.cert-img {
+  width: 100%;
+  aspect-ratio: 2481 / 1890;
+  object-fit: cover;
 }
 
 .cert-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  padding-top: 12px;
 }
 
-.cert-info h3 {
+/* .cert-cap คือที่ที่ script.js ก๊อปชื่อของใบกลางไปวาง ต้องได้สไตล์เดียวกัน */
+.cert-info h3,
+.cert-cap h3 {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
+  line-height: 1.3;
   color: var(--text);
   letter-spacing: -0.01em;
+}
+
+.cert-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 4px;
+}
+
+/* ชิประดับ — Intermediate ใช้พื้นทองทึบกับตัวหนังสือกรมท่า (5.17:1)
+   อย่าใช้พื้นทองจางกับตัวหนังสือทองเข้ม วัดแล้วได้ราว 4.5:1 คับเกินไป */
+.cert-level {
+  padding: 2px 10px;
+  border-radius: 100px;
+  background: var(--elevated);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.cert-level.is-mid {
+  background: var(--accent);
+  color: var(--on-accent-light);
 }
 
 .cert-issuer {
@@ -1189,10 +1320,287 @@ body {
 
 .cert-date {
   font-size: 13px;
-  /* ห้ามใช้ --dim ตรงนี้ มันเป็นสีสำหรับพื้นกรมท่า บนการ์ดขาวได้ 2.50:1 */
+  /* ห้ามใช้ --dim ตรงนี้ มันเป็นสีสำหรับพื้นกรมท่า บนพื้นสว่างได้ 2.50:1 */
   color: var(--muted);
   font-weight: 600;
   letter-spacing: 0.2px;
+}
+
+.cert-date::before {
+  content: '· ';
+  font-weight: 400;
+}
+
+/* ── โหมด 3D (JS พร้อมแล้ว) ── */
+
+/* ใบที่เอียงอยู่ริมจะยื่นเลยขอบเวที ต้องตัดทิ้งไม่งั้นหน้าเลื่อนแนวนอนได้
+   padding บนล่างเผื่อไว้ให้เงา (--shadow-lg ฟุ้งลงล่างราว 56px) จางหมดก่อนถึงขอบตัด
+   ไม่งั้นเห็นเป็นแถบสีเทาขอบคมใต้ใบรับรอง · margin ติดลบดึงระยะกลับ เลย์เอาต์จึงไม่ขยับ
+   mask ไล่ขอบซ้ายขวาให้ใบริมค่อย ๆ จางหาย แทนที่จะโดนตัดฉับ */
+.cert-flow.is-live .cert-clip {
+  overflow: hidden;
+  margin: -14px -8px -42px;
+  padding: 28px 8px 62px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+/* ความสูงเวที = ความกว้างใบ × อัตราส่วนรูป (1890/2481 = 0.762) + เผื่อเงา
+   ใช้ padding-bottom เพราะเปอร์เซ็นต์ของมันคิดจาก "ความกว้าง" ซึ่ง height ทำไม่ได้ */
+.cert-flow.is-live .cert-stage {
+  display: block;
+  position: relative;
+  height: 0;
+  padding-bottom: calc(var(--cert-w) * 0.762 + 2%);
+  perspective: 1400px;
+  /* z-index ของใบรับรองต้องไม่หลุดไปแข่งกับ navbar */
+  isolation: isolate;
+  /* ปัดซ้ายขวาเป็นของ coverflow ปัดขึ้นลงยังเลื่อนหน้าได้ */
+  touch-action: pan-y;
+}
+
+/* transform / opacity / z-index ของแต่ละใบ script.js เป็นคนใส่ผ่าน style */
+.cert-flow.is-live .cert-item {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--cert-w);
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 500ms ease, filter 500ms ease;
+  will-change: transform;
+}
+
+.cert-flow.is-live .cert-info {
+  display: none;
+}
+
+.cert-flow.is-live .cert-shot {
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+}
+
+.cert-flow.is-live .cert-item.is-active .cert-shot {
+  border-color: var(--accent);
+  cursor: zoom-in;
+}
+
+.cert-bar {
+  /* ต้องอยู่เหนือ padding ล่างของ .cert-clip ที่ยื่นลงมาทับ ไม่งั้นกดลูกศรไม่ติด */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+/* display: flex ด้านบนชนะ [hidden] ของเบราว์เซอร์ ต้องเขียนซ่อนเอง */
+.cert-bar[hidden],
+.cert-dots[hidden] {
+  display: none;
+}
+
+/* หน้าตาเดียวกับ .pc-arrow ของ Projects แต่โชว์ตลอด เพราะที่นี่ลูกศรคือทางหลักในการเลื่อน */
+.cert-arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: background var(--trans), border-color var(--trans), color var(--trans);
+}
+
+.cert-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent-light);
+}
+
+.cert-cap {
+  min-width: 320px;
+  text-align: center;
+}
+
+.cert-cap h3 {
+  font-size: 1.4rem;
+}
+
+.cert-cap .cert-meta {
+  justify-content: center;
+}
+
+.cert-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* ปุ่มกว้าง 26px แต่จุดข้างในเล็ก — แบบเดียวกับ .pc-dots */
+.cert-dots button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-dots button::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: width var(--trans), background var(--trans), border-radius var(--trans);
+}
+
+.cert-dots button[aria-current='true']::before {
+  width: 20px;
+  border-radius: 100px;
+  background: var(--accent);
+}
+
+/* ── กล่องขยายรูป (<dialog>) ── */
+.cert-zoom {
+  /* ห้ามตั้ง display ตรงนี้ เหตุผลเดียวกับ .doc-modal · margin: auto ก็ต้องเขียนคืนเหมือนกัน */
+  margin: auto;
+  width: min(1120px, calc(100vw - 32px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--on-accent);
+  overflow: visible;
+}
+
+.cert-zoom[open] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  animation: dmIn 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* เข้มกว่าฉากหลังของ .doc-modal เพราะต้องอ่านตัวหนังสือขาวที่วางบนฉากหลังโดยตรง */
+.cert-zoom::backdrop {
+  background: rgba(15, 27, 66, 0.93);
+}
+
+.cert-zoom-fig {
+  min-width: 0;
+}
+
+.cert-zoom-fig img {
+  width: auto;
+  max-width: 100%;
+  max-height: 78vh;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.cert-zoom-fig figcaption {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.cert-zoom-fig strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--on-accent);
+}
+
+.cert-zoom-fig span {
+  font-size: 14px;
+  color: var(--on-accent-muted);
+}
+
+.cert-zoom-btn {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--on-accent-muted);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--on-accent);
+  cursor: pointer;
+  transition: background var(--trans), border-color var(--trans), color var(--trans);
+}
+
+.cert-zoom-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent-light);
+}
+
+.cert-zoom-btn:focus-visible {
+  outline: 2px solid var(--on-accent);
+  outline-offset: 3px;
+}
+
+.cert-zoom-close {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+}
+
+@media (max-width: 768px) {
+  /* จอแคบ: ใบกลางกว้างขึ้น ใบข้างโผล่แค่ขอบ */
+  .cert-flow {
+    --cert-w: 78%;
+  }
+
+  /* กริดสำรองตอนไม่มี JS */
+  .cert-stage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ชื่อใบขึ้นไปอยู่เต็มแถว ลูกศรลงมาคู่กันข้างล่าง — ถ้าวางแถวเดียวกัน
+     ที่ 375px เหลือที่ให้ชื่อแค่ ~220px บรรทัดผู้ออกกับปีจะตกเป็นสองบรรทัด */
+  .cert-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cert-cap {
+    order: -1;
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .cert-cap h3 {
+    font-size: 1.2rem;
+  }
+
+  /* กล่องขยาย: รูปเต็มแถว ลูกศรลงไปอยู่ใต้รูป */
+  .cert-zoom[open] {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cert-zoom-fig {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .cert-zoom-prev {
+    justify-self: end;
+  }
 }
 
 /* ═══ CONTACT ═══ */
@@ -1442,9 +1850,12 @@ body {
     padding: 0 24px;
   }
 
+  /* ยังเป็นสองคอลัมน์ต่อ รูปย่อลงตามความกว้างจอ (150–220px)
+     เดิมตรงนี้เปลี่ยนเป็นคอลัมน์เดียว รูปเลยกว้างเต็มจอ — ที่ 768px ได้รูป 717×935px
+     เลย์เอาต์มือถือ (รูปเล็กคู่ประโยคเปิด) ไปเริ่มที่ ≤480px ข้างล่าง */
   .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-columns: 1fr clamp(150px, 27vw, 220px);
+    gap: clamp(20px, 4vw, 32px);
   }
 
   .contact-grid {
@@ -1454,10 +1865,6 @@ body {
 
   .contact-intro {
     max-width: none;
-  }
-
-  .certs-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .nav-links {
@@ -1475,7 +1882,7 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .section {
     padding: 70px 0;
   }
@@ -1484,12 +1891,61 @@ body {
     padding-top: 130px;
   }
 
-  .certs-grid {
-    grid-template-columns: 1fr;
-  }
-
   .footer {
     padding: 20px 24px;
+  }
+}
+
+/* มือถือ: รูปโปรไฟล์ย่อเป็นกรอบเล็กคู่กับประโยคเปิด เห็นหน้าตั้งแต่จอแรก
+   เดิมรูปอยู่ใต้ข้อความเต็มความกว้าง ต้องเลื่อนไปจอที่สองถึงจะเห็น
+   .about-text ใช้ display: contents เพื่อให้ลูก ๆ ของมันมาเป็นช่องของกริดเดียวกับรูป
+   (ผลข้างเคียง: คลาส reveal บน .about-text ไม่ทำงานที่ขนาดนี้ ข้อความขึ้นทันทีไม่ค่อย ๆ จาง) */
+@media (max-width: 480px) {
+  .about-grid {
+    grid-template-columns: 96px 1fr;
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: center;
+  }
+
+  .about-text {
+    display: contents;
+  }
+
+  .about-visual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .about-text .about-role {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .about-text > p:not(.about-role),
+  .about-pills {
+    grid-column: 1 / -1;
+  }
+
+  .about-role + p {
+    margin-top: 20px;
+  }
+
+  .avatar-placeholder {
+    aspect-ratio: 1 / 1.15;
+    border: 0;
+    border-radius: 18px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  /* ครอบให้เห็นช่วงหน้าถึงไหล่ · 18% คือจุดที่ศีรษะไม่โดนตัดในรูปปัจจุบัน เปลี่ยนรูปแล้วต้องปรับ */
+  .avatar-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 18%;
   }
 }
 
@@ -1550,11 +2006,12 @@ body {
 
 /* Responsive Back to Top */
 @media (max-width: 768px) {
+  /* 44px = ขั้นต่ำที่นิ้วกดสบาย · ชิดมุมมากขึ้นจะได้ทับเนื้อหาน้อยลง */
   #backToTop {
-    bottom: 30px;
-    right: 30px;
-    width: 45px;
-    height: 45px;
+    bottom: 18px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
     font-size: 18px;
   }
 
@@ -1805,19 +2262,36 @@ body {
   }
 
   .tech-tile span {
-    font-size: 12px;
+    font-size: 12.5px;
   }
 }
 
 /* จอมือถือ: 32 ไทล์ที่ 2 คอลัมน์กลายเป็น 16 แถว ต้องเลื่อนยาวเกินไป
    ย่อไทล์ลงให้ได้ 3 คอลัมน์ เหลือ 11 แถว */
-@media (max-width: 600px) {
+/* มือถือ: แต่ละหมวดเหลือแถวเดียว ปัดซ้ายขวาดูต่อ
+   เดิมไทล์ 38 อันเรียง 3 คอลัมน์ลงมา ส่วน Skills ยาว 2.5 จอ = หนึ่งในสี่ของทั้งหน้า
+   แถวยื่นออกไปชนขอบจอทั้งสองข้าง (margin ติดลบเท่า padding ของ .container)
+   ไทล์กว้าง 31% จึงเห็น 3 ใบเต็มกับใบที่ 4 โผล่มานิดหนึ่ง เป็นตัวบอกว่าปัดต่อได้ */
+@media (max-width: 480px) {
   .tech-grid {
-    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    display: flex;
     gap: 10px;
+    margin: 0 -24px;
+    padding: 4px 24px 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 24px;
+    scrollbar-width: none;
+  }
+
+  .tech-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .tech-tile {
+    flex: 0 0 31%;
+    scroll-snap-align: start;
     padding: 16px 6px 12px;
     gap: 8px;
   }
@@ -1828,12 +2302,11 @@ body {
   }
 
   .tech-tile span {
-    font-size: 11px;
     letter-spacing: 0;
   }
 
   .tech-tier-label {
-    margin: 36px 0 14px;
+    margin: 26px 0 10px;
   }
 }
 /* ═══ REVEAL (นิยามเดียวในไฟล์) ═══ */
@@ -1854,18 +2327,6 @@ body {
 /* delay */
 .reveal-delay { transition-delay: 120ms; }
 .reveal-delay-2 { transition-delay: 240ms; }
-
-.cert-img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cert-card:hover .cert-img {
-  transform: scale(1.03);
-  box-shadow: var(--shadow-md);
-}
 
 /* ===== WORKSHOP DOC LIST ===== */
 
@@ -2163,7 +2624,7 @@ html {
   flex-wrap: wrap;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .doc-modal {
     width: 100vw;
     max-width: 100vw;
@@ -2250,14 +2711,31 @@ html {
 }
 
 /* Responsive */
-@media (max-width: 560px) {
+@media (max-width: 768px) {
+  /* auto-fit: แท็บเล็ตแนวตั้ง (กล่อง ≥ ~650px) ยังได้สองคอลัมน์ มือถือเหลือคอลัมน์เดียวเอง */
   .doc-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 12px;
+    margin-top: 20px;
   }
 
   .doc-card {
-    padding: 22px 20px 18px;
+    padding: 18px 18px 16px;
+  }
+
+  /* ปุ่มสามปุ่มกว้างเท่ากันในแถวเดียว — เดิมเป็น flex-wrap ปุ่มที่สามตกไปบรรทัดที่สอง
+     max-width กันไม่ให้ปุ่มยืดยาวเกินบนจอ 600–768px ที่การ์ดกว้างเต็มแถว */
+  .doc-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 440px;
+    padding-top: 14px;
+  }
+
+  .doc-actions .btn {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
   }
 }
 
@@ -2314,10 +2792,84 @@ html {
   transform: translateY(-2px);
 }
 
+/* ── จอสัมผัส: พื้นที่กดขั้นต่ำ 44px และตัวหนังสือขั้นต่ำ 12.5px ──
+   วัดที่ 375px ก่อนแก้: ปุ่มและลิงก์เล็กกว่า 40px มี 55 จุด (.btn-sm สูง 32px · ไอคอนในการ์ด Projects 32×32
+   · จุดบอกตำแหน่ง 26px · ปุ่มสามขีด 32×33) และตัวหนังสือเล็กกว่า 12.5px ราว 50 จุด
+   หน้าตาบนจอกว้างไม่เปลี่ยน กฎทั้งหมดอยู่ใต้ 768px */
+@media (max-width: 768px) {
+  .btn-sm {
+    min-height: 44px;
+    font-size: 0.8125rem !important;
+  }
+
+  .proj-links a {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  /* จุดยังเล็กเท่าเดิม ขยายแต่พื้นที่กดรอบจุด · กว้าง 30px เพราะราง Projects มี 8 จุด ถ้ากว้าง 44 จะล้นแถว */
+  .pc-dots button,
+  .cert-dots button {
+    width: 30px;
+    height: 44px;
+  }
+
+  .hamburger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .dm-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-copy {
+    min-height: 44px;
+  }
+
+  .back-top {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* ที่ 320px "github.com/nanthapat3751" ตัดคำไม่ได้ ดันการ์ดติดต่อกว้างเกินจอ 23px
+     ทั้งหน้าเลยเลื่อนแนวนอนได้ · ยอมให้ตัดกลางคำได้เฉพาะตอนที่ไม่พอจริง ๆ */
+  .contact-item > div {
+    min-width: 0;
+  }
+
+  .ci-val {
+    overflow-wrap: anywhere;
+  }
+
+  /* ปุ่มอีเมลเป็นข้อความยาวบรรทัดเดียว ที่ 320px กว้างเกินคอลัมน์ 28px
+     ย่อตัวหนังสือตามจอ (14–16px) กับ padding ข้าง แทนการปล่อยให้อีเมลตกบรรทัด */
+  .contact-cta {
+    max-width: 100%;
+    padding: 13px 20px;
+    font-size: clamp(0.875rem, 4.2vw, 1rem);
+  }
+
+  .tech-tier-label,
+  .ci-label,
+  .act-body .act-kind {
+    font-size: 12.5px;
+  }
+
+  .doc-kind,
+  .footer-credit {
+    font-size: 0.8125rem;
+  }
+}
+
 /* ที่ว่างใน navbar ไม่พอให้สองปุ่มมีข้อความเต็ม (วัดจริงก่อนตัด):
    961-1199px เมนูยังเรียงเต็มแถว ที่ 961 ปุ่ม View ชนกับลิงก์ Contact พอดี · 601-960 เมนูยุบเป็นแฮมเบอร์เกอร์แล้ว เหลือที่ 240px+ ใส่ข้อความได้
-   ≤600px ที่แคบลงเรื่อย ๆ จนที่ 375 โลโก้ชนปุ่ม -> ปุ่ม View เหลือแค่ไอคอนรูปตา · ชื่อปุ่มยังอยู่ใน aria-label */
-@media (min-width: 961px) and (max-width: 1199px), (max-width: 600px) {
+   ≤768px ที่แคบลงเรื่อย ๆ จนที่ 375 โลโก้ชนปุ่ม -> ปุ่ม View เหลือแค่ไอคอนรูปตา · ชื่อปุ่มยังอยู่ใน aria-label
+   (เดิมตัดที่ 600px ย้ายมา 768px ให้ตรงกับจุดเปลี่ยนเลย์เอาต์อื่น ช่วง 601–768 จึงเสียคำว่า View CV ไป เหลือไอคอน) */
+@media (min-width: 961px) and (max-width: 1199px), (max-width: 768px) {
   .nav-cv-view {
     padding: 0 15px;
   }

@@ -22,7 +22,6 @@
        ทั้งใน og:url และ og:image (Facebook ต้องการ URL เต็ม ไม่รับ path สั้น) -->
   <meta property="og:url" content="https://nanthapat3751.github.io/My-Portfolio/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -30,7 +29,7 @@
     rel="stylesheet">
   <!-- ?v= คือเลขรุ่นกันแคช · แก้ style.css หรือ script.js เมื่อไหร่ ต้องเปลี่ยนเลขนี้ทั้งสองจุดก่อนอัปขึ้น GitHub
        ไม่งั้นเบราว์เซอร์ของคนที่เคยเปิดเว็บจะใช้ไฟล์เก่าที่จำไว้คู่กับ HTML ใหม่ หน้าเพี้ยน (เคยทำรูปโปรไฟล์ยืดมาแล้ว) -->
-  <link rel="stylesheet" href="style.css?v=20261108" />
+  <link rel="stylesheet" href="style.css?v=20261116-2" />
   <noscript>
     <!-- ไม่มี JS = IntersectionObserver ไม่ทำงาน = .reveal ค้างที่ opacity 0 ทั้งหน้า
          กฎนี้บังคับให้เนื้อหาโผล่ครบ ยอมทิ้งอนิเมชันไป -->
@@ -1344,34 +1343,41 @@
     <div class="container">
       <h2 class="section-label reveal">Education</h2>
       <!--<h2 class="section-title reveal">Academic<br /><em>Background.</em></h2>-->
+      <!-- เส้นเวลาวาดตามการเลื่อน · script.js เติม .tl-live ให้ .timeline และ .is-on ให้ .tl-item
+           เพิ่มรายการใหม่: ก๊อป <article class="tl-item"> ทั้งก้อน วางเรียงใหม่สุดไว้บน -->
       <div class="timeline">
+        <div class="tl-rail" aria-hidden="true"><span class="tl-fill"></span></div>
 
-        <div class="tl-item reveal">
-          <div class="tl-dot"></div>
+        <article class="tl-item">
+          <div class="tl-year">2023<small>– Present</small></div>
+          <span class="tl-dot" aria-hidden="true"></span>
           <div class="tl-card">
-            <div class="tl-year">2023 – Present</div>
+            <span class="tl-now">กำลังศึกษา</span>
             <h3>ปริญญาตรี</h3>
-            <div class="tl-place">มหาวิทยาลัยเกษตรศาสตร์ · คณะศิลปศาสตร์และวิทยาศาสตร์ · สาขาเทคโนโลยีสารสนเทศ</div>
-            <p>เกรดเฉลี่ย: <strong>2.82</strong></p>
-            <div class="tl-highlights">
-              <!-- <span>วิชาเอก: Business Analysis</span> -->
-              <!-- <span>Senior Project: [ชื่อ Project]</span> -->
-            </div>
+            <p class="tl-place">มหาวิทยาลัยเกษตรศาสตร์</p>
+            <ul class="tl-meta">
+              <li>คณะศิลปศาสตร์และวิทยาศาสตร์</li>
+              <li>สาขาเทคโนโลยีสารสนเทศ</li>
+              <li>เกรดเฉลี่ย 2.96</li>
+              <!-- <li>วิชาเอก: Business Analysis</li> -->
+              <!-- <li>Senior Project: [ชื่อ Project]</li> -->
+            </ul>
           </div>
-        </div>
+        </article>
 
-        <div class="tl-item reveal reveal-delay">
-          <div class="tl-dot"></div>
+        <article class="tl-item">
+          <div class="tl-year">2020<small>– 2023</small></div>
+          <span class="tl-dot" aria-hidden="true"></span>
           <div class="tl-card">
-            <div class="tl-year">2020 – 2023</div>
             <h3>มัธยมศึกษาตอนปลาย</h3>
-            <div class="tl-place">โรงเรียนพระปฐมวิทยาลัย · แผนการเรียนศิลป์-คำนวณ</div>
-            <p>เกรดเฉลี่ย: <strong>3.60</strong></p>
-            <div class="tl-highlights">
-              <!-- <span>กิจกรรม: [ระบุ]</span> -->
-            </div>
+            <p class="tl-place">โรงเรียนพระปฐมวิทยาลัย</p>
+            <ul class="tl-meta">
+              <li>แผนการเรียนศิลป์-คำนวณ</li>
+              <li>เกรดเฉลี่ย 3.60</li>
+              <!-- <li>กิจกรรม: [ระบุ]</li> -->
+            </ul>
           </div>
-        </div>
+        </article>
 
       </div>
     </div>
@@ -1382,83 +1388,124 @@
     <div class="container">
       <h2 class="section-label reveal">Certificates</h2>
       <!-- <h2 class="section-title reveal">Always learning,<br /><em>always growing.</em></h2> -->
-      <div class="certs-grid">
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/css_certificate.jpg" width="4961" height="3780" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง CSS (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h3>CSS (Basic) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
+      <!-- Coverflow 3D · script.js เติม .is-live ให้ .cert-flow แล้วจัดตำแหน่งการ์ดเอง
+           ถ้าสคริปต์ไม่ทำงาน ส่วนนี้เป็นกริด 3 คอลัมน์ธรรมดาที่มีชื่ออยู่ใต้รูป
+           เพิ่มใบใหม่: ก๊อป <figure class="cert-item"> ทั้งก้อน ไม่ต้องแก้ script.js -->
+      <div class="cert-flow reveal" id="certFlow">
+        <div class="cert-clip">
+          <div class="cert-stage">
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/css_certificate.jpg" width="4961" height="3780" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง CSS (Basic) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>CSS (Basic) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level">Basic</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/java_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Java (Basic) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>Java (Basic) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level">Basic</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/javascript_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง JavaScript (Basic) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>JavaScript (Basic) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level">Basic</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/nodejs_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Node.js (Basic) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>Node.js (Basic) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level">Basic</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/sql_intermediate certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง SQL (Intermediate) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>SQL (Intermediate) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level is-mid">Intermediate</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
+            <figure class="cert-item">
+              <button type="button" class="cert-shot">
+                <img src="images/python_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Python (Basic) จาก HackerRank">
+              </button>
+              <figcaption class="cert-info">
+                <h3>Python (Basic) Certificate</h3>
+                <p class="cert-meta"><span class="cert-level">Basic</span><span class="cert-issuer">Issued by HackerRank</span><span class="cert-date">2025</span></p>
+              </figcaption>
+            </figure>
+
           </div>
         </div>
 
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/java_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Java (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h3>Java (Basic) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
+        <!-- แถบควบคุม: ซ่อนไว้จนกว่า script.js จะพร้อม · ชื่อใบที่อยู่ตรงกลางถูกก๊อปมาใส่ .cert-cap -->
+        <div class="cert-bar" hidden>
+          <button type="button" class="cert-arrow" data-dir="-1" aria-label="ใบรับรองใบก่อนหน้า">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div class="cert-cap" aria-live="polite"></div>
+          <button type="button" class="cert-arrow" data-dir="1" aria-label="ใบรับรองใบถัดไป">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
         </div>
-
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/javascript_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง JavaScript (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h3>JavaScript (Basic) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
-        </div>
-
-
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/nodejs_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Node.js (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h3>Node.js (Basic) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
-        </div>
-
-
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/sql_intermediate certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง SQL (Intermediate) จาก HackerRank">
-          <div class="cert-info">
-            <h3>SQL (Intermediate) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
-        </div>
-
-
-        <div class="cert-card reveal reveal-delay">
-          <div class="brings-icon">
-            <i class="fa-solid fa-certificate" style="color: rgb(215, 150, 19);"></i>
-          </div>
-          <img src="images/python_basic certificate.jpg" width="2481" height="1890" loading="lazy" decoding="async" class="cert-img" alt="ใบรับรอง Python (Basic) จาก HackerRank">
-          <div class="cert-info">
-            <h3>Python (Basic) Certificate</h3>
-            <span class="cert-issuer">Issued by HackerRank</span>
-            <span class="cert-date">2024</span>
-          </div>
-        </div>
-
+        <div class="cert-dots" hidden></div>
       </div>
+
+      <!-- กล่องขยายรูป · รูปกับข้อความถูกใส่ตอนกดเปิด -->
+      <dialog class="cert-zoom" id="certZoom" aria-labelledby="certZoomTitle">
+        <button type="button" class="cert-zoom-btn cert-zoom-close" data-close aria-label="ปิดรูปขยาย">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" aria-hidden="true" focusable="false">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+        <button type="button" class="cert-zoom-btn cert-zoom-prev" data-dir="-1" aria-label="ใบรับรองใบก่อนหน้า">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <figure class="cert-zoom-fig">
+          <img id="certZoomImg" alt="">
+          <figcaption>
+            <strong id="certZoomTitle"></strong>
+            <span id="certZoomSub"></span>
+          </figcaption>
+        </figure>
+        <button type="button" class="cert-zoom-btn cert-zoom-next" data-dir="1" aria-label="ใบรับรองใบถัดไป">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+      </dialog>
     </div>
   </section>
 
@@ -1538,7 +1585,7 @@
   <!-- Back to Top Button -->
   <button id="backToTop" aria-label="Back to top" title="Back to Top">↑</button>
 
-  <script src="script.js?v=20261108"></script>
+  <script src="script.js?v=20261116-2"></script>
 </body>
 
 </html>

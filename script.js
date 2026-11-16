@@ -121,6 +121,44 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealEls.forEach(el => revealObserver.observe(el));
 
+/* ── Education: เส้นเวลาวาดตามการเลื่อน ──
+   เส้นทองยืดลงมาถึง "เส้นกระตุ้น" ที่ 62% ของความสูงจอ · จุดไหนอยู่เหนือเส้นนี้
+   รายการนั้นได้ .is-on (จุดสว่าง ปีเข้ม การ์ดเลื่อนเข้า) เลื่อนกลับขึ้นก็ดับตาม
+   .tl-live เติมจากตรงนี้เท่านั้น — ถ้าสคริปต์ไม่ทำงานหรือผู้ใช้ตั้งลดการเคลื่อนไหว
+   CSS จะแสดงทุกอย่างแบบสว่างครบไว้ให้เลย */
+const eduTimeline = document.querySelector('.timeline');
+
+if (eduTimeline && !reduceMotion) {
+  const TL_TRIGGER = 0.62;
+  const tlItems = eduTimeline.querySelectorAll('.tl-item');
+  let tlQueued = false;
+
+  const updateTimeline = () => {
+    tlQueued = false;
+    const rect = eduTimeline.getBoundingClientRect();
+    const trigger = window.innerHeight * TL_TRIGGER;
+    const progress = Math.min(1, Math.max(0, (trigger - rect.top) / rect.height));
+
+    eduTimeline.style.setProperty('--tl-progress', progress.toFixed(4));
+    tlItems.forEach(item => {
+      const dot = item.querySelector('.tl-dot');
+      item.classList.toggle('is-on', dot.getBoundingClientRect().top < trigger);
+    });
+  };
+
+  // เลื่อนหนึ่งครั้งยิง event หลายสิบรอบ รวบให้คำนวณเฟรมละครั้งพอ
+  const queueTimelineUpdate = () => {
+    if (tlQueued) return;
+    tlQueued = true;
+    requestAnimationFrame(updateTimeline);
+  };
+
+  eduTimeline.classList.add('tl-live');
+  window.addEventListener('scroll', queueTimelineUpdate, { passive: true });
+  window.addEventListener('resize', queueTimelineUpdate);
+  updateTimeline();
+}
+
 /* ── Smooth scroll for all anchor links ── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
@@ -211,6 +249,158 @@ document.querySelectorAll('.proj-card').forEach(card => {
   // รูปในการ์ดเป็น lazy ความกว้างรวมเลยเปลี่ยนหลังโหลด ต้องคำนวณใหม่อีกรอบ
   window.addEventListener('load', sync);
   sync();
+})();
+
+/* ── Certificates: Coverflow 3D + กล่องขยายรูป ──
+   ใบกลางหันตรง ใบข้างเอียงลึกเข้าไป · เลื่อนได้ด้วยลูกศร จุด กดใบข้าง ปัดนิ้ว หรือปุ่มซ้ายขวา
+   กดใบกลางเพื่อขยายเต็มจอ · HTML ตั้งต้นเป็นกริดธรรมดา ตรงนี้เติม .is-live แล้วค่อยจัดเป็น 3D
+   ตำแหน่งของแต่ละใบใส่ผ่าน style ตรง ๆ เพราะขึ้นกับว่าห่างจากใบกลางกี่ใบ เขียนเป็น CSS ล่วงหน้าไม่ได้ */
+(() => {
+  const flow = document.getElementById('certFlow');
+  if (!flow) return;
+
+  const stage = flow.querySelector('.cert-stage');
+  const items = Array.from(flow.querySelectorAll('.cert-item'));
+  if (!stage || items.length < 2) return;
+
+  const CF_SHIFT = 58;    // ใบข้างเลื่อนออกไปกี่ % ของความกว้างใบ (ต่อหนึ่งลำดับ)
+  const CF_DEPTH = 150;   // ถอยลึกเข้าไปกี่ px (ต่อหนึ่งลำดับ)
+  const CF_ANGLE = 42;    // ใบข้างเอียงกี่องศา
+  const CF_VISIBLE = 2;   // โชว์ใบข้างได้ข้างละกี่ใบ ที่ไกลกว่านี้ซ่อน
+  const SWIPE_MIN = 45;   // ปัดเกินกี่ px ถึงนับว่าตั้งใจเลื่อน
+
+  const n = items.length;
+  const shots = items.map(item => item.querySelector('.cert-shot'));
+  const titles = items.map(item => item.querySelector('h3').textContent.trim());
+  const subs = items.map(item => {
+    const issuer = item.querySelector('.cert-issuer');
+    const date = item.querySelector('.cert-date');
+    return [issuer, date].filter(Boolean).map(el => el.textContent.trim()).join(' · ');
+  });
+
+  const bar = flow.querySelector('.cert-bar');
+  const cap = flow.querySelector('.cert-cap');
+  const dotBox = flow.querySelector('.cert-dots');
+  // เริ่มที่ใบกลางรายการ จะได้มีใบโผล่ทั้งสองข้างตั้งแต่แรก
+  let active = Math.floor(n / 2);
+
+  const dots = items.map((_, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', titles[i]);
+    b.addEventListener('click', () => go(i));
+    dotBox.appendChild(b);
+    return b;
+  });
+
+  const render = () => {
+    items.forEach((item, i) => {
+      const d = i - active;
+      const far = Math.abs(d);
+      const angle = d === 0 ? 0 : (d > 0 ? -CF_ANGLE : CF_ANGLE);
+
+      item.style.transform =
+        `translateX(calc(-50% + ${d * CF_SHIFT}%)) translateZ(${-far * CF_DEPTH}px) rotateY(${angle}deg)`;
+      item.style.zIndex = String(n - far);
+      item.style.opacity = far > CF_VISIBLE ? '0' : '1';
+      item.style.pointerEvents = far > CF_VISIBLE ? 'none' : '';
+      item.style.filter = far ? 'brightness(0.93)' : '';
+      item.classList.toggle('is-active', d === 0);
+
+      // Tab เข้ามาแล้วเจอใบกลางใบเดียว ใบอื่นไปถึงด้วยปุ่มซ้ายขวา
+      shots[i].tabIndex = d === 0 ? 0 : -1;
+      shots[i].setAttribute('aria-label', (d === 0 ? 'ขยายดู ' : 'เลื่อนไปที่ ') + titles[i]);
+      dots[i].setAttribute('aria-current', String(d === 0));
+    });
+    cap.innerHTML = items[active].querySelector('.cert-info').innerHTML;
+  };
+
+  // เลยใบสุดท้ายแล้ววนกลับใบแรก
+  const go = (i, focus) => {
+    active = (i + n) % n;
+    render();
+    if (focus) shots[active].focus({ preventScroll: true });
+  };
+
+  // ── กล่องขยายรูป ──
+  const zoom = document.getElementById('certZoom');
+  const canZoom = zoom && typeof HTMLDialogElement === 'function' && HTMLDialogElement.prototype.showModal;
+  const zoomImg = document.getElementById('certZoomImg');
+  const zoomTitle = document.getElementById('certZoomTitle');
+  const zoomSub = document.getElementById('certZoomSub');
+  let zoomAt = 0;
+
+  const showZoom = i => {
+    zoomAt = (i + n) % n;
+    const img = shots[zoomAt].querySelector('img');
+    zoomImg.src = img.currentSrc || img.src;
+    zoomImg.alt = img.alt;
+    zoomTitle.textContent = titles[zoomAt];
+    zoomSub.textContent = `${subs[zoomAt]} · ${zoomAt + 1} / ${n}`;
+  };
+
+  const openZoom = i => {
+    if (!canZoom) return;
+    showZoom(i);
+    zoom.showModal();
+    document.body.style.overflow = 'hidden';
+  };
+
+  if (canZoom) {
+    zoom.querySelector('[data-close]').addEventListener('click', () => zoom.close());
+    zoom.querySelectorAll('[data-dir]').forEach(btn => {
+      btn.addEventListener('click', () => showZoom(zoomAt + Number(btn.dataset.dir)));
+    });
+    // กดบนฉากหลังหรือที่ว่างรอบรูปแล้วปิด — กล่องโปร่งใสและ padding: 0 จึงไม่มีขอบให้กดพลาด
+    zoom.addEventListener('click', e => { if (e.target === zoom) zoom.close(); });
+    zoom.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') showZoom(zoomAt - 1);
+      else if (e.key === 'ArrowRight') showZoom(zoomAt + 1);
+    });
+    zoom.addEventListener('close', () => {
+      document.body.style.overflow = '';
+      // ไล่ดูในกล่องไปถึงใบไหน ปิดแล้ว coverflow ก็อยู่ที่ใบนั้น
+      go(zoomAt, true);
+    });
+  }
+
+  // ── การควบคุม ──
+  let downX = null;
+  let swiped = false;
+
+  shots.forEach((shot, i) => {
+    shot.addEventListener('click', () => {
+      if (swiped) return;
+      if (i === active) openZoom(i); else go(i);
+    });
+  });
+
+  bar.querySelectorAll('.cert-arrow').forEach(btn => {
+    btn.addEventListener('click', () => go(active + Number(btn.dataset.dir)));
+  });
+
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(active - 1, true); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(active + 1, true); }
+  });
+
+  stage.addEventListener('pointerdown', e => { downX = e.clientX; swiped = false; });
+  stage.addEventListener('pointerup', e => {
+    if (downX === null) return;
+    const dx = e.clientX - downX;
+    downX = null;
+    if (Math.abs(dx) < SWIPE_MIN) return;
+    // ปัดแล้วเบราว์เซอร์ยังยิง click ตามมา กันไว้ไม่ให้เลื่อนซ้ำหรือเปิดกล่องขยาย
+    swiped = true;
+    setTimeout(() => { swiped = false; }, 0);
+    go(active + (dx < 0 ? 1 : -1));
+  });
+  stage.addEventListener('pointercancel', () => { downX = null; });
+
+  flow.classList.add('is-live');
+  bar.hidden = false;
+  dotBox.hidden = false;
+  render();
 })();
 
 /* ── Workshop: กล่องรายละเอียดเอกสาร ──
