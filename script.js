@@ -403,6 +403,40 @@ document.querySelectorAll('.proj-card').forEach(card => {
   render();
 })();
 
+/* ── ปุ่ม CV บนมือถือ: แผ่นเลือกจากล่างจอ ──
+   จอ ≤768px แถบบนมีที่ไม่พอให้ปุ่ม View / Download มีข้อความ เลยรวมเป็นปุ่ม "CV" ปุ่มเดียว
+   กดแล้ว <dialog id="cvSheet"> เลื่อนขึ้นจากล่างจอ · ใช้ showModal() จึงได้ focus trap กับปุ่ม Esc มาเอง
+   คลาส has-cv-sheet บน <html> คือสวิตช์ให้ CSS ซ่อนสองปุ่มเดิมแล้วโชว์ปุ่มใหม่
+   เติมเฉพาะเมื่อเปิด dialog ได้จริง เบราว์เซอร์เก่าจึงยังเห็นสองปุ่มเดิม */
+(() => {
+  const sheet = document.getElementById('cvSheet');
+  const opener = document.getElementById('cvOpen');
+  if (!sheet || !opener) return;
+  if (typeof HTMLDialogElement !== 'function' || !HTMLDialogElement.prototype.showModal) return;
+
+  document.documentElement.classList.add('has-cv-sheet');
+
+  opener.addEventListener('click', () => {
+    sheet.showModal();
+    document.body.style.overflow = 'hidden';
+  });
+
+  // ปิดเมื่อ: กดฉากหลัง (เป้าคือตัว dialog เอง เพราะ padding อยู่ที่ชั้นใน) · กดปุ่มปิด · กดลิงก์ดูหรือโหลด
+  // กดลิงก์แล้วปิดแผ่นเฉย ๆ ไม่ได้ยกเลิกการทำงานของลิงก์ แท็บใหม่/การดาวน์โหลดยังเกิดตามปกติ
+  sheet.addEventListener('click', e => {
+    if (e.target === sheet || e.target.closest('a, [data-close]')) sheet.close();
+  });
+
+  sheet.addEventListener('close', () => {
+    document.body.style.overflow = '';
+  });
+
+  // หมุนจอหรือขยายหน้าต่างจนเกิน 768px ปุ่ม CV หายไปแล้ว แผ่นก็ต้องปิดตาม
+  window.matchMedia('(min-width: 769px)').addEventListener('change', e => {
+    if (e.matches && sheet.open) sheet.close();
+  });
+})();
+
 /* ── Workshop: กล่องรายละเอียดเอกสาร ──
    ใช้ <dialog> ของเบราว์เซอร์ จึงไม่ต้องเขียน focus trap / ปุ่ม Esc / ฉากหลังเอง
    เบราว์เซอร์เก่าที่ไม่มี showModal จะไม่ผูกปุ่มให้เลย ปุ่มจะเฉย ๆ แทนที่จะพังทั้งหน้า */
@@ -491,8 +525,12 @@ document.querySelectorAll('.mobile-menu a').forEach(link => {
 });
 
 const phrases = [
+  // สองประโยคแรกเป็นของเดิม อีกสองประโยคเพิ่มให้ครบสายที่ยื่น: SA/BA → Developer → Data
+  // ประโยคแรกต้องตรงกับข้อความสำรองใน #typingText ของ index.html
   'เข้าใจทั้งธุรกิจและเทคโนโลยี',
   'แปลงความต้องการเป็นภาษาคอมพิวเตอร์ได้',
+  'พัฒนาระบบให้ใช้งานได้จริง',
+  'เปลี่ยนข้อมูลให้เป็นสิ่งที่ใช้ตัดสินใจได้',
 ];
 
 let pi = 0;
@@ -542,6 +580,23 @@ if (track && !reduceMotion) {
   const oneSet = track.innerHTML;
   const setsPerHalf = Math.max(1, Math.ceil(MIN_HALF_WIDTH / track.offsetWidth));
   track.innerHTML = oneSet.repeat(setsPerHalf * 2);
+}
+
+/* ── Contact: แสงสีทองลอยตามเมาส์ ──
+   ตำแหน่งตั้งต้นอยู่ใน CSS (.contact-section::before) ตรงนี้แค่ส่งพิกัดเมาส์ให้ผ่าน --glow-x / --glow-y
+   เฉพาะเครื่องที่มีเมาส์และไม่ได้ตั้งลดการเคลื่อนไหว · เมาส์ออกแล้วแสงกลับไปที่เดิม */
+const contactSection = document.querySelector('.contact-section');
+
+if (contactSection && !reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  contactSection.addEventListener('pointermove', e => {
+    const rect = contactSection.getBoundingClientRect();
+    contactSection.style.setProperty('--glow-x', `${e.clientX - rect.left}px`);
+    contactSection.style.setProperty('--glow-y', `${e.clientY - rect.top}px`);
+  });
+  contactSection.addEventListener('pointerleave', () => {
+    contactSection.style.removeProperty('--glow-x');
+    contactSection.style.removeProperty('--glow-y');
+  });
 }
 
 // ปุ่มคัดลอกอีเมล — มีไว้เผื่อเครื่องที่กด mailto แล้วไม่มีโปรแกรมอีเมลเปิดขึ้นมา

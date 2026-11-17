@@ -454,40 +454,6 @@ body {
   }
 }
 
-.brings-icon {
-  font-size: 3rem;
-  position: relative;
-  z-index: 1;
-  transition: transform var(--trans);
-}
-
-/* โลโก้แบรนด์แบบ SVG ในบล็อกไอคอน - block กัน baseline gap จาก font-size 3rem */
-.brings-icon svg {
-  display: block;
-}
-
-/* ── ไอคอนช่องทางติดต่อ: ชิปขาวรองโลโก้แบรนด์ ──
-   สีแบรนด์ contrast ไม่ผ่านบนพื้น navy ของ .contact-section
-   (Facebook 2.55:1 · Instagram 2.49:1 · GitHub 1.66:1 · เกณฑ์ 3:1)
-   วางบนชิปขาวแล้วผ่านหมด (4.82 / 4.34 / 17.89:1) */
-.contact-item .brings-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  background: var(--surface);
-  border-radius: 12px;
-  font-size: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-}
-
-.contact-item .brings-icon svg {
-  width: 26px;
-  height: 26px;
-}
-
 /* ต่ำกว่า 1040px แถบเริ่มแคบกว่ากรอบ 1100 -> บีบอีกขั้นก่อนสลับไป hamburger ที่ 960px
    (ที่ 961px ซึ่งแคบสุดของช่วงนี้ ยังเหลือช่องว่างริมข้างละ ~21px) */
 /* navbar เท่านั้น: 961–1199px เมนูยังเรียงเต็มแถวแต่ที่เริ่มไม่พอ ต้องบีบช่องไฟ
@@ -502,12 +468,6 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .brings-icon {
-    font-size: 2.5rem;
-  }
-
-}
 
 /* ไม่มีอะไรต่อท้ายรูปแล้ว margin ล่างจึงเป็นที่ว่างเปล่า ๆ */
 .avatar-wrap {
@@ -1112,9 +1072,11 @@ body {
   transform: none;
 }
 
+/* เยื้องขวาได้ไม่เกิน padding ของ .container ที่แคบที่สุดในช่วงที่กฎนี้ทำงาน (24px ที่ 769–960px)
+   เคยตั้ง 28px แล้วการ์ดล้นขอบ 4px ทั้งหน้าเลื่อนแนวนอนได้ตอนการ์ดยังไม่สว่าง */
 .timeline.tl-live .tl-item:not(.is-on) .tl-card {
   opacity: 0.25;
-  transform: translateX(28px);
+  transform: translateX(20px);
   box-shadow: none;
 }
 
@@ -1603,9 +1565,35 @@ body {
   }
 }
 
-/* ═══ CONTACT ═══ */
+/* ═══ CONTACT ═══
+   คำชวนตัวใหญ่กลางจอ + ปุ่มอีเมลปุ่มเดียว ช่องทางอื่นเป็นแถวชิปข้างล่าง
+   เดิมเป็นสองคอลัมน์ (คำชวน+อีเมล | การ์ด GitHub+ชิป) ซึ่งสูงไม่เท่ากัน เหลือที่ว่างใต้คอลัมน์ขวา */
 .contact-section {
+  position: relative;
   background: var(--accent2);
+  text-align: center;
+  /* แสงสีทองข้างล่างใหญ่กว่าตัว section ต้องตัดส่วนที่ล้นออก */
+  overflow: hidden;
+}
+
+/* แสงสีทองจาง ๆ หลังคำชวน · script.js ย้ายมันตามเมาส์ด้วย --glow-x / --glow-y
+   จอสัมผัสหรือเครื่องที่ตั้งลดการเคลื่อนไหว จะอยู่นิ่งที่ค่าตั้งต้นตรงนี้ */
+.contact-section::before {
+  content: '';
+  position: absolute;
+  left: var(--glow-x, 50%);
+  top: var(--glow-y, 42%);
+  width: 640px;
+  height: 640px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(201, 150, 12, 0.22), transparent 62%);
+  pointer-events: none;
+  transition: left 600ms ease-out, top 600ms ease-out;
+}
+
+/* เนื้อหาต้องอยู่เหนือแสง */
+.contact-section .container {
+  position: relative;
 }
 
 .contact-section .section-label {
@@ -1620,41 +1608,45 @@ body {
   color: var(--accent);
 }
 
-/* สองคอลัมน์: ซ้ายคำชวน+อีเมล ขวาช่องทางอื่น
-   ของเดิมเป็นคอลัมน์เดียวล็อก max-width 680px ในกรอบ 1100 เหลือที่ว่างขวามือ 420px ไม่ได้ใช้เลย
-   และการ์ด 4 ใบเรียงลงมารวม 380px ทั้งที่แต่ละใบมีแค่สองบรรทัด */
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
-
-/* คุมความยาวบรรทัดไว้ ไม่ให้คำโปรยลากยาวเต็มคอลัมน์จนอ่านยาก */
-.contact-intro {
-  max-width: 420px;
+.contact-title {
+  max-width: 860px;
+  margin: 0 auto 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.2vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--on-accent);
 }
 
 .contact-desc {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 28px;
+  color: var(--on-accent-muted);
+  margin-bottom: 34px;
   line-height: 1.8;
   letter-spacing: 0.2px;
 }
 
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
 /* ปุ่มหลักของทั้งส่วน — พื้นขาวบนกรมท่า ไม่ใช่ .btn ปกติ
-   .btn เป็นพื้นกรมท่าซึ่งจมหายไปกับพื้น section และ .btn-outline ก็เป็นตัวหนังสือกรมท่าเหมือนกัน */
+   .btn เป็นพื้นกรมท่าซึ่งจมหายไปกับพื้น section และ .btn-outline ก็เป็นขอบกรมท่าเหมือนกัน */
 .contact-cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 26px;
+  max-width: 100%;
+  padding: 17px 36px;
   background: var(--surface);
   color: var(--accent2);
   border-radius: 100px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.15rem;
   letter-spacing: 0.2px;
   box-shadow: var(--shadow-md);
   transition: background var(--trans), color var(--trans), transform var(--trans), box-shadow var(--trans);
@@ -1668,15 +1660,11 @@ body {
 }
 
 .contact-copy {
-  /* flex ไม่ใช่ inline-flex — ต้องให้ขึ้นบรรทัดใหม่ใต้ปุ่มหลัก
-     ไม่งั้นมันจะไปนั่งข้าง ๆ ปุ่มซึ่งเป็น inline-flex เหมือนกัน
-     แล้ว fit-content กันไม่ให้พื้นที่กดลากยาวเต็มคอลัมน์ */
   display: flex;
-  width: fit-content;
   align-items: center;
   gap: 8px;
-  margin-top: 16px;
-  padding: 4px 2px;
+  min-height: 44px;
+  padding: 4px 6px;
   background: none;
   border: 0;
   /* ปุ่มไม่สืบทอดฟอนต์จาก body เอง ต้องสั่งเอง ไม่งั้นได้ฟอนต์ระบบ */
@@ -1699,42 +1687,50 @@ body {
   display: none;
 }
 
-.contact-channels {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
+/* ช่องทางอื่นเป็นชั้นรอง: แถวชิปใต้เส้นคั่น */
 .contact-social {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
+  margin-top: 34px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-/* โซเชียลส่วนตัวเป็นชั้นรอง เลยย่อจากการ์ดเต็มใบเหลือชิป */
 .contact-chip {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  max-width: 100%;
+  min-height: 44px;
   padding: 7px 18px 7px 7px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 100px;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--on-accent);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.2px;
+  text-align: left;
   transition: background var(--trans), border-color var(--trans), transform var(--trans);
 }
 
 .contact-chip:hover {
   background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(196, 118, 58, 0.4);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
+/* "github.com/nanthapat3751" ตัดคำไม่ได้ ที่จอ 320px เคยดันทั้งหน้าให้เลื่อนแนวนอนได้
+   ยอมให้ตัดกลางคำเฉพาะตอนที่ไม่พอจริง ๆ */
+.contact-chip > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 /* แผ่นขาวรองโลโก้ — เป็นเรื่องอ่านออก ไม่ใช่การตกแต่ง
-   สีแบรนด์วางบนพื้นกรมท่าตรง ๆ ได้ IG 2.49 · FB 2.55 · GitHub 1.66 : 1 ซึ่งตกหมด
+   สีแบรนด์วางบนพื้นกรมท่าตรง ๆ ได้ IG 2.49 · FB 2.55 · GitHub 1.66 : 1 ซึ่งตกเกณฑ์ 3:1
    พอวางบนพื้นขาวได้ 4.34 / 4.82 / 17.89 : 1 */
 .ci-badge {
   display: flex;
@@ -1751,39 +1747,6 @@ body {
   display: block;
   width: 17px;
   height: 17px;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius);
-  transition: background var(--trans), transform var(--trans), border-color var(--trans);
-  backdrop-filter: blur(10px);
-}
-
-.contact-item:hover {
-  background: rgba(255, 255, 255, 0.14);
-  transform: translateX(6px);
-  border-color: rgba(196, 118, 58, 0.4);
-}
-
-.ci-label {
-  font-size: 12px;
-  color: var(--on-accent-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 700;
-}
-
-.ci-val {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 700;
-  letter-spacing: 0.2px;
 }
 
 /* ═══ FOOTER ═══ */
@@ -1856,15 +1819,6 @@ body {
   .about-grid {
     grid-template-columns: 1fr clamp(150px, 27vw, 220px);
     gap: clamp(20px, 4vw, 32px);
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .contact-intro {
-    max-width: none;
   }
 
   .nav-links {
@@ -2792,6 +2746,167 @@ html {
   transform: translateY(-2px);
 }
 
+/* ── ปุ่ม CV บนมือถือ: ปุ่มเดียว เปิดแผ่นเลือกจากล่างจอ ──
+   จอ ≤768px ที่ว่างในแถบบนไม่พอให้สองปุ่มมีข้อความ เดิมเหลือไอคอนรูปตากับคำว่า "CV" ซึ่งต้องเดา
+   ตอนนี้เป็นปุ่ม "CV" ปุ่มเดียว กดแล้วแผ่น <dialog class="cv-sheet"> เลื่อนขึ้นมาให้เลือกดูหรือโหลด
+   script.js เติมคลาส has-cv-sheet ให้ <html> เมื่อเบราว์เซอร์เปิด dialog ได้
+   ถ้าไม่มีคลาสนี้ (JS ไม่ทำงาน / เบราว์เซอร์เก่า) สองปุ่มเดิมยังอยู่ครบ กดได้ตามปกติ */
+.nav-cv-open {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 100px;
+  background: var(--accent2);
+  color: var(--on-accent);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background var(--trans), color var(--trans);
+}
+
+/* เฉพาะเครื่องที่มีเมาส์ — บนจอสัมผัส :hover ค้างหลังแตะ ปุ่มจะเป็นสีทองค้างอยู่หลังปิดแผ่น */
+@media (hover: hover) {
+  .nav-cv-open:hover {
+    background: var(--accent);
+    color: var(--on-accent-light);
+  }
+}
+
+.cv-sheet {
+  /* ห้ามตั้ง display ตรงนี้ เหตุผลเดียวกับ .doc-modal
+     margin บนเป็น auto ดันแผ่นลงไปชิดขอบล่าง · max-width ต้องเขียนทับค่าของเบราว์เซอร์ที่เว้นขอบข้างไว้ */
+  margin: auto 0 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 22px 22px 0 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 -12px 40px rgba(15, 27, 66, 0.22);
+}
+
+.cv-sheet[open] {
+  animation: cvSheetIn 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes cvSheetIn {
+  from { transform: translateY(100%); }
+  to   { transform: none; }
+}
+
+.cv-sheet::backdrop {
+  background: rgba(15, 27, 66, 0.55);
+}
+
+/* padding อยู่ที่ชั้นใน ไม่ใช่ที่ <dialog> — script.js ปิดแผ่นเมื่อกดโดนตัว dialog ตรง ๆ (= กดฉากหลัง)
+   ถ้า dialog มี padding เอง กดโดนขอบในของแผ่นก็จะปิดไปด้วย
+   env(safe-area-inset-bottom) เผื่อแถบ home ของ iPhone ไม่ให้ทับปุ่มล่าง */
+.cv-sheet-inner {
+  position: relative;
+  padding: 10px 20px calc(26px + env(safe-area-inset-bottom, 0px));
+}
+
+.cv-sheet-grip {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 16px;
+  border-radius: 4px;
+  background: var(--border);
+}
+
+.cv-sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--trans), background var(--trans);
+}
+
+.cv-sheet-close:hover,
+.cv-sheet-close:focus-visible {
+  color: var(--text);
+  background: var(--elevated);
+}
+
+.cv-sheet-title {
+  padding-right: 44px;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.cv-sheet-meta {
+  margin-bottom: 16px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.cv-sheet-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+  margin-top: 10px;
+  padding: 0 16px;
+  border: 1px solid var(--accent2);
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  transition: background var(--trans), color var(--trans), border-color var(--trans);
+}
+
+.cv-sheet-btn small {
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+/* ดู = ปุ่มหลัก (ทึบ) · โหลด = ปุ่มรอง (ขอบ) — บนมือถือคนเปิดดูก่อนมากกว่า */
+.cv-sheet-btn.is-solid {
+  background: var(--accent2);
+  color: var(--on-accent);
+}
+
+.cv-sheet-btn.is-line {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.cv-sheet-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent-light);
+}
+
+@media (max-width: 768px) {
+  .has-cv-sheet .nav-cv-view,
+  .has-cv-sheet .nav-cv-btn {
+    display: none;
+  }
+
+  .has-cv-sheet .nav-cv-open {
+    display: inline-flex;
+  }
+}
+
 /* ── จอสัมผัส: พื้นที่กดขั้นต่ำ 44px และตัวหนังสือขั้นต่ำ 12.5px ──
    วัดที่ 375px ก่อนแก้: ปุ่มและลิงก์เล็กกว่า 40px มี 55 จุด (.btn-sm สูง 32px · ไอคอนในการ์ด Projects 32×32
    · จุดบอกตำแหน่ง 26px · ปุ่มสามขีด 32×33) และตัวหนังสือเล็กกว่า 12.5px ราว 50 จุด
@@ -2825,36 +2940,25 @@ html {
     height: 44px;
   }
 
-  .contact-copy {
-    min-height: 44px;
-  }
-
   .back-top {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
   }
 
-  /* ที่ 320px "github.com/nanthapat3751" ตัดคำไม่ได้ ดันการ์ดติดต่อกว้างเกินจอ 23px
-     ทั้งหน้าเลยเลื่อนแนวนอนได้ · ยอมให้ตัดกลางคำได้เฉพาะตอนที่ไม่พอจริง ๆ */
-  .contact-item > div {
-    min-width: 0;
-  }
-
-  .ci-val {
-    overflow-wrap: anywhere;
-  }
-
-  /* ปุ่มอีเมลเป็นข้อความยาวบรรทัดเดียว ที่ 320px กว้างเกินคอลัมน์ 28px
-     ย่อตัวหนังสือตามจอ (14–16px) กับ padding ข้าง แทนการปล่อยให้อีเมลตกบรรทัด */
+  /* ปุ่มอีเมลเป็นข้อความยาวบรรทัดเดียว ถ้าใช้ขนาดจอคอม ที่ 320px จะกว้างเกินจอ
+     ย่อตัวหนังสือตามจอ (14.4–17.6px) กับ padding ข้าง แทนการปล่อยให้อีเมลตกบรรทัด */
   .contact-cta {
-    max-width: 100%;
-    padding: 13px 20px;
-    font-size: clamp(0.875rem, 4.2vw, 1rem);
+    padding: 15px 24px;
+    font-size: clamp(0.9rem, 4.4vw, 1.1rem);
+  }
+
+  .contact-social {
+    margin-top: 28px;
+    padding-top: 28px;
   }
 
   .tech-tier-label,
-  .ci-label,
   .act-body .act-kind {
     font-size: 12.5px;
   }

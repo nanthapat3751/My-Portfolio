@@ -7,7 +7,7 @@
   <!-- แก้ชื่อ-นามสกุลได้ที่นี่ (มีผลกับ title, description และการแชร์ลิงก์) -->
   <title>ณันธภัทร์ ลิ่มเจริญ · IT Portfolio</title>
   <meta name="description"
-    content="พอร์ตโฟลิโอของ ณันธภัทร์ ลิ่มเจริญ — นิสิตสาขาเทคโนโลยีสารสนเทศ มหาวิทยาลัยเกษตรศาสตร์ สนใจงานด้าน Business Analysis, Requirement และการนำข้อมูลกับเทคโนโลยีมาช่วยแก้ปัญหาทางธุรกิจ" />
+    content="พอร์ตโฟลิโอของ ณันธภัทร์ ลิ่มเจริญ — นิสิตสาขาเทคโนโลยีสารสนเทศ มหาวิทยาลัยเกษตรศาสตร์ ผลงานด้าน Software Development, Data Analysis และ Business Analysis ตั้งแต่วิเคราะห์ความต้องการ พัฒนาระบบ จนถึงไปป์ไลน์ข้อมูลและแดชบอร์ด" />
   <meta name="author" content="ณันธภัทร์ ลิ่มเจริญ" />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
 
@@ -16,7 +16,7 @@
   <meta property="og:locale" content="th_TH" />
   <meta property="og:title" content="ณันธภัทร์ ลิ่มเจริญ · IT Portfolio" />
   <meta property="og:description"
-    content="นิสิตสาขาเทคโนโลยีสารสนเทศ ม.เกษตรศาสตร์ · ผลงาน IoT, การวิเคราะห์ระบบ และใบรับรองจาก HackerRank" />
+    content="นิสิตสาขาเทคโนโลยีสารสนเทศ ม.เกษตรศาสตร์ · ผลงานพัฒนาระบบ ไปป์ไลน์ข้อมูล และการวิเคราะห์ระบบ" />
   <meta property="og:image" content="https://nanthapat3751.github.io/My-Portfolio/images/myproflie.png" />
   <!-- เมื่อ deploy แล้วให้ใส่ URL เต็มของเว็บ เช่น https://nanthapat3751.github.io/portfolio/
        ทั้งใน og:url และ og:image (Facebook ต้องการ URL เต็ม ไม่รับ path สั้น) -->
@@ -29,7 +29,7 @@
     rel="stylesheet">
   <!-- ?v= คือเลขรุ่นกันแคช · แก้ style.css หรือ script.js เมื่อไหร่ ต้องเปลี่ยนเลขนี้ทั้งสองจุดก่อนอัปขึ้น GitHub
        ไม่งั้นเบราว์เซอร์ของคนที่เคยเปิดเว็บจะใช้ไฟล์เก่าที่จำไว้คู่กับ HTML ใหม่ หน้าเพี้ยน (เคยทำรูปโปรไฟล์ยืดมาแล้ว) -->
-  <link rel="stylesheet" href="style.css?v=20261116-2" />
+  <link rel="stylesheet" href="style.css?v=20261117-3" />
   <noscript>
     <!-- ไม่มี JS = IntersectionObserver ไม่ทำงาน = .reveal ค้างที่ opacity 0 ทั้งหน้า
          กฎนี้บังคับให้เนื้อหาโผล่ครบ ยอมทิ้งอนิเมชันไป -->
@@ -372,6 +372,18 @@
         </svg>
         <span><span class="nav-cv-word">Download </span>CV</span>
       </a>
+      <!-- จอ ≤768px: สองปุ่มข้างบนถูกซ่อน เหลือปุ่มนี้ปุ่มเดียว กดแล้วเปิดแผ่น #cvSheet
+           ปุ่มซ่อนอยู่จนกว่า script.js จะเติม has-cv-sheet ให้ <html> ถ้า JS ไม่ทำงานสองปุ่มเดิมยังใช้ได้ -->
+      <button type="button" class="nav-cv-open" id="cvOpen" aria-haspopup="dialog" aria-controls="cvSheet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <path d="M14 2v6h6" />
+          <path d="M8 13h8" />
+          <path d="M8 17h5" />
+        </svg>
+        CV
+      </button>
       </div>
 
       <button class="hamburger" id="hamburger" type="button" aria-label="menu"
@@ -391,6 +403,39 @@
     <a href="#contact">Contact</a>
   </div>
 
+  <!-- แผ่นเลือก CV (มือถือ) · ขนาดไฟล์ในบรรทัด .cv-sheet-meta พิมพ์ไว้เอง เปลี่ยนไฟล์ CV แล้วต้องแก้เลขตาม -->
+  <dialog class="cv-sheet" id="cvSheet" aria-labelledby="cvSheetTitle">
+    <div class="cv-sheet-inner">
+      <div class="cv-sheet-grip" aria-hidden="true"></div>
+      <button type="button" class="cv-sheet-close" data-close aria-label="ปิด">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" aria-hidden="true" focusable="false">
+          <line x1="5" y1="5" x2="19" y2="19" />
+          <line x1="19" y1="5" x2="5" y2="19" />
+        </svg>
+      </button>
+      <h2 class="cv-sheet-title" id="cvSheetTitle">CV · ณันธภัทร์ ลิ่มเจริญ</h2>
+      <p class="cv-sheet-meta">ไฟล์ PDF · 268 KB</p>
+      <a href="pdf/CV.pdf" target="_blank" rel="noopener noreferrer" class="cv-sheet-btn is-solid">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        View CV <small>· เปิดในแท็บใหม่</small>
+      </a>
+      <a href="pdf/CV.pdf" download="CV-ณันธภัทร์ ลิ่มเจริญ.pdf" class="cv-sheet-btn is-line">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download CV <small>· บันทึกลงเครื่อง</small>
+      </a>
+    </div>
+  </dialog>
+
   <!-- หัวข้อหลักของหน้า ซ่อนจากสายตาแต่โปรแกรมอ่านหน้าจอและ Google อ่านได้ -->
   <h1 class="sr-only">ณันธภัทร์ ลิ่มเจริญ — พอร์ตโฟลิโอ นิสิตเทคโนโลยีสารสนเทศ</h1>
 
@@ -407,16 +452,21 @@
             <span class="typing-text" id="typingText">เข้าใจทั้งธุรกิจและเทคโนโลยี</span>
             <span class="cursor-blink"></span>
           </p>
+          <!-- พอร์ตนี้ใช้ยื่นสามสาย (Developer / Data Analyst / BA-SA) เนื้อหาจึงพูดถึงทั้งสามด้าน
+               เขียนแบบบอกสิ่งที่สนใจและชอบทำ ไม่ใส่ตัวเลขหรือชื่อเครื่องมือ
+               (ผลงานกับเครื่องมืออยู่ในส่วน Projects / Workshop ข้างล่างอยู่แล้ว) -->
           <p>กำลังศึกษาอยู่ที่มหาวิทยาลัยเกษตรศาสตร์ สาขาเทคโนโลยีสารสนเทศ
             สนใจการนำข้อมูลและเทคโนโลยีมาใช้ช่วยแก้ปัญหาทางธุรกิจ
-            โดยเฉพาะการวิเคราะห์ความต้องการและมองภาพรวมของระบบให้เข้าใจง่ายขึ้น</p>
+            ตั้งแต่การวิเคราะห์ความต้องการและออกแบบระบบ การพัฒนาระบบให้ใช้งานได้จริง
+            ไปจนถึงการนำข้อมูลมาวิเคราะห์เพื่อช่วยตัดสินใจ</p>
 
-          <p>ชอบทำงานที่ต้องจัดระเบียบข้อมูลที่ซับซ้อนให้กลายเป็นสิ่งที่ทีมสามารถนำไปใช้ต่อได้จริง
-            มีความสนใจในด้าน Process, Requirement เพื่อช่วยให้การตัดสินใจเร็วและชัดเจนขึ้น</p>
+          <p>ชอบทำงานที่ต้องจัดระเบียบสิ่งที่ซับซ้อนให้กลายเป็นสิ่งที่ทีมนำไปใช้ต่อได้จริง
+            ไม่ว่าจะเป็น Requirement ที่ชัดเจน โค้ดที่ใช้งานได้ หรือข้อมูลที่พร้อมนำไปวิเคราะห์
+            และอยากนำสิ่งที่เรียนมาไปใช้กับงานจริง พร้อมเรียนรู้จากการทำงานร่วมกับทีม</p>
           <div class="about-pills">
-            <span>Problem Solver</span>
-            <span>Detail-Oriented</span>
-            <span>Quick Learner</span>
+            <span>Developer</span>
+            <span>Data Analyst</span>
+            <span>Business &amp; System Analyst</span>
           </div>
         </div>
         <div class="about-visual reveal reveal-delay">
@@ -1512,58 +1562,48 @@
   <!-- ══ CONTACT ══ -->
   <section class="section contact-section" id="contact">
     <div class="container">
-      <div class="contact-grid reveal">
+      <h2 class="section-label reveal">Contact</h2>
+      <p class="contact-title reveal">สนใจร่วมงานหรืออยากพูดคุยเพิ่มเติม?</p>
+      <p class="contact-desc reveal reveal-delay">ยินดีรับ Opportunity ทุกรูปแบบครับ</p>
 
-        <div class="contact-intro">
-          <h2 class="section-label">Contact</h2>
-          <p class="contact-desc">สนใจร่วมงานหรืออยากพูดคุยเพิ่มเติม? ยินดีรับ Opportunity ทุกรูปแบบครับ</p>
+      <div class="contact-actions reveal reveal-delay">
+        <!-- ไอคอนเป็นเส้นสี currentColor ไม่ใช่โลโก้ Gmail สีจริง
+             เพราะปุ่มเปลี่ยนพื้นเป็นสีทองตอนเอาเมาส์ชี้ โลโก้สี่สีบนพื้นทองจะดูมั่ว -->
+        <a href="mailto:tangpun2547@gmail.com" class="contact-cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+          tangpun2547@gmail.com
+        </a>
+        <!-- เผื่อเครื่องที่กดแล้วไม่มีโปรแกรมอีเมลเปิดขึ้นมา · ซ่อนไว้ก่อน
+             JS จะเปิดให้เฉพาะเบราว์เซอร์ที่คัดลอกได้จริง ไม่งั้นจะเป็นปุ่มกดแล้วไม่เกิดอะไร -->
+        <button type="button" class="contact-copy" id="copyEmail" data-email="tangpun2547@gmail.com" hidden>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="9" y="9" width="13" height="13" rx="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+          <span class="cc-text" aria-live="polite">คัดลอกอีเมล</span>
+        </button>
+      </div>
 
-          <!-- ไอคอนเป็นเส้นสี currentColor ไม่ใช่โลโก้ Gmail สีจริง
-               เพราะปุ่มเปลี่ยนพื้นเป็นสีทองตอนเอาเมาส์ชี้ โลโก้สี่สีบนพื้นทองจะดูมั่ว -->
-          <a href="mailto:tangpun2547@gmail.com" class="contact-cta">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 7-10 6L2 7" />
-            </svg>
-            tangpun2547@gmail.com
-          </a>
-
-          <!-- เผื่อเครื่องที่กดแล้วไม่มีโปรแกรมอีเมลเปิดขึ้นมา · ซ่อนไว้ก่อน
-               JS จะเปิดให้เฉพาะเบราว์เซอร์ที่คัดลอกได้จริง ไม่งั้นจะเป็นปุ่มกดแล้วไม่เกิดอะไร -->
-          <button type="button" class="contact-copy" id="copyEmail" data-email="tangpun2547@gmail.com" hidden>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <rect x="9" y="9" width="13" height="13" rx="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-            </svg>
-            <span class="cc-text" aria-live="polite">คัดลอกอีเมล</span>
-          </button>
-        </div>
-
-        <div class="contact-channels">
-          <a href="https://github.com/nanthapat3751" class="contact-item" target="_blank" rel="noopener noreferrer">
-            <div class="brings-icon"><svg aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></div>
-            <div>
-              <div class="ci-label">GitHub</div>
-              <div class="ci-val">github.com/nanthapat3751</div>
-            </div>
-          </a>
-
-          <!-- โซเชียลส่วนตัวเป็นชั้นรอง ย่อลงเป็นชิป
-               แต่โลโก้ยังต้องนั่งบนแผ่นขาวเหมือนเดิม สีแบรนด์วางบนพื้นกรมท่าตรง ๆ ได้แค่ IG 2.49 · FB 2.55 : 1 -->
-          <div class="contact-social">
-            <a href="https://www.instagram.com/ntpxtt.s/" class="contact-chip" target="_blank" rel="noopener noreferrer">
-              <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-instagram" /></svg></span>
-              <span>ntpxtt.s</span>
-            </a>
-            <a href="https://www.facebook.com/nanthapat.tang?locale=th_TH" class="contact-chip" target="_blank" rel="noopener noreferrer">
-              <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-facebook" /></svg></span>
-              <span>nanthapat.tang</span>
-            </a>
-          </div>
-        </div>
-
+      <!-- ช่องทางอื่นเป็นชั้นรอง · เพิ่มช่องทาง: ก๊อป <a class="contact-chip"> ทั้งก้อน
+           โลโก้ต้องนั่งบนแผ่นขาว .ci-badge เสมอ สีแบรนด์วางบนพื้นกรมท่าตรง ๆ อ่านไม่ออก -->
+      <div class="contact-social reveal reveal-delay-2">
+        <a href="https://github.com/nanthapat3751" class="contact-chip" target="_blank" rel="noopener noreferrer">
+          <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-github" /></svg></span>
+          <span>github.com/nanthapat3751</span>
+        </a>
+        <a href="https://www.instagram.com/ntpxtt.s/" class="contact-chip" target="_blank" rel="noopener noreferrer">
+          <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-instagram" /></svg></span>
+          <span>ntpxtt.s</span>
+        </a>
+        <a href="https://www.facebook.com/nanthapat.tang?locale=th_TH" class="contact-chip" target="_blank" rel="noopener noreferrer">
+          <span class="ci-badge"><svg aria-hidden="true" focusable="false"><use href="#icon-facebook" /></svg></span>
+          <span>nanthapat.tang</span>
+        </a>
       </div>
     </div>
   </section>
@@ -1585,7 +1625,7 @@
   <!-- Back to Top Button -->
   <button id="backToTop" aria-label="Back to top" title="Back to Top">↑</button>
 
-  <script src="script.js?v=20261116-2"></script>
+  <script src="script.js?v=20261117-3"></script>
 </body>
 
 </html>
